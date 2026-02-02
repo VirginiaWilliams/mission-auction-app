@@ -37,11 +37,8 @@ export default createStore({
       }
     },
     getTests: async (ctx) => {
-      console.log("========= 1");
       let response = await window.ipc.invoke("get-tests");
-      console.log("========= 2");
       if (response.status === true) {
-        console.log("========= 3");
         ctx.state.tests = response.data;
       }
     },
@@ -93,9 +90,7 @@ export default createStore({
       }
     },
     createTest: async (ctx, data) => {
-      console.log("--------------- 1");
       let response = await window.ipc.invoke("create-test", data);
-      console.log("--------------- 2");
 
       if (response.status === true) {
         ctx.dispatch("getTests");

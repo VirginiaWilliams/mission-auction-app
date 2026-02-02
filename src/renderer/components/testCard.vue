@@ -6,19 +6,19 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "testCard",
-  props: {
-    test: Object,
-  },
-  setup(props) {
-    console.log("in here with: ", props.test.name);
-  },
-};
+<script setup>
+import { onMounted, defineProps } from "vue";
+
+const props = defineProps({
+  test: Object,
+});
+
+onMounted(() => {
+  console.log("props: ", props.test);
+});
 </script>
 
-<style scoped>
+<style>
 .card {
   max-width: 220px;
   min-width: 220px;
@@ -34,16 +34,6 @@ export default {
   display: flex;
   flex-direction: column;
 
-  .image {
-    border-radius: 3px;
-    width: 100%;
-    height: 196px;
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
   .title {
     display: block;
     margin-top: 10px;

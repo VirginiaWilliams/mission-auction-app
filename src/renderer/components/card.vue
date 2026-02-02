@@ -42,12 +42,13 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .card {
   max-width: 220px;
   min-width: 220px;
   height: 100%;
   text-align: left;
+  background: #fff;
 }
 .card-content {
   height: 100%;
@@ -57,56 +58,5 @@ export default {
   padding: 10px;
   display: flex;
   flex-direction: column;
-
-  .image {
-    border-radius: 3px;
-    width: 100%;
-    height: 196px;
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-  .title {
-    display: block;
-    margin-top: 10px;
-    margin-bottom: 5px;
-    font-weight: 600;
-    color: darken(grey, 10);
-    overflow-wrap: break-word;
-  }
-  .author {
-    display: block;
-    font-weight: 500;
-    color: grey;
-  }
-  .playlists {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    row-gap: 5px;
-    margin: 10px 0;
-    .playlist {
-      color: red;
-      font-weight: 600;
-      margin: 0 5px;
-      transition: 0.3s ease-in-out;
-      &:nth-of-type(1) {
-        margin: 0;
-      }
-      &:hover {
-        color: darkred;
-      }
-    }
-    button {
-      margin-left: 5px;
-    }
-  }
-  .controllers {
-    margin-top: auto;
-    display: flex;
-    column-gap: 10px;
-  }
 }
 </style>

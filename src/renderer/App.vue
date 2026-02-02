@@ -3,7 +3,7 @@
   <main>
     <header>
       <h1>Tester</h1>
-      <span @click="openAdd = true" class="material-icons">add</span>
+      <span @click="openAdd = true" class="material-icons">+</span>
     </header>
     <article class="cards-container">
       <div class="empty" v-if="tests.length === 0">
@@ -16,88 +16,68 @@
   </main>
 </template>
 
-<script>
-import "material-icons/iconfont/material-icons.css";
+<script setup>
 import testCard from "./components/testCard.vue";
 import addTest from "./components/add-test.vue";
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
-export default {
-  name: "App",
-  components: {
-    testCard,
-    addTest,
-  },
-  setup() {
-    const store = useStore();
 
-    store.dispatch("getTests");
+const store = useStore();
 
-    const tests = computed(() => {
-      console.log("tests from App: ", store.getters.tests);
-      return store.getters.tests;
-    });
+store.dispatch("getTests");
 
-    const openAdd = ref(false);
+const tests = computed(() => {
+  return store.getters.tests;
+});
 
-    return {
-      tests,
-      openAdd,
-    };
-  },
-};
+const openAdd = ref(false);
 </script>
 
 <style>
-#app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: black;
-}
-.app {
-  background: lightgray;
-}
-a {
-  text-decoration: none;
-  color: black;
-}
 main {
+  background: lightgray;
   max-width: 950px;
   margin: 0 auto;
   padding: 50px 0;
-  header {
-    margin: 50px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    h1 {
-      font-size: 2rem;
-      font-weight: 900;
-      text-align: center;
-    }
-    span {
-      margin-left: 20px;
-      padding: 5px;
-      background: red;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-    }
+  font-family: Arial, sans-serif;
+}
+header {
+  margin: 50px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+}
+span {
+  margin-left: 20px;
+  padding: 5px;
+  background: red;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 1rem;
+  row-gap: 2rem;
+  padding: 1rem;
+}
+.empty {
+  background: #fdd0d0;
+  grid-column: 1 / -1;
+  h1 {
+    color: #a04545;
   }
-  .cards-container {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    column-gap: 10px;
-    row-gap: 20px;
-  }
-  .empty {
-    background: #fdd0d0;
-    grid-column: 1 / -1;
-    h1 {
-      color: #a04545;
-    }
-  }
+}
+.material-icons {
+  background-color: indianred;
+  border-radius: 5px;
 }
 </style>

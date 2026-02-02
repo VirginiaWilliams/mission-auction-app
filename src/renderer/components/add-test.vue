@@ -23,32 +23,25 @@
   </div>
 </template>
 
-<script>
-import { useStore } from "vuex";
-export default {
-  name: "addTest",
-  emits: ["close"],
-  setup() {
-    const store = useStore();
+<script setup>
+import { useStore, defineEmits } from "vuex";
 
-    function cancel() {
-      //   ctx.emit("close");
-    }
+const store = useStore();
 
-    function addTest() {
-      let data = {
-        name: "",
-      };
-      data.name = "test";
-      store.dispatch("createTest", data);
-      //   ctx.emit("close");
-    }
-    return {
-      addTest,
-      cancel,
-    };
-  },
-};
+const emit = defineEmits(["close"]);
+
+function cancel() {
+  emit("close");
+}
+
+function addTest() {
+  let data = {
+    name: "",
+  };
+  data.name = "test";
+  store.dispatch("createTest", data);
+  emit("close");
+}
 </script>
 
 <style scoped>
