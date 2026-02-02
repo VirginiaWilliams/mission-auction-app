@@ -18,53 +18,31 @@
 
 <script>
 import "material-icons/iconfont/material-icons.css";
-// import videoCard from "./components/card.vue";
 import testCard from "./components/testCard.vue";
-// import addVideo from "./components/add-video.vue";
 import addTest from "./components/add-test.vue";
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
 export default {
   name: "App",
   components: {
-    // videoCard,
     testCard,
-    // addVideo,
     addTest,
   },
   setup() {
     const store = useStore();
-    /**
-     * to get the videos and playlists
-     * whenever the component is loaded
-     */
 
     store.dispatch("getTests");
-    // const videos = computed(() => {
-    //   return store.getters.videos;
-    // });
 
     const tests = computed(() => {
-      return store.getters.videos;
+      console.log("tests from App: ", store.getters.tests);
+      return store.getters.tests;
     });
 
     const openAdd = ref(false);
 
-    // const selectedVideo = computed(() => {
-    //   return store.state.toEditVideo;
-    // });
-
-    // watch(selectedVideo, () => {
-    //   if (selectedVideo.value !== null) {
-    //     openAdd.value = true;
-    //   }
-    // });
-
     return {
-      // videos,
       tests,
       openAdd,
-      // selectedVideo,
     };
   },
 };

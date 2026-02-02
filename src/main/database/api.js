@@ -5,11 +5,7 @@ import TestModel from "./models/test";
 
 const sequelize = new Sequelize({
   dialect: "sqlite", // type of the database
-  logging: false, // if you want to log out the states of the database
   storage: "./database/db_dev.db", // database file path
-  sync: {
-    force: process.env.NODE_ENV === "development",
-  },
 });
 
 const Video = VideoModel(sequelize);
@@ -113,7 +109,6 @@ async function ReadVideo(id, withPlaylist = false) {
 // *****************************************************************
 
 async function CreateTest(testData) {
-  console.log("=============== in create test api");
   if (!testData) throw new Error("testData must be a valid object");
 
   if (typeof testData !== "object")
@@ -124,17 +119,9 @@ async function CreateTest(testData) {
   return test;
 }
 
-async function ReadTest(id) {
+async function ReadTest() {
   let tests;
-  if (Array.isArray(id) && id.every((i) => typeof i === "number")) {
-    return tests.map((test) => {
-      return test.toJSON();
-    });
-  }
-
-  if (typeof id === "number") {
-    return tests.toJSON();
-  }
+  tests = await Test.findAll();
 
   return tests.map((test) => {
     return test.toJSON();

@@ -36,6 +36,15 @@ export default createStore({
         ctx.state.playlists = response.data;
       }
     },
+    getTests: async (ctx) => {
+      console.log("========= 1");
+      let response = await window.ipc.invoke("get-tests");
+      console.log("========= 2");
+      if (response.status === true) {
+        console.log("========= 3");
+        ctx.state.tests = response.data;
+      }
+    },
     deleteVideo: async (ctx, id) => {
       let response = await window.ipc.invoke("delete-video", id);
 
@@ -81,12 +90,6 @@ export default createStore({
       if (response.status === true) {
         ctx.dispatch("getVideos");
         ctx.dispatch("getPlaylists");
-      }
-    },
-    getTests: async (ctx) => {
-      let response = await window.ipc.invoke("get-tests");
-      if (response.status === true) {
-        ctx.state.tests = response.data;
       }
     },
     createTest: async (ctx, data) => {

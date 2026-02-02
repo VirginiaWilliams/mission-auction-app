@@ -12,6 +12,9 @@ export default {
   props: {
     test: Object,
   },
+  setup(props) {
+    console.log("in here with: ", props.test.name);
+  },
 };
 </script>
 

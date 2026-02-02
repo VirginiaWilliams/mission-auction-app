@@ -37,10 +37,20 @@ async function server() {
       }
     });
 
+    ipcMain.handle("get-tests", async () => {
+      try {
+        return {
+          status: true,
+          data: await ReadTest(),
+        };
+      } catch (err) {
+        return { status: false, data: err.message };
+      }
+    });
+
     ipcMain.handle(
       "create-video",
       async (e, { url, playlists: { existingPlaylists, newPlaylists } }) => {
-        console.log("--------------------------- create-video");
         try {
           /**
            * Creating a video is a bit tricky, we have many conditions
@@ -73,7 +83,6 @@ async function server() {
           let videoData = await getVideoData(url);
 
           await CreateVideo(videoData, playlistIDs);
-          console.log("-------------- after CreateVideoin server.js");
 
           return {
             status: true,
@@ -135,31 +144,18 @@ async function server() {
     // *****************************************************************
 
     ipcMain.handle("create-test", async () => {
-      console.log("--------------------------- create-test");
       try {
         let testData = {
           name: "test",
         };
 
         await CreateTest(testData);
-        console.log("-------------- after CreateTest in server.js");
 
         return {
           status: true,
         };
       } catch (err) {
         return { status: false, data: err };
-      }
-    });
-
-    ipcMain.handle("get-tests", async (e, testIds) => {
-      try {
-        return {
-          status: true,
-          data: await ReadTest(testIds, true),
-        };
-      } catch (err) {
-        return { status: false, data: err.message };
       }
     });
 
