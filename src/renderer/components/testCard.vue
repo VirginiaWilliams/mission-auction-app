@@ -47,28 +47,6 @@ onMounted(() => {
     font-weight: 500;
     color: grey;
   }
-  .playlists {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    row-gap: 5px;
-    margin: 10px 0;
-    .playlist {
-      color: red;
-      font-weight: 600;
-      margin: 0 5px;
-      transition: 0.3s ease-in-out;
-      &:nth-of-type(1) {
-        margin: 0;
-      }
-      &:hover {
-        color: darkred;
-      }
-    }
-    button {
-      margin-left: 5px;
-    }
-  }
   .controllers {
     margin-top: auto;
     display: flex;

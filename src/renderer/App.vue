@@ -1,5 +1,5 @@
 <template>
-  <addTest :video="selectedVideo" @close="openAdd = false" v-if="openAdd" />
+  <addTest @close="openAdd = false" v-if="openAdd" />
   <main>
     <header>
       <h1>Tester</h1>
