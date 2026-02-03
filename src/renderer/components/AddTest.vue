@@ -5,7 +5,7 @@
       <form @submit.prevent="addTest">
         <label for="name">Name</label>
         <input
-          v-model="name"
+          v-model="newName"
           type="name"
           name="name"
           placeholder="Enter the test Name"
@@ -25,10 +25,13 @@
 
 <script setup>
 import { useStore, defineEmits } from "vuex";
+import { ref } from "vue";
 
 const store = useStore();
 
 const emit = defineEmits(["close"]);
+
+const newName = ref("");
 
 function cancel() {
   emit("close");
@@ -38,7 +41,8 @@ function addTest() {
   let data = {
     name: "",
   };
-  data.name = "test";
+  data.name = newName.value;
+  console.log("newName: ", newName);
   store.dispatch("createTest", data);
   emit("close");
 }

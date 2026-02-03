@@ -26,13 +26,11 @@ async function server() {
     //   }
     // });****************************************************************
 
-    ipcMain.handle("create-test", async () => {
+    ipcMain.handle("create-test", async (e, name) => {
       try {
-        let testData = {
-          name: "test",
-        };
+        console.log("name in server: ", name);
 
-        await CreateTest(testData);
+        await CreateTest(name);
 
         return {
           status: true,

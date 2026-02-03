@@ -1,5 +1,5 @@
 <template>
-  <addTest @close="openAdd = false" v-if="openAdd" />
+  <AddTest @close="openAdd = false" v-if="openAdd" />
   <main>
     <header>
       <h1>Tester</h1>
@@ -10,15 +10,15 @@
         <h1>The list is empty</h1>
       </div>
       <template v-else v-for="(test, index) in tests" :key="index">
-        <testCard :test="test" />
+        <TestCard :test="test" />
       </template>
     </article>
   </main>
 </template>
 
 <script setup>
-import testCard from "./components/testCard.vue";
-import addTest from "./components/add-test.vue";
+import TestCard from "./components/TestCard";
+import AddTest from "./components/AddTest";
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
 
