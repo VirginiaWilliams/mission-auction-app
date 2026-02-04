@@ -18,8 +18,8 @@ server();
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1500,
+    height: 1000,
     webPreferences: {
       enableRemoteModule: !!process.env.IS_TEST,
       nodeIntegration: false,

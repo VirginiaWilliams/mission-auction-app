@@ -5,19 +5,27 @@
       <h1>Tester</h1>
       <span @click="openAdd = true" class="material-icons">+</span>
     </header>
-    <article class="cards-container">
-      <div class="empty" v-if="tests.length === 0">
-        <h1>The list is empty</h1>
-      </div>
-      <template v-else v-for="(test, index) in tests" :key="index">
-        <TestCard :test="test" />
-      </template>
-    </article>
+    <div class="empty" v-if="tests.length === 0">
+      <h2>
+        The list is empty! Please Upload package data or manually add packages
+      </h2>
+    </div>
+    <div v-else class="table-container">
+      <table>
+        <tr class="table-headers">
+          <th>ID</th>
+          <th>Name</th>
+        </tr>
+        <tr v-for="(test, index) in tests" :key="index">
+          <td>{{ test.id ? test.id : 0 }}</td>
+          <td>{{ test.name }}</td>
+        </tr>
+      </table>
+    </div>
   </main>
 </template>
 
 <script setup>
-import TestCard from "./components/TestCard";
 import AddTest from "./components/AddTest";
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
@@ -41,17 +49,32 @@ main {
   padding: 50px 0;
   font-family: Arial, sans-serif;
 }
+
 header {
-  margin: 50px 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 h1 {
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 32px;
+  font-weight: 700;
   text-align: center;
 }
+
+h2 {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  color: #a04545;
+}
+
+.empty {
+  margin-left: 2rem;
+  margin-right: 2rem;
+  border: 1px solid black;
+}
+
 span {
   margin-left: 20px;
   padding: 5px;
@@ -62,22 +85,26 @@ span {
   align-items: center;
   cursor: pointer;
 }
-.cards-container {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  column-gap: 1rem;
-  row-gap: 2rem;
-  padding: 1rem;
-}
-.empty {
-  background: #fdd0d0;
-  grid-column: 1 / -1;
-  h1 {
-    color: #a04545;
-  }
-}
+
 .material-icons {
   background-color: indianred;
   border-radius: 5px;
+}
+
+.table-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+table,
+th,
+td {
+  background: white;
+  border: 1px solid black;
+  border-collapse: collapse;
+  width: 30rem;
+  text-align: left;
+  padding-left: 1rem;
 }
 </style>
