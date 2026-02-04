@@ -1,11 +1,11 @@
 <template>
-  <AddTest @close="openAdd = false" v-if="openAdd" />
+  <AddAucItem @close="openAdd = false" v-if="openAdd" />
   <main>
     <header>
-      <h1>Tester</h1>
+      <h1>Add/Delete Data</h1>
       <span @click="openAdd = true" class="material-icons">+</span>
     </header>
-    <div class="empty" v-if="tests.length === 0">
+    <div class="empty" v-if="aucItems.length === 0">
       <h2>
         The list is empty! Please Upload package data or manually add packages
       </h2>
@@ -16,9 +16,9 @@
           <th>ID</th>
           <th>Name</th>
         </tr>
-        <tr v-for="(test, index) in tests" :key="index">
-          <td>{{ test.id ? test.id : 0 }}</td>
-          <td>{{ test.name }}</td>
+        <tr v-for="(i, index) in aucItems" :key="index">
+          <td>{{ i.id ? i.id : 0 }}</td>
+          <td>{{ i.name }}</td>
         </tr>
       </table>
     </div>
@@ -26,16 +26,16 @@
 </template>
 
 <script setup>
-import AddTest from "./components/AddTest";
+import AddAucItem from "./components/AddAucItem";
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
 
 const store = useStore();
 
-store.dispatch("getTests");
+store.dispatch("getAucItems");
 
-const tests = computed(() => {
-  return store.getters.tests;
+const aucItems = computed(() => {
+  return store.getters.aucItems;
 });
 
 const openAdd = ref(false);

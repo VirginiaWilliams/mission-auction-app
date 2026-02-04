@@ -2,11 +2,11 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    tests: [],
+    aucItems: [],
   },
   getters: {
-    tests: (state) => {
-      return state.tests;
+    aucItems: (state) => {
+      return state.aucItems;
     },
   },
   // mutations: {
@@ -15,10 +15,10 @@ export default createStore({
   //   },
   // },
   actions: {
-    getTests: async (ctx) => {
-      let response = await window.ipc.invoke("get-tests");
+    getAucItems: async (ctx) => {
+      let response = await window.ipc.invoke("get-aucItems");
       if (response.status === true) {
-        ctx.state.tests = response.data;
+        ctx.state.aucItems = response.data;
       }
     },
     // deleteVideo: async (ctx, id) => {
@@ -28,11 +28,11 @@ export default createStore({
     //     ctx.dispatch("getVideos");
     //   }
     // },
-    createTest: async (ctx, data) => {
-      let response = await window.ipc.invoke("create-test", data);
+    createAucItem: async (ctx, data) => {
+      let response = await window.ipc.invoke("create-aucItem", data);
 
       if (response.status === true) {
-        ctx.dispatch("getTests");
+        ctx.dispatch("getAucItems");
       }
     },
   },

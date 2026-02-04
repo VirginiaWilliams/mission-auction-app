@@ -2,13 +2,13 @@
   <div class="form-wrapper">
     <div class="form-modal">
       <h2>Create</h2>
-      <form @submit.prevent="addTest">
+      <form @submit.prevent="addAucItem">
         <label for="name">Name</label>
         <input
           v-model="newName"
           type="name"
           name="name"
-          placeholder="Enter the test Name"
+          placeholder="Enter the Item Name"
           required
         />
 
@@ -37,13 +37,13 @@ function cancel() {
   emit("close");
 }
 
-function addTest() {
+function addAucItem() {
   let data = {
     name: "",
   };
   data.name = newName.value;
   console.log("newName: ", newName);
-  store.dispatch("createTest", data);
+  store.dispatch("createAucItem", data);
   emit("close");
 }
 </script>

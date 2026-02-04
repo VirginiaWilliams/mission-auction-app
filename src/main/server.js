@@ -1,13 +1,13 @@
 import { ipcMain } from "electron";
-import { CreateTest, ReadTest } from "./database/api";
+import { CreateAucItem, ReadAucItem } from "./database/api";
 
 async function server() {
   try {
-    ipcMain.handle("get-tests", async () => {
+    ipcMain.handle("get-aucItems", async () => {
       try {
         return {
           status: true,
-          data: await ReadTest(),
+          data: await ReadAucItem(),
         };
       } catch (err) {
         return { status: false, data: err.message };
@@ -26,11 +26,9 @@ async function server() {
     //   }
     // });****************************************************************
 
-    ipcMain.handle("create-test", async (e, name) => {
+    ipcMain.handle("create-aucItem", async (e, name) => {
       try {
-        console.log("name in server: ", name);
-
-        await CreateTest(name);
+        await CreateAucItem(name);
 
         return {
           status: true,

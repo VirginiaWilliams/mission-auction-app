@@ -1,12 +1,12 @@
 import { Sequelize } from "sequelize";
-import TestModel from "./models/test";
+import AucItemModel from "./models/aucItem";
 
 const sequelize = new Sequelize({
   dialect: "sqlite", // type of the database
   storage: "./database/db_dev.db", // database file path
 });
 
-const Test = TestModel(sequelize);
+const AucItem = AucItemModel(sequelize);
 
 SyncDB();
 
@@ -14,23 +14,23 @@ async function SyncDB() {
   await sequelize.sync();
 }
 
-async function CreateTest(testData) {
-  if (!testData) throw new Error("testData must be a valid object");
+async function CreateAucItem(aucItemData) {
+  if (!aucItemData) throw new Error("aucItemData must be a valid object");
 
-  if (typeof testData !== "object")
-    throw new Error("testData must be a object");
+  if (typeof aucItemData !== "object")
+    throw new Error("aucItemData must be a object");
 
-  let test = await Test.create(testData);
+  let aucItem = await AucItem.create(aucItemData);
 
-  return test;
+  return aucItem;
 }
 
-async function ReadTest() {
-  let tests;
-  tests = await Test.findAll();
+async function ReadAucItem() {
+  let aucItems;
+  aucItems = await AucItem.findAll();
 
-  return tests.map((test) => {
-    return test.toJSON();
+  return aucItems.map((aucItem) => {
+    return aucItem.toJSON();
   });
 }
 
@@ -47,4 +47,4 @@ async function ReadTest() {
 //   throw new Error("id must be Number or Array of numbers");
 // }
 
-export { CreateTest, ReadTest };
+export { CreateAucItem, ReadAucItem };
