@@ -14,11 +14,13 @@
       <table>
         <tr class="table-headers">
           <th>ID</th>
-          <th>Name</th>
+          <th>Description</th>
+          <th>Value</th>
         </tr>
         <tr v-for="(i, index) in aucItems" :key="index">
           <td>{{ i.id ? i.id : 0 }}</td>
           <td>{{ i.name }}</td>
+          <td>{{ i.value }}</td>
         </tr>
       </table>
     </div>

@@ -11,6 +11,14 @@
           placeholder="Enter the Item Name"
           required
         />
+        <label for="value">Value</label>
+        <input
+          v-model="newValue"
+          type="value"
+          name="value"
+          placeholder="Enter the Item Value"
+          required
+        />
 
         <footer>
           <button type="submit" class="button primary">Add</button>
@@ -32,6 +40,7 @@ const store = useStore();
 const emit = defineEmits(["close"]);
 
 const newName = ref("");
+const newValue = ref(0);
 
 function cancel() {
   emit("close");
@@ -40,8 +49,12 @@ function cancel() {
 function addAucItem() {
   let data = {
     name: "",
+    value: 0,
   };
+
   data.name = newName.value;
+  data.value = newValue.value;
+
   console.log("newName: ", newName);
   store.dispatch("createAucItem", data);
   emit("close");

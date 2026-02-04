@@ -26,9 +26,10 @@ async function server() {
     //   }
     // });****************************************************************
 
-    ipcMain.handle("create-aucItem", async (e, name) => {
+    ipcMain.handle("create-aucItem", async (e, data) => {
+      console.log("----------------- ipcMain", data);
       try {
-        await CreateAucItem(name);
+        await CreateAucItem(data.name, data.value);
 
         return {
           status: true,

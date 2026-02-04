@@ -14,13 +14,19 @@ async function SyncDB() {
   await sequelize.sync();
 }
 
-async function CreateAucItem(aucItemData) {
-  if (!aucItemData) throw new Error("aucItemData must be a valid object");
+async function CreateAucItem(name, value) {
+  if (!name) throw new Error("aucItemData must be a valid object");
 
-  if (typeof aucItemData !== "object")
-    throw new Error("aucItemData must be a object");
+  // if (typeof aucItemData !== "object")
+  //   throw new Error("aucItemData must be a object");
 
-  let aucItem = await AucItem.create(aucItemData);
+  console.log("-------------- name: ");
+  const data = {
+    name: name,
+    value: value,
+  };
+
+  let aucItem = await AucItem.create(data);
 
   return aucItem;
 }
