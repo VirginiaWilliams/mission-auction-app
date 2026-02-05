@@ -1,5 +1,5 @@
 <template>
-  <AddAucItem @close="openAdd = false" v-if="openAdd" />
+  <AddAucModal @close="openAdd = false" v-if="openAdd" />
   <main>
     <header>
       <h1>Add/Delete Data</h1>
@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import AddAucItem from "./components/AddAucItem";
+import AddAucModal from "./components/AddAucModal";
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
 

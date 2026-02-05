@@ -1,32 +1,34 @@
 <template>
-  <div class="form-wrapper">
-    <div class="form-modal">
-      <h2>Create</h2>
-      <form @submit.prevent="addAucItem">
-        <label for="name">Name</label>
-        <input
-          v-model="newName"
-          type="name"
-          name="name"
-          placeholder="Enter the Item Name"
-          required
-        />
-        <label for="value">Value</label>
-        <input
-          v-model="newValue"
-          type="value"
-          name="value"
-          placeholder="Enter the Item Value"
-          required
-        />
+  <div class="add-auc-container">
+    <div class="form-wrapper">
+      <div class="form-modal">
+        <h2>Create</h2>
+        <form @submit.prevent="addAucItem">
+          <label for="name">Name</label>
+          <input
+            v-model="newName"
+            type="name"
+            name="name"
+            placeholder="Enter the Item Name"
+            required
+          />
+          <label for="value">Value</label>
+          <input
+            v-model="newValue"
+            type="value"
+            name="value"
+            placeholder="Enter the Item Value"
+            required
+          />
 
-        <footer>
-          <button type="submit" class="button primary">Add</button>
-          <button @click="cancel" type="button" class="button white-s">
-            Cancel
-          </button>
-        </footer>
-      </form>
+          <footer>
+            <button type="submit" class="button primary">Add</button>
+            <button @click="cancel" type="button" class="button white-s">
+              Cancel
+            </button>
+          </footer>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -39,6 +41,7 @@ const store = useStore();
 
 const emit = defineEmits(["close"]);
 
+// TODO: should change this to an object
 const newName = ref("");
 const newValue = ref(0);
 
@@ -61,7 +64,7 @@ function addAucItem() {
 }
 </script>
 
-<style scoped>
+<style>
 .form-wrapper {
   position: fixed;
   top: 0;
