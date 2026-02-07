@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize";
 import AucItemModel from "./models/aucItem";
+import BidderModel from "./models/bidder";
 
 const sequelize = new Sequelize({
   dialect: "sqlite", // type of the database
@@ -7,6 +8,7 @@ const sequelize = new Sequelize({
 });
 
 const AucItem = AucItemModel(sequelize);
+const Bidder = BidderModel(sequelize);
 
 SyncDB();
 
@@ -15,6 +17,7 @@ async function SyncDB() {
 }
 
 // Third and final stop in the API action process
+// ********** Auc Item **********
 async function CreateAucItem(data) {
   let aucItem = await AucItem.create(data);
   return aucItem;
@@ -26,6 +29,21 @@ async function ReadAucItem() {
 
   return aucItems.map((aucItem) => {
     return aucItem.toJSON();
+  });
+}
+
+// ********** Bidder **********
+async function CreateBidder(data) {
+  let bidder = await Bidder.create(data);
+  return bidder;
+}
+
+async function ReadBidder() {
+  let bidders;
+  bidders = await Bidder.findAll();
+
+  return bidders.map((bidder) => {
+    return bidder.toJSON();
   });
 }
 
@@ -42,4 +60,4 @@ async function ReadAucItem() {
 //   throw new Error("id must be Number or Array of numbers");
 // }
 
-export { CreateAucItem, ReadAucItem };
+export { CreateAucItem, ReadAucItem, CreateBidder, ReadBidder };

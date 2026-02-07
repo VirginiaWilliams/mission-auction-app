@@ -8,7 +8,7 @@
     </header>
     <div class="empty" v-if="aucItems.length === 0">
       <h2>
-        The list is empty! Please Upload package data or manually add packages
+        The list is empty! Please upload package data or manually add entries
       </h2>
     </div>
     <div v-else class="table-container">
@@ -99,9 +99,7 @@ h2 {
 }
 
 .empty {
-  margin-left: 2rem;
-  margin-right: 2rem;
-  border: 1px solid black;
+  padding: 2rem;
 }
 
 .add {
