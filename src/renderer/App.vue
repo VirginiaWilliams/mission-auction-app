@@ -1,6 +1,7 @@
 <template>
   <AddAucModal @close="openAdd = false" v-if="openAdd" />
   <main>
+    <ToolBar />
     <header>
       <h1>Add/Delete Data</h1>
       <span @click="openAdd = true" class="button add-icon">+</span>
@@ -52,6 +53,7 @@
 
 <script setup>
 import AddAucModal from "./components/AddAucModal";
+import ToolBar from "./components/ToolBar";
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
 
@@ -71,7 +73,6 @@ main {
   background: lightgray;
   max-width: 950px;
   margin: 0 auto;
-  padding: 50px 0;
   font-family: Arial, sans-serif;
 }
 
