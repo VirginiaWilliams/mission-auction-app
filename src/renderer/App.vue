@@ -3,7 +3,7 @@
   <main>
     <header>
       <h1>Add/Delete Data</h1>
-      <span @click="openAdd = true" class="material-icons">+</span>
+      <span @click="openAdd = true" class="button add-icon">+</span>
     </header>
     <div class="empty" v-if="aucItems.length === 0">
       <h2>
@@ -20,6 +20,7 @@
           <th>Winning Amnt</th>
           <th>Bidder Name</th>
           <th>Bidder Num</th>
+          <th>Actions</th>
         </tr>
         <tr v-for="(i, index) in aucItems" :key="index">
           <td>{{ i.id ? i.id : "" }}</td>
@@ -29,6 +30,20 @@
           <td>{{ i.winningAmount }}</td>
           <td>{{ i.bidderName }}</td>
           <td>{{ i.bidderNum }}</td>
+          <td>
+            <div class="action-container">
+              <img
+                src="./assets/trash.png"
+                @click="openAdd = true"
+                class="button delete"
+              />
+              <img
+                src="./assets/pencil.png"
+                @click="openAdd = true"
+                class="button edit"
+              />
+            </div>
+          </td>
         </tr>
       </table>
     </div>
@@ -85,20 +100,27 @@ h2 {
   border: 1px solid black;
 }
 
-span {
-  margin-left: 20px;
-  padding: 5px;
-  background: red;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
+.add-icon {
+  background-color: cornflowerblue;
+  margin-left: 1rem;
 }
 
-.material-icons {
-  background-color: indianred;
-  border-radius: 5px;
+.delete {
+  width: 1rem;
+  background-color: lightcoral;
+  margin-right: 4px;
+  height: 14px;
+}
+
+.edit {
+  width: 1rem;
+  background-color: cornflowerblue;
+  height: 14px;
+}
+
+.action-container {
+  display: flex;
+  flex-direction: row;
 }
 
 .table-container {
@@ -124,5 +146,18 @@ td {
   width: 30rem;
   text-align: left;
   padding-left: 1rem;
+}
+
+/* ********** Global Stuff ********** */
+
+.button {
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  color: white;
+  border-radius: 5px;
+  border: none;
 }
 </style>

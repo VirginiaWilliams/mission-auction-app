@@ -31,7 +31,7 @@
 
           <footer>
             <button type="submit" class="button primary">Add</button>
-            <button @click="cancel" type="button" class="button white-s">
+            <button @click="cancel" type="button" class="button secondary">
               Cancel
             </button>
           </footer>
@@ -80,25 +80,20 @@ function addAucItem() {
   width: 100%;
   height: 100%;
   z-index: 900;
-  background: rgba(darkred, 0.7);
   backdrop-filter: blur(5px);
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .form-modal {
   background: lightgray;
   padding: 25px;
   border-radius: 5px;
-  border-color: black;
   box-shadow: 20px 0 40px rgba(black, 0.1);
   width: 480px;
-  h2 {
-    font-size: 1.8rem;
-    text-align: center;
-    margin-bottom: 20px;
-  }
 }
+
 form {
   display: grid;
   grid-template-columns: 15% 85%;
@@ -108,39 +103,22 @@ form {
   label {
     font-weight: 600;
   }
-  .pls {
-    display: flex;
-    width: 100%;
-    column-gap: 10px;
-    align-items: center;
-    input {
-      width: 100%;
-    }
-    .add {
-      background: red;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s ease-in-out;
-      &:hover {
-        background: darkred;
-      }
-    }
-  }
-  footer {
-    margin-top: 20px;
-    grid-column: 1/-1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    column-gap: 20px;
-    button {
-      min-width: 80px;
-    }
-  }
+}
+
+footer {
+  grid-column: 1/-1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: right;
+  column-gap: 20px;
+}
+
+.primary {
+  background-color: cornflowerblue;
+}
+
+.secondary {
+  background-color: rgb(82, 82, 82);
 }
 </style>
