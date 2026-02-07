@@ -1,60 +1,62 @@
 <template>
-  <AddAucModal @close-add-modal="openAddModal = false" v-if="openAddModal" />
-  <ConfirmationModal
-    @close-conf-modal="openConfirmationModal = false"
-    @submit-conf-modal="deleteAucItem"
-    v-if="openConfirmationModal"
-  />
-  <main>
+  <body>
+    <AddAucModal @close-add-modal="openAddModal = false" v-if="openAddModal" />
+    <ConfirmationModal
+      @close-conf-modal="openConfirmationModal = false"
+      @submit-conf-modal="deleteAucItem"
+      v-if="openConfirmationModal"
+    />
     <ToolBar />
-    <header>
-      <h1>Add/Delete Data</h1>
-      <span @click="openAddModal = true" class="button add">Add Entry</span>
-    </header>
-    <div class="empty" v-if="aucItems.length === 0">
-      <h2>
-        The list is empty! Please upload package data or manually add entries
-      </h2>
+    <div class="page-content">
+      <header>
+        <h1>Manage Package Data</h1>
+        <span @click="openAddModal = true" class="button add">Add Entry</span>
+      </header>
+      <div class="empty" v-if="aucItems.length === 0">
+        <h2>
+          The list is empty! Please upload package data or manually add entries
+        </h2>
+      </div>
+      <div v-else class="table-container">
+        <table>
+          <tr class="table-headers">
+            <th>ID</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Value</th>
+            <th>Winning Amnt</th>
+            <th>Bidder Name</th>
+            <th>Bidder Num</th>
+            <th>Actions</th>
+          </tr>
+          <tr v-for="(i, index) in aucItems" :key="index">
+            <td>{{ i.id ? i.id : "" }}</td>
+            <td>{{ i.type }}</td>
+            <td>{{ i.name }}</td>
+            <td>{{ i.value }}</td>
+            <td>{{ i.winningAmount }}</td>
+            <td>{{ i.bidderName }}</td>
+            <td>{{ i.bidderNum }}</td>
+            <td>
+              <div class="action-container">
+                <img src="./assets/pencil.png" class="button edit" />
+                <img
+                  src="./assets/trash.png"
+                  @click="handleDelete(i.id)"
+                  class="button delete"
+                />
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
-    <div v-else class="table-container">
-      <table>
-        <tr class="table-headers">
-          <th>ID</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Value</th>
-          <th>Winning Amnt</th>
-          <th>Bidder Name</th>
-          <th>Bidder Num</th>
-          <th>Actions</th>
-        </tr>
-        <tr v-for="(i, index) in aucItems" :key="index">
-          <td>{{ i.id ? i.id : "" }}</td>
-          <td>{{ i.type }}</td>
-          <td>{{ i.name }}</td>
-          <td>{{ i.value }}</td>
-          <td>{{ i.winningAmount }}</td>
-          <td>{{ i.bidderName }}</td>
-          <td>{{ i.bidderNum }}</td>
-          <td>
-            <div class="action-container">
-              <img src="./assets/pencil.png" class="button edit" />
-              <img
-                src="./assets/trash.png"
-                @click="handleDelete(i.id)"
-                class="button delete"
-              />
-            </div>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </main>
+  </body>
 </template>
 
 <script setup>
-import AddAucModal from "./components/AddAucModal";
-import ConfirmationModal from "./components/ConfirmationModal";
+import AddAucModal from "./components/modals/AddAucModal";
+import ConfirmationModal from "./components/modals/ConfirmationModal";
 import ToolBar from "./components/ToolBar";
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
@@ -84,11 +86,20 @@ function handleDelete(id) {
 </script>
 
 <style>
-main {
+body {
   background: lightgray;
-  max-width: 950px;
   margin: 0 auto;
   font-family: Arial, sans-serif;
+}
+
+.page-content {
+  margin: 2rem;
+}
+
+.table-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 header {
@@ -140,12 +151,6 @@ h2 {
 .action-container {
   display: flex;
   flex-direction: row;
-}
-
-.table-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
 }
 
 table {

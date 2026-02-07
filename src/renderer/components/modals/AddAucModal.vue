@@ -2,7 +2,6 @@
   <div class="add-auc-container">
     <div class="form-wrapper">
       <div class="form-modal">
-        <h2>Create</h2>
         <form @submit.prevent="addAucItem">
           <label for="name">Name</label>
           <input
@@ -85,11 +84,12 @@ function addAucItem() {
 }
 
 .form-modal {
-  background: lightgray;
+  background: white;
   padding: 25px;
   border-radius: 5px;
+  border: solid 1px gray;
   box-shadow: 20px 0 40px rgba(black, 0.1);
-  width: 480px;
+  width: 100%;
 }
 
 form {
@@ -98,9 +98,7 @@ form {
   column-gap: 10px;
   row-gap: 20px;
   align-items: center;
-  label {
-    font-weight: 600;
-  }
+  width: 100%;
 }
 
 footer {

@@ -2,9 +2,9 @@
   <div class="add-auc-container">
     <div class="form-wrapper">
       <div class="form-modal">
-        <h2>WooHoo!</h2>
+        <div class="modal-text">Are You Sure?</div>
         <footer>
-          <button type="submit" class="button primary">Add</button>
+          <button @click="submit" class="button primary">Delete</button>
           <button @click="cancel" type="button" class="button secondary">
             Cancel
           </button>
@@ -17,10 +17,14 @@
 <script setup>
 import { defineEmits } from "vuex";
 
-const emit = defineEmits(["close-upload-modal"]);
+const emit = defineEmits(["close-conf-modal, submit-conf-modal"]);
+
+function submit() {
+  emit("submit-conf-modal");
+}
 
 function cancel() {
-  emit("close-upload-modal");
+  emit("close-conf-modal");
 }
 </script>
 
@@ -40,11 +44,18 @@ function cancel() {
 }
 
 .form-modal {
-  background: lightgray;
+  display: flex;
+  flex-direction: row;
+  background: white;
   padding: 25px;
   border-radius: 5px;
+  border: solid 1px gray;
   box-shadow: 20px 0 40px rgba(black, 0.1);
-  width: 480px;
+  width: 30rem;
+}
+
+.modal-text {
+  text-align: left;
 }
 
 form {
@@ -65,6 +76,8 @@ footer {
   align-items: center;
   justify-content: right;
   column-gap: 20px;
+  margin-right: 0;
+  margin-left: auto;
 }
 
 .primary {
