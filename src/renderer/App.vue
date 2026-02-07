@@ -1,5 +1,10 @@
 <template>
   <AddAucModal @close-add-modal="openAddModal = false" v-if="openAddModal" />
+  <ConfirmationModal
+    @close-conf-modal="openConfirmationModal = false"
+    @submit-conf-modal="deleteAucItem"
+    v-if="openConfirmationModal"
+  />
   <main>
     <ToolBar />
     <header>
@@ -33,14 +38,10 @@
           <td>{{ i.bidderNum }}</td>
           <td>
             <div class="action-container">
-              <img
-                src="./assets/pencil.png"
-                @click="openAddModal = true"
-                class="button edit"
-              />
+              <img src="./assets/pencil.png" class="button edit" />
               <img
                 src="./assets/trash.png"
-                @click="deleteAucItem(i.id)"
+                @click="handleDelete(i.id)"
                 class="button delete"
               />
             </div>
@@ -53,6 +54,7 @@
 
 <script setup>
 import AddAucModal from "./components/AddAucModal";
+import ConfirmationModal from "./components/ConfirmationModal";
 import ToolBar from "./components/ToolBar";
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
@@ -66,9 +68,18 @@ const aucItems = computed(() => {
 });
 
 const openAddModal = ref(false);
+const openConfirmationModal = ref(false);
 
-function deleteAucItem(id) {
-  store.dispatch("deleteAucItem", id);
+const idToDelete = ref();
+
+function deleteAucItem() {
+  store.dispatch("deleteAucItem", idToDelete.value);
+  openConfirmationModal.value = false;
+}
+
+function handleDelete(id) {
+  idToDelete.value = id;
+  openConfirmationModal.value = true;
 }
 </script>
 
@@ -116,7 +127,6 @@ h2 {
 .delete {
   width: 1rem;
   background-color: #a04545;
-  margin-right: 4px;
   height: 14px;
 }
 
@@ -124,6 +134,7 @@ h2 {
   width: 1rem;
   background-color: cornflowerblue;
   height: 14px;
+  margin-right: 4px;
 }
 
 .action-container {
@@ -151,9 +162,10 @@ td {
   background: white;
   border: 1px solid black;
   border-collapse: collapse;
-  width: 30rem;
+  /* width: 30rem; */
   text-align: left;
   padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 /* ********** Global Stuff ********** */
