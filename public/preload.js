@@ -11,6 +11,7 @@ const validChannels = [
   "delete-aucItem",
   "get-bidders",
   "create-bidder",
+  "delete-bidder",
 ];
 
 contextBridge.exposeInMainWorld("ipc", {

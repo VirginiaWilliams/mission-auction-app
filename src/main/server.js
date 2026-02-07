@@ -5,6 +5,7 @@ import {
   DeleteAucItem,
   CreateBidder,
   ReadBidder,
+  DeleteBidder,
 } from "./database/api";
 
 async function server() {
@@ -67,17 +68,14 @@ async function server() {
       }
     });
 
-    // ipcMain.handle("delete-video", async (e, id) => {
-    //   try {
-    //     /**
-    //      * When we delete a video, the relationship is deleted too.
-    //      */
-    //     await DeleteVideo(id);
-    //     return { status: true };
-    //   } catch (err) {
-    //     return { status: false, data: err.message };
-    //   }
-    // });****************************************************************
+    ipcMain.handle("delete-bidder", async (e, id) => {
+      try {
+        await DeleteBidder(id);
+        return { status: true };
+      } catch (err) {
+        return { status: false, data: err.message };
+      }
+    });
   } catch (err) {
     throw new Error(err);
   }

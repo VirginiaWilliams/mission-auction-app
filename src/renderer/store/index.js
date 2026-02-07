@@ -60,12 +60,12 @@ export default createStore({
       }
     },
 
-    // deleteVideo: async (ctx, id) => {
-    //   let response = await window.ipc.invoke("delete-video", id);
+    deleteBidder: async (ctx, id) => {
+      let response = await window.ipc.invoke("delete-bidder", id);
 
-    //   if (response.status === true) {
-    //     ctx.dispatch("getVideos");
-    //   }
-    // },
+      if (response.status === true) {
+        ctx.dispatch("getBidders");
+      }
+    },
   },
 });

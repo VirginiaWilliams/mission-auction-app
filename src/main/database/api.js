@@ -53,17 +53,17 @@ async function ReadBidder() {
   });
 }
 
-// async function DeleteVideo(id) {
-//   if (
-//     typeof id === "number" ||
-//     (Array.isArray(id) && id.every((i) => typeof i === "number"))
-//   ) {
-//     return Video.destroy({
-//       where: { id },
-//     });
-//   }
+async function DeleteBidder(id) {
+  return Bidder.destroy({
+    where: { id },
+  });
+}
 
-//   throw new Error("id must be Number or Array of numbers");
-// }
-
-export { CreateAucItem, ReadAucItem, DeleteAucItem, CreateBidder, ReadBidder };
+export {
+  CreateAucItem,
+  ReadAucItem,
+  DeleteAucItem,
+  CreateBidder,
+  ReadBidder,
+  DeleteBidder,
+};
