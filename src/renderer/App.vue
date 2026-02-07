@@ -14,13 +14,21 @@
       <table>
         <tr class="table-headers">
           <th>ID</th>
+          <th>Type</th>
           <th>Description</th>
           <th>Value</th>
+          <th>Winning Amnt</th>
+          <th>Bidder Name</th>
+          <th>Bidder Num</th>
         </tr>
         <tr v-for="(i, index) in aucItems" :key="index">
-          <td>{{ i.id ? i.id : 0 }}</td>
+          <td>{{ i.id ? i.id : "" }}</td>
+          <td>{{ i.type }}</td>
           <td>{{ i.name }}</td>
           <td>{{ i.value }}</td>
+          <td>{{ i.winningAmount }}</td>
+          <td>{{ i.bidderName }}</td>
+          <td>{{ i.bidderNum }}</td>
         </tr>
       </table>
     </div>
@@ -99,7 +107,15 @@ span {
   justify-content: center;
 }
 
-table,
+table {
+  background: white;
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: left;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
 th,
 td {
   background: white;
