@@ -2,6 +2,7 @@ import { ipcMain } from "electron";
 import {
   CreateAucItem,
   ReadAucItem,
+  DeleteAucItem,
   CreateBidder,
   ReadBidder,
 } from "./database/api";
@@ -30,6 +31,15 @@ async function server() {
         };
       } catch (err) {
         return { status: false, data: err };
+      }
+    });
+
+    ipcMain.handle("delete-aucItem", async (e, id) => {
+      try {
+        await DeleteAucItem(id);
+        return { status: true };
+      } catch (err) {
+        return { status: false, data: err.message };
       }
     });
 

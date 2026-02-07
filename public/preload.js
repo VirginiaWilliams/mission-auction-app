@@ -3,9 +3,12 @@ const { contextBridge, ipcRenderer } = require("electron");
  * To make sure there is no other events are invoked
  * and expose you app or computer to some problem (Attacks)!
  */
+
+// Hidden in API action process
 const validChannels = [
   "get-aucItems",
   "create-aucItem",
+  "delete-aucItem",
   "get-bidders",
   "create-bidder",
 ];

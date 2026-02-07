@@ -32,6 +32,12 @@ async function ReadAucItem() {
   });
 }
 
+async function DeleteAucItem(id) {
+  return AucItem.destroy({
+    where: { id },
+  });
+}
+
 // ********** Bidder **********
 async function CreateBidder(data) {
   let bidder = await Bidder.create(data);
@@ -60,4 +66,4 @@ async function ReadBidder() {
 //   throw new Error("id must be Number or Array of numbers");
 // }
 
-export { CreateAucItem, ReadAucItem, CreateBidder, ReadBidder };
+export { CreateAucItem, ReadAucItem, DeleteAucItem, CreateBidder, ReadBidder };

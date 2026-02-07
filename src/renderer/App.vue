@@ -34,14 +34,14 @@
           <td>
             <div class="action-container">
               <img
-                src="./assets/trash.png"
-                @click="openAddModal = true"
-                class="button delete"
-              />
-              <img
                 src="./assets/pencil.png"
                 @click="openAddModal = true"
                 class="button edit"
+              />
+              <img
+                src="./assets/trash.png"
+                @click="deleteAucItem(i.id)"
+                class="button delete"
               />
             </div>
           </td>
@@ -66,6 +66,10 @@ const aucItems = computed(() => {
 });
 
 const openAddModal = ref(false);
+
+function deleteAucItem(id) {
+  store.dispatch("deleteAucItem", id);
+}
 </script>
 
 <style>
