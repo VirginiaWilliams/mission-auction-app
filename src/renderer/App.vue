@@ -1,10 +1,10 @@
 <template>
-  <AddAucModal @close="openAdd = false" v-if="openAdd" />
+  <AddAucModal @close-add-modal="openAddModal = false" v-if="openAddModal" />
   <main>
     <ToolBar />
     <header>
       <h1>Add/Delete Data</h1>
-      <span @click="openAdd = true" class="button add-icon">+</span>
+      <span @click="openAddModal = true" class="button add-icon">+</span>
     </header>
     <div class="empty" v-if="aucItems.length === 0">
       <h2>
@@ -35,12 +35,12 @@
             <div class="action-container">
               <img
                 src="./assets/trash.png"
-                @click="openAdd = true"
+                @click="openAddModal = true"
                 class="button delete"
               />
               <img
                 src="./assets/pencil.png"
-                @click="openAdd = true"
+                @click="openAddModal = true"
                 class="button edit"
               />
             </div>
@@ -65,7 +65,7 @@ const aucItems = computed(() => {
   return store.getters.aucItems;
 });
 
-const openAdd = ref(false);
+const openAddModal = ref(false);
 </script>
 
 <style>

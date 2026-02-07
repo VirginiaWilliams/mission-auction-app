@@ -47,14 +47,14 @@ import { ref } from "vue";
 
 const store = useStore();
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(["close-add-modal"]);
 
 const newName = ref("");
 const newValue = ref(0);
 const newType = ref("");
 
 function cancel() {
-  emit("close");
+  emit("close-add-modal");
 }
 
 function addAucItem() {
@@ -84,6 +84,7 @@ function addAucItem() {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: Arial, sans-serif;
 }
 
 .form-modal {

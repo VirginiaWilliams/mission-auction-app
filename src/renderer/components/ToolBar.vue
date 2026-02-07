@@ -1,12 +1,21 @@
 <template>
   <div class="toolbar">
-    <span @click="uploadCSV" class="button add-csv"> Upload Package CSV </span>
+    <label for="file-input" class="button add-csv"> Upload Package CSV </label>
+    <input id="file-input" type="file" hidden @change="handleFileSelect" />
   </div>
 </template>
 
 <script setup>
-function uploadCSV() {
-  console.log("lol");
+import { ref } from "vue";
+
+const files = ref([]);
+
+function handleFileSelect(e) {
+  const input = e.target;
+  const filesAsArray = Array.from(input?.files || []);
+  files.value = files.value.concat(filesAsArray);
+
+  console.log("----------------------");
 }
 </script>
 
