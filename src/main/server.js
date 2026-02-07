@@ -26,10 +26,10 @@ async function server() {
     //   }
     // });****************************************************************
 
+    // Second stop in API action process
     ipcMain.handle("create-aucItem", async (e, data) => {
-      console.log("----------------- ipcMain", data);
       try {
-        await CreateAucItem(data.name, data.value);
+        await CreateAucItem(data);
 
         return {
           status: true,

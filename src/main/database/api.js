@@ -14,20 +14,9 @@ async function SyncDB() {
   await sequelize.sync();
 }
 
-async function CreateAucItem(name, value) {
-  if (!name) throw new Error("aucItemData must be a valid object");
-
-  // if (typeof aucItemData !== "object")
-  //   throw new Error("aucItemData must be a object");
-
-  console.log("-------------- name: ");
-  const data = {
-    name: name,
-    value: value,
-  };
-
+// Third and final stop in the API action process
+async function CreateAucItem(data) {
   let aucItem = await AucItem.create(data);
-
   return aucItem;
 }
 

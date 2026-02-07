@@ -28,8 +28,9 @@ export default createStore({
     //     ctx.dispatch("getVideos");
     //   }
     // },
+
+    // First stop in API action process
     createAucItem: async (ctx, data) => {
-      console.log("---------- createAucItem: ", data);
       let response = await window.ipc.invoke("create-aucItem", data);
 
       if (response.status === true) {

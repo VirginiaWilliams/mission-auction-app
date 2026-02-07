@@ -20,6 +20,14 @@
             placeholder="Enter the Item Value"
             required
           />
+          <label for="type">Type</label>
+          <input
+            v-model="newType"
+            type="type"
+            name="type"
+            placeholder="Enter the Item Type"
+            required
+          />
 
           <footer>
             <button type="submit" class="button primary">Add</button>
@@ -41,9 +49,9 @@ const store = useStore();
 
 const emit = defineEmits(["close"]);
 
-// TODO: should change this to an object
 const newName = ref("");
 const newValue = ref(0);
+const newType = ref("");
 
 function cancel() {
   emit("close");
@@ -55,10 +63,10 @@ function addAucItem() {
     value: 0,
   };
 
+  data.type = newType.value;
   data.name = newName.value;
   data.value = newValue.value;
 
-  console.log("newName: ", newName);
   store.dispatch("createAucItem", data);
   emit("close");
 }
