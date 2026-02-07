@@ -1,8 +1,14 @@
 import { ipcMain } from "electron";
-import { CreateAucItem, ReadAucItem } from "./database/api";
+import {
+  CreateAucItem,
+  ReadAucItem,
+  CreateBidder,
+  ReadBidder,
+} from "./database/api";
 
 async function server() {
   try {
+    // ********** Auc Item **********
     ipcMain.handle("get-aucItems", async () => {
       try {
         return {
@@ -13,18 +19,6 @@ async function server() {
         return { status: false, data: err.message };
       }
     });
-
-    // ipcMain.handle("delete-video", async (e, id) => {
-    //   try {
-    //     /**
-    //      * When we delete a video, the relationship is deleted too.
-    //      */
-    //     await DeleteVideo(id);
-    //     return { status: true };
-    //   } catch (err) {
-    //     return { status: false, data: err.message };
-    //   }
-    // });****************************************************************
 
     // Second stop in API action process
     ipcMain.handle("create-aucItem", async (e, data) => {
@@ -39,7 +33,41 @@ async function server() {
       }
     });
 
-    // *****************************************************************
+    // ********** Bidder **********
+    ipcMain.handle("get-bidders", async () => {
+      try {
+        return {
+          status: true,
+          data: await ReadBidder(),
+        };
+      } catch (err) {
+        return { status: false, data: err.message };
+      }
+    });
+
+    ipcMain.handle("create-bidder", async (e, data) => {
+      try {
+        await CreateBidder(data);
+
+        return {
+          status: true,
+        };
+      } catch (err) {
+        return { status: false, data: err };
+      }
+    });
+
+    // ipcMain.handle("delete-video", async (e, id) => {
+    //   try {
+    //     /**
+    //      * When we delete a video, the relationship is deleted too.
+    //      */
+    //     await DeleteVideo(id);
+    //     return { status: true };
+    //   } catch (err) {
+    //     return { status: false, data: err.message };
+    //   }
+    // });****************************************************************
   } catch (err) {
     throw new Error(err);
   }
