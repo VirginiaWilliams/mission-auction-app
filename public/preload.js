@@ -3,7 +3,12 @@ const { contextBridge, ipcRenderer } = require("electron");
  * To make sure there is no other events are invoked
  * and expose you app or computer to some problem (Attacks)!
  */
-const validChannels = ["get-aucItems", "create-aucItem"];
+const validChannels = [
+  "get-aucItems",
+  "create-aucItem",
+  "get-bidders",
+  "create-bidder",
+];
 
 contextBridge.exposeInMainWorld("ipc", {
   invoke: (channel, args) => {

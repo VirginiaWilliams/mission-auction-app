@@ -1,16 +1,26 @@
 <template>
   <div class="toolbar">
     <div class="package-button">
-      <label for="file-input" class="button add-package">
+      <label for="package-input" class="button add-package">
         Upload Package CSV
       </label>
-      <input id="file-input" type="file" hidden @change="handlePackageUpload" />
+      <input
+        id="package-input"
+        type="file"
+        hidden
+        @change="handlePackageUpload"
+      />
     </div>
-    <div class="package-button">
-      <label for="file-input" class="button add-bidder">
+    <div class="bidder-button">
+      <label for="bidder-input" class="button add-bidder">
         Upload Bidder CSV
       </label>
-      <input id="file-input" type="file" hidden @change="handleBidderUpload" />
+      <input
+        id="bidder-input"
+        type="file"
+        hidden
+        @change="handleBidderUpload"
+      />
     </div>
   </div>
 </template>
@@ -46,6 +56,7 @@ function handlePackageUpload(e) {
 
 function handleBidderUpload(e) {
   const file = e.target.files[0];
+  console.log("######################## 1");
 
   if (file) {
     Papa.parse(file, {
@@ -55,13 +66,12 @@ function handleBidderUpload(e) {
       complete: function (results) {
         for (let i = 0; i < results.data.length - 1; i++) {
           console.log("results: ", results.data[i]);
-          // let data = {};
+          let data = {};
 
-          // data.type = results.data[i].type;
-          // data.name = results.data[i].description;
-          // data.value = results.data[i].value;
+          data.num = results.data[i].bidderNum;
+          data.name = results.data[i].bidderName;
 
-          // store.dispatch("createAucItem", data);
+          store.dispatch("createBidder", data);
         }
       },
     });

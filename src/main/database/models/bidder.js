@@ -10,7 +10,7 @@ const BidderModel = (sequelize) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      bidderNum: {
+      num: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
       },
