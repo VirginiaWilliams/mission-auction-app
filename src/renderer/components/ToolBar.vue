@@ -6,16 +6,33 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import Papa from "papaparse";
+import { useStore } from "vuex";
 
-const files = ref([]);
+const store = useStore();
 
 function handleFileSelect(e) {
-  const input = e.target;
-  const filesAsArray = Array.from(input?.files || []);
-  files.value = files.value.concat(filesAsArray);
+  const file = e.target.files[0];
 
-  console.log("----------------------");
+  if (file) {
+    Papa.parse(file, {
+      delimiter: ",",
+      header: true,
+      comments: false,
+      complete: function (results) {
+        for (let i = 0; i < results.data.length - 1; i++) {
+          console.log("results: ", results.data[i]);
+          let data = {};
+
+          data.type = results.data[i].type;
+          data.name = results.data[i].description;
+          data.value = results.data[i].value;
+
+          store.dispatch("createAucItem", data);
+        }
+      },
+    });
+  }
 }
 </script>
 

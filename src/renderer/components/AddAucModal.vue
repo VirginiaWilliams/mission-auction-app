@@ -58,17 +58,14 @@ function cancel() {
 }
 
 function addAucItem() {
-  let data = {
-    name: "",
-    value: 0,
-  };
+  let data = {};
 
   data.type = newType.value;
   data.name = newName.value;
   data.value = newValue.value;
 
   store.dispatch("createAucItem", data);
-  emit("close");
+  emit("close-add-modal");
 }
 </script>
 
