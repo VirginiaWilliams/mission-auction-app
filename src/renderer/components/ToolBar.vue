@@ -56,7 +56,6 @@ function handlePackageUpload(e) {
 
 function handleBidderUpload(e) {
   const file = e.target.files[0];
-  console.log("######################## 1");
 
   if (file) {
     Papa.parse(file, {
@@ -65,7 +64,6 @@ function handleBidderUpload(e) {
       comments: false,
       complete: function (results) {
         for (let i = 0; i < results.data.length - 1; i++) {
-          console.log("results: ", results.data[i]);
           let data = {};
 
           data.num = results.data[i].bidderNum;

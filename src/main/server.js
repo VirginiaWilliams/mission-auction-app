@@ -46,7 +46,6 @@ async function server() {
     });
 
     ipcMain.handle("create-bidder", async (e, data) => {
-      console.log("######################## 3");
       try {
         await CreateBidder(data);
 

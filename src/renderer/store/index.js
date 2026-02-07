@@ -45,7 +45,6 @@ export default createStore({
     },
 
     createBidder: async (ctx, data) => {
-      console.log("######################## 2");
       let response = await window.ipc.invoke("create-bidder", data);
 
       if (response.status === true) {

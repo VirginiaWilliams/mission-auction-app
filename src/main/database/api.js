@@ -34,7 +34,6 @@ async function ReadAucItem() {
 
 // ********** Bidder **********
 async function CreateBidder(data) {
-  console.log("######################## 4");
   let bidder = await Bidder.create(data);
   return bidder;
 }
