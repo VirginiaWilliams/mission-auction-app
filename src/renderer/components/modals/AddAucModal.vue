@@ -3,6 +3,14 @@
     <div class="form-wrapper">
       <div class="form-modal">
         <form @submit.prevent="addAucItem">
+          <label for="num">Num</label>
+          <input
+            v-model="newNum"
+            type="num"
+            name="num"
+            placeholder="Enter the Item Number"
+            required
+          />
           <label for="name">Name</label>
           <input
             v-model="newName"
@@ -48,8 +56,9 @@ const store = useStore();
 
 const emit = defineEmits(["close-add-modal"]);
 
+const newNum = ref();
 const newName = ref("");
-const newValue = ref(0);
+const newValue = ref();
 const newType = ref("");
 
 function cancel() {
@@ -59,6 +68,7 @@ function cancel() {
 function addAucItem() {
   let data = {};
 
+  data.num = newNum.value;
   data.type = newType.value;
   data.description = newName.value;
   data.value = newValue.value;

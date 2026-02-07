@@ -20,7 +20,7 @@
       <div v-else class="table-container">
         <table>
           <tr class="table-headers">
-            <th>ID</th>
+            <th>Num</th>
             <th>Type</th>
             <th>Description</th>
             <th>Value</th>
@@ -30,13 +30,13 @@
             <th>Actions</th>
           </tr>
           <tr v-for="(i, index) in aucItems" :key="index">
-            <td>{{ i.id ? i.id : "" }}</td>
+            <td>{{ i.num ? i.num : "" }}</td>
             <td>{{ i.type }}</td>
             <td>{{ i.description }}</td>
             <td>{{ i.value }}</td>
-            <td>{{ i.winningAmount }}</td>
+            <td>{{ i.winningAmount == 0 ? "" : i.winningAmount }}</td>
             <td>{{ i.bidderName }}</td>
-            <td>{{ i.bidderNum }}</td>
+            <td>{{ i.bidderNum == 0 ? "" : i.bidderNum }}</td>
             <td>
               <div class="action-container">
                 <img src="./assets/pencil.png" class="button edit" />

@@ -10,6 +10,10 @@ const AucItemModel = (sequelize) => {
         autoIncrement: true,
         primaryKey: true,
       },
+      num: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
       type: {
         type: DataTypes.STRING,
         defaultValue: "",

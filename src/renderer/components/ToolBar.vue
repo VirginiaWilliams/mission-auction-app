@@ -43,6 +43,7 @@ function handlePackageUpload(e) {
         for (let i = 0; i < results.data.length - 1; i++) {
           let data = {};
 
+          data.num = results.data[i].packagenum;
           data.type = results.data[i].type;
           data.description = results.data[i].description;
           data.value = results.data[i].value;
