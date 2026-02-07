@@ -14,7 +14,7 @@ const AucItemModel = (sequelize) => {
         type: DataTypes.STRING,
         defaultValue: "",
       },
-      name: {
+      description: {
         type: DataTypes.STRING,
       },
       value: {

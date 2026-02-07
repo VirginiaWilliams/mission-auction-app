@@ -60,7 +60,7 @@ function addAucItem() {
   let data = {};
 
   data.type = newType.value;
-  data.name = newName.value;
+  data.description = newName.value;
   data.value = newValue.value;
 
   store.dispatch("createAucItem", data);

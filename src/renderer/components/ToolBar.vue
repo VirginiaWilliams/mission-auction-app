@@ -44,7 +44,7 @@ function handlePackageUpload(e) {
           let data = {};
 
           data.type = results.data[i].type;
-          data.name = results.data[i].description;
+          data.description = results.data[i].description;
           data.value = results.data[i].value;
 
           store.dispatch("createAucItem", data);
@@ -67,7 +67,7 @@ function handleBidderUpload(e) {
           let data = {};
 
           data.num = results.data[i].bidderNum;
-          data.name = results.data[i].bidderName;
+          data.description = results.data[i].bidderName;
 
           store.dispatch("createBidder", data);
         }

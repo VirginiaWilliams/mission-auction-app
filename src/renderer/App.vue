@@ -32,7 +32,7 @@
           <tr v-for="(i, index) in aucItems" :key="index">
             <td>{{ i.id ? i.id : "" }}</td>
             <td>{{ i.type }}</td>
-            <td>{{ i.name }}</td>
+            <td>{{ i.description }}</td>
             <td>{{ i.value }}</td>
             <td>{{ i.winningAmount }}</td>
             <td>{{ i.bidderName }}</td>
