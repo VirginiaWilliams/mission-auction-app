@@ -4,7 +4,7 @@
     <ToolBar />
     <header>
       <h1>Add/Delete Data</h1>
-      <span @click="openAddModal = true" class="button add-icon">+</span>
+      <span @click="openAddModal = true" class="button add">Add Entry</span>
     </header>
     <div class="empty" v-if="aucItems.length === 0">
       <h2>
@@ -80,12 +80,15 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 4rem;
+  margin-top: 1rem;
 }
 
 h1 {
   font-size: 32px;
   font-weight: 700;
   text-align: center;
+  margin-left: 1rem;
 }
 
 h2 {
@@ -101,14 +104,16 @@ h2 {
   border: 1px solid black;
 }
 
-.add-icon {
+.add {
+  width: 6rem;
   background-color: cornflowerblue;
-  margin-left: 1rem;
+  margin-left: auto;
+  margin-right: 1rem;
 }
 
 .delete {
   width: 1rem;
-  background-color: lightcoral;
+  background-color: #a04545;
   margin-right: 4px;
   height: 14px;
 }
