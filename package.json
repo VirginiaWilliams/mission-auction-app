@@ -12,10 +12,10 @@
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },
+  "main": "background.js",
   "browser": {
     "fs": false
   },
-  "main": "background.js",
   "dependencies": {
     "core-js": "^3.8.3",
     "csv-parser": "^3.2.0",

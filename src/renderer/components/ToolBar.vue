@@ -1,5 +1,9 @@
 <template>
   <div class="toolbar">
+    <InvoiceModal
+      @close-generate-modal="openGenerateModal = false"
+      v-if="openGenerateModal"
+    />
     <div class="package-button">
       <label for="package-input" class="button add-package">
         Upload Package CSV
@@ -22,14 +26,21 @@
         @change="handleBidderUpload"
       />
     </div>
+    <div class="button generate-button" @click="openGenerateModal = true">
+      Generate Invoices
+    </div>
   </div>
 </template>
 
 <script setup>
 import Papa from "papaparse";
 import { useStore } from "vuex";
+import { ref } from "vue";
+import InvoiceModal from "./modals/InvoiceModal";
 
 const store = useStore();
+
+const openGenerateModal = ref(false);
 
 function handlePackageUpload(e) {
   const file = e.target.files[0];
@@ -97,6 +108,13 @@ function handleBidderUpload(e) {
 .add-bidder {
   background-color: slateblue;
   margin-left: 1rem;
+  height: 1rem;
+}
+
+.generate-button {
+  background-color: mediumseagreen;
+  margin-left: auto;
+  margin-right: 1rem;
   height: 1rem;
 }
 </style>
