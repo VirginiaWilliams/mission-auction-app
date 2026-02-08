@@ -2,12 +2,22 @@
   <div class="add-auc-container">
     <div class="form-wrapper">
       <div class="form-modal">
-        <button @click="generateSinglePDF" type="button" class="button primary">
-          Generate Single PDF
-        </button>
-        <button @click="generateAllPDFs" type="button" class="button primary">
-          Generate All PDFs
-        </button>
+        <div class="invoice-container">
+          <button
+            @click="generateSinglePDF"
+            type="button"
+            class="button primary"
+          >
+            Generate Single PDF
+          </button>
+          <br />
+          - or -
+          <br />
+          <br />
+          <button @click="generateAllPDFs" type="button" class="button primary">
+            Generate All PDFs
+          </button>
+        </div>
         <footer>
           <button @click="cancel" type="button" class="button secondary">
             Cancel
@@ -50,7 +60,6 @@ function cancel() {
   height: 100%;
   z-index: 900;
   backdrop-filter: blur(5px);
-  display: flex;
   align-items: center;
   justify-content: center;
   font-family: Arial, sans-serif;
@@ -58,7 +67,7 @@ function cancel() {
 
 .form-modal {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   background: white;
   padding: 25px;
   border-radius: 5px;
@@ -71,15 +80,12 @@ function cancel() {
   text-align: left;
 }
 
-form {
-  display: grid;
-  grid-template-columns: 15% 85%;
-  column-gap: 10px;
-  row-gap: 20px;
+.invoice-container {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  label {
-    font-weight: 600;
-  }
+  justify-content: center;
+  width: 100%;
 }
 
 footer {
@@ -96,6 +102,7 @@ footer {
 .primary {
   background-color: cornflowerblue;
   margin-right: 1rem;
+  margin-left: 1rem;
 }
 
 .secondary {

@@ -6,36 +6,41 @@
           <label for="num">Num</label>
           <input
             v-model="newNum"
-            type="num"
+            type="number"
             name="num"
-            placeholder="Enter the Item Number"
+            class="short-input-field"
             required
           />
-          <label for="name">Name</label>
+          <label for="description">Desc</label>
           <input
-            v-model="newName"
-            type="name"
-            name="name"
-            placeholder="Enter the Item Name"
+            v-model="newDescription"
+            type="textarea"
+            name="description"
+            placeholder="Enter the Item Description"
             required
           />
           <label for="value">Value</label>
           <input
             v-model="newValue"
-            type="value"
+            type="number"
             name="value"
-            placeholder="Enter the Item Value"
+            class="short-input-field"
             required
           />
           <label for="type">Type</label>
           <input
             v-model="newType"
-            type="type"
+            type="list"
+            id="type"
+            list="options"
             name="type"
-            placeholder="Enter the Item Type"
+            class="short-input-field"
             required
           />
-
+          <datalist id="options">
+            <option value="Oral"></option>
+            <option value="Silent"></option>
+          </datalist>
           <footer>
             <button type="submit" class="button primary">Add</button>
             <button @click="cancel" type="button" class="button secondary">
@@ -57,7 +62,7 @@ const store = useStore();
 const emit = defineEmits(["close-add-modal"]);
 
 const newNum = ref();
-const newName = ref("");
+const newDescription = ref("");
 const newValue = ref();
 const newType = ref("");
 
@@ -69,8 +74,8 @@ function addAucItem() {
   let data = {};
 
   data.num = newNum.value;
+  data.description = newDescription.value;
   data.type = newType.value;
-  data.description = newName.value;
   data.value = newValue.value;
 
   store.dispatch("createAucItem", data);
@@ -126,5 +131,9 @@ footer {
 
 .secondary {
   background-color: rgb(82, 82, 82);
+}
+
+.short-input-field {
+  width: 4rem;
 }
 </style>
