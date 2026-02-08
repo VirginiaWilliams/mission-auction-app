@@ -27,22 +27,36 @@
     </div>
   </div>
   <div id="print-content">
-    <!-- Your printable content here -->
-    <h1>Invoice #123</h1>
-    <p>Details of the purchase...</p>
+    <div v-for="(i, index) in aucItems" :key="index">
+      <!-- Your printable content here -->
+      <h1>Invoice #123</h1>
+      <div>{{ i.num ? i.num : "" }}</div>
+      <div class="page-break"></div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { defineEmits } from "vuex";
+import { defineEmits, useStore } from "vuex";
+import { computed } from "vue";
+
+const store = useStore();
 
 const emit = defineEmits(["close-generate-modal"]);
+
+store.dispatch("getAucItems");
+
+const aucItems = computed(() => {
+  return store.getters.aucItems;
+});
+// const aucItems = ref();
 
 function generateSinglePDF() {
   window.print();
 }
 
 function generateAllPDFs() {
+  aucItems.value = store.getters.aucItems;
   window.print();
 }
 
@@ -122,6 +136,10 @@ footer {
   #print-content * {
     display: block;
     visibility: visible;
+  }
+
+  .page-break {
+    break-after: page;
   }
 }
 </style>
