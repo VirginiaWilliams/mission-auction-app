@@ -2,12 +2,19 @@
   <div class="add-auc-container">
     <div class="form-wrapper">
       <div class="form-modal">
-        <label for="bidder-id" class="bidder-id-label">Bidder ID</label>
-        <input v-model="newNum" type="number" name="bidder-id" required />
-        <button @click="generateAllPDFs" type="button" class="button primary">
+        <label for="bidder-id" class="bidder-id-label"> Bidder ID </label>
+        <input
+          v-model="bidderName"
+          type="list"
+          list="bidder-options"
+          name="bidder-id"
+          required
+          @input="setValues"
+        />
+        <datalist id="bidder-options"></datalist>
+        <button @click="generatePDF" type="button" class="button primary">
           Generate
         </button>
-        <!-- <div class="cancel-button-right"></div> -->
         <button
           @click="cancel"
           type="button"
@@ -29,7 +36,7 @@
         <div>503-658-5650</div>
         <div>Fed ID# 93-0719295</div>
       </div>
-      <p>Invoice #123</p>
+      <p>Invoice for {{ bidderName }}, num: {{ bidderNum }}</p>
     </div>
     <div style="break-after: page"></div>
   </div>
@@ -38,26 +45,42 @@
 
 <script setup>
 import { defineEmits, useStore } from "vuex";
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 const store = useStore();
 
 const emit = defineEmits(["close-generate-modal"]);
 
-store.dispatch("getAucItems");
+const bidderName = ref("");
+const bidderNum = ref();
 
-const aucItems = computed(() => {
-  return store.getters.aucItems;
+const bidders = computed(() => {
+  return store.getters.bidders;
 });
 
-function generateAllPDFs() {
-  console.log(aucItems.value);
+function setValues() {
+  const chosenBidder = bidders.value.find((b) => b.name === bidderName.value);
+  bidderNum.value = chosenBidder.num;
+  console.log("bidderNum.value: ", bidderNum.value);
+}
+
+function generatePDF() {
   window.print();
 }
 
 function cancel() {
   emit("close-generate-modal");
 }
+
+onMounted(() => {
+  const datalist = document.getElementById("bidder-options");
+
+  store.getters.bidders.forEach((bidder) => {
+    var option = document.createElement("option");
+    option.innerHTML = bidder.name;
+    datalist.appendChild(option);
+  });
+});
 </script>
 
 <style>
@@ -133,13 +156,15 @@ function cancel() {
 
   .pdf-content {
     float: none;
-    margin-top: 5rem;
+    margin-top: 7rem;
+    width: 100%;
   }
 
   .pdf-content-header {
     padding-top: 5rem;
     font-size: 26px;
     font-weight: bold;
+    width: 100%;
   }
 }
 </style>

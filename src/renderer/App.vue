@@ -64,6 +64,7 @@ import { computed, ref } from "vue";
 const store = useStore();
 
 store.dispatch("getAucItems");
+store.dispatch("getBidders");
 
 const aucItems = computed(() => {
   return store.getters.aucItems;
