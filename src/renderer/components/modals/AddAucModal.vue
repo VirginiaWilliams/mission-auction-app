@@ -42,10 +42,10 @@
             <option value="Silent"></option>
           </datalist>
           <footer>
-            <button type="submit" class="button primary">Add</button>
             <button @click="cancel" type="button" class="button secondary">
               Cancel
             </button>
+            <button type="submit" class="button primary">Add</button>
           </footer>
         </form>
       </div>

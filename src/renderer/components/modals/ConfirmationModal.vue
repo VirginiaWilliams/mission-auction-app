@@ -4,10 +4,10 @@
       <div class="form-modal">
         <div class="modal-text">Are You Sure?</div>
         <footer>
-          <button @click="submit" class="button primary">Delete</button>
           <button @click="cancel" type="button" class="button secondary">
             Cancel
           </button>
+          <button @click="submit" class="button primary">Delete</button>
         </footer>
       </div>
     </div>
