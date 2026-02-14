@@ -9,6 +9,7 @@ import {
 } from "./database/api";
 
 async function server() {
+  // Second stop in API action process
   try {
     // ********** Auc Item **********
     ipcMain.handle("get-aucItems", async () => {
@@ -22,7 +23,6 @@ async function server() {
       }
     });
 
-    // Second stop in API action process
     ipcMain.handle("create-aucItem", async (e, data) => {
       try {
         await CreateAucItem(data);

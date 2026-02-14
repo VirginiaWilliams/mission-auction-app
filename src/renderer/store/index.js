@@ -19,6 +19,7 @@ export default createStore({
   //   },
   // },
   actions: {
+    // First stop in API action process
     // ********** Auc Item **********
     getAucItems: async (ctx) => {
       let response = await window.ipc.invoke("get-aucItems");
@@ -27,7 +28,6 @@ export default createStore({
       }
     },
 
-    // First stop in API action process
     createAucItem: async (ctx, data) => {
       let response = await window.ipc.invoke("create-aucItem", data);
 
