@@ -2,38 +2,38 @@
   <div class="add-auc-container">
     <div class="form-wrapper">
       <div class="form-modal">
-        <div class="invoice-container">
-          <button
-            @click="generateSinglePDF"
-            type="button"
-            class="button primary"
-          >
-            Generate Single PDF
-          </button>
-          <br />
-          - or -
-          <br />
-          <br />
-          <button @click="generateAllPDFs" type="button" class="button primary">
-            Generate All PDFs
-          </button>
-        </div>
-        <footer>
-          <button @click="cancel" type="button" class="button secondary">
-            Cancel
-          </button>
-        </footer>
+        <label for="bidder-id" class="bidder-id-label">Bidder ID</label>
+        <input v-model="newNum" type="number" name="bidder-id" required />
+        <button @click="generateAllPDFs" type="button" class="button primary">
+          Generate
+        </button>
+        <!-- <div class="cancel-button-right"></div> -->
+        <button
+          @click="cancel"
+          type="button"
+          class="button secondary cancel-button-right"
+        >
+          Cancel
+        </button>
       </div>
     </div>
   </div>
-  <div id="print-content">
-    <div v-for="(i, index) in aucItems" :key="index">
-      <!-- Your printable content here -->
-      <h1>Invoice #123</h1>
-      <div>{{ i.num ? i.num : "" }}</div>
-      <div class="page-break"></div>
+  <div class="print-content">
+    <!-- <div v-for="(i, index) in aucItems" :key="index"> -->
+    <div class="pdf-content">
+      <div class="pdf-content-header">
+        <div>Missions Auction</div>
+        <div>Christ The Vine Lutheran Church</div>
+        <div>18677 SE Highway 212</div>
+        <div>Damascus OR 97089</div>
+        <div>503-658-5650</div>
+        <div>Fed ID# 93-0719295</div>
+      </div>
+      <p>Invoice #123</p>
     </div>
+    <div style="break-after: page"></div>
   </div>
+  <!-- </div> -->
 </template>
 
 <script setup>
@@ -49,14 +49,9 @@ store.dispatch("getAucItems");
 const aucItems = computed(() => {
   return store.getters.aucItems;
 });
-// const aucItems = ref();
-
-function generateSinglePDF() {
-  window.print();
-}
 
 function generateAllPDFs() {
-  aucItems.value = store.getters.aucItems;
+  console.log(aucItems.value);
   window.print();
 }
 
@@ -81,13 +76,17 @@ function cancel() {
 
 .form-modal {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   background: white;
   padding: 25px;
   border-radius: 5px;
   border: solid 1px gray;
   box-shadow: 20px 0 40px rgba(black, 0.1);
   width: 30rem;
+}
+
+.bidder-id-label {
+  margin-right: 1rem;
 }
 
 .modal-text {
@@ -102,17 +101,6 @@ function cancel() {
   width: 100%;
 }
 
-footer {
-  grid-column: 1/-1;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: right;
-  column-gap: 20px;
-  margin-right: 0;
-  margin-left: auto;
-}
-
 .primary {
   background-color: cornflowerblue;
   margin-right: 1rem;
@@ -123,8 +111,13 @@ footer {
   background-color: rgb(82, 82, 82);
 }
 
-#print-content,
-#print-content * {
+.cancel-button-right {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.print-content,
+.print-content * {
   display: none;
 }
 
@@ -132,14 +125,21 @@ footer {
   body {
     visibility: hidden;
   }
-  #print-content,
-  #print-content * {
+  .print-content,
+  .print-content * {
     display: block;
     visibility: visible;
   }
 
-  .page-break {
-    break-after: page;
+  .pdf-content {
+    float: none;
+    margin-top: 5rem;
+  }
+
+  .pdf-content-header {
+    padding-top: 5rem;
+    font-size: 26px;
+    font-weight: bold;
   }
 }
 </style>

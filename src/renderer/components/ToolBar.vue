@@ -1,33 +1,46 @@
 <template>
   <div class="toolbar">
-    <InvoiceModal
-      @close-generate-modal="openGenerateModal = false"
-      v-if="openGenerateModal"
+    <SingleInvoiceModal
+      @close-generate-modal="openSingleGenerateModal = false"
+      v-if="openSingleGenerateModal"
     />
-    <div class="package-button">
-      <label for="package-input" class="button add-package">
-        Upload Package CSV
-      </label>
-      <input
-        id="package-input"
-        type="file"
-        hidden
-        @change="handlePackageUpload"
-      />
+    <div class="left-side">
+      <div class="package-button">
+        <label for="package-input" class="button add-package">
+          Upload Package CSV
+        </label>
+        <input
+          id="package-input"
+          type="file"
+          hidden
+          @change="handlePackageUpload"
+        />
+      </div>
+      <div class="bidder-button">
+        <label for="bidder-input" class="button add-bidder">
+          Upload Bidder CSV
+        </label>
+        <input
+          id="bidder-input"
+          type="file"
+          hidden
+          @change="handleBidderUpload"
+        />
+      </div>
     </div>
-    <div class="bidder-button">
-      <label for="bidder-input" class="button add-bidder">
-        Upload Bidder CSV
-      </label>
-      <input
-        id="bidder-input"
-        type="file"
-        hidden
-        @change="handleBidderUpload"
-      />
-    </div>
-    <div class="button generate-button" @click="openGenerateModal = true">
-      Generate Invoices
+    <div class="right-side">
+      <div
+        class="button generate-single-button"
+        @click="openSingleGenerateModal = true"
+      >
+        Generate Single Invoice
+      </div>
+      <div
+        class="button generate-all-button"
+        @click="openSingleGenerateModal = true"
+      >
+        Generate All Invoices
+      </div>
     </div>
   </div>
 </template>
@@ -36,11 +49,11 @@
 import Papa from "papaparse";
 import { useStore } from "vuex";
 import { ref } from "vue";
-import InvoiceModal from "./modals/InvoiceModal";
+import SingleInvoiceModal from "./modals/SingleInvoiceModal";
 
 const store = useStore();
 
-const openGenerateModal = ref(false);
+const openSingleGenerateModal = ref(false);
 
 function handlePackageUpload(e) {
   const file = e.target.files[0];
@@ -99,6 +112,16 @@ function handleBidderUpload(e) {
   align-items: center;
 }
 
+.left-side {
+  display: flex;
+}
+
+.right-side {
+  display: flex;
+  margin-left: auto;
+  margin-right: 1rem;
+}
+
 .add-package {
   background-color: cornflowerblue;
   margin-left: 1rem;
@@ -106,15 +129,19 @@ function handleBidderUpload(e) {
 }
 
 .add-bidder {
-  background-color: slateblue;
+  background-color: rgb(44, 65, 105);
   margin-left: 1rem;
   height: 1rem;
 }
 
-.generate-button {
+.generate-single-button {
   background-color: mediumseagreen;
-  margin-left: auto;
+  height: 1rem;
   margin-right: 1rem;
+}
+
+.generate-all-button {
+  background-color: rgb(29, 88, 56);
   height: 1rem;
 }
 </style>
