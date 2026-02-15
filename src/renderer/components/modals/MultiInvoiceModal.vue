@@ -19,31 +19,33 @@
     </div>
   </div>
   <div class="print-content">
-    <!-- <div v-for="(i, index) in aucItems" :key="index"> -->
-    <div class="pdf-content">
-      <div class="pdf-content-header">
-        Missions Auction<br />
-        Christ The Vine Lutheran Church<br />
-        18677 SE Highway 212<br />
-        Damascus OR 97089<br />
-        503-658-5650<br />
-        Fed ID# 93-0719295<br />
-      </div>
-      <div class="dynamic-content">
-        <div class="bidder-info">
-          <p>Invoice for: {{ bidderName }}, Bidder #: {{ bidderNum }}</p>
+    <div v-for="(b, index) in bidders" :key="index">
+      <div class="pdf-content">
+        <div class="pdf-content-header">
+          Missions Auction<br />
+          Christ The Vine Lutheran Church<br />
+          18677 SE Highway 212<br />
+          Damascus OR 97089<br />
+          503-658-5650<br />
+          Fed ID# 93-0719295<br />
         </div>
-        <div class="bidder-winnings">
-          <div
-            v-for="(item, index) in aucItemsWon"
-            :key="index"
-            class="winning-item"
-          >
-            {{ item.description }} | ${{ item.winningAmount }}
+        <div class="dynamic-content">
+          <div class="bidder-info">
+            <p>Invoice for: {{ b.name }}, Bidder #: {{ b.num }}</p>
           </div>
-          <div class="bottom-section">Total Cost: ${{ total }}</div>
+          <!-- <div class="bidder-winnings">
+            <div
+              v-for="(item, index) in aucItemsWon"
+              :key="index"
+              class="winning-item"
+            >
+              {{ item.description }} | ${{ item.winningAmount }}
+            </div>
+            <div class="bottom-section">Total Cost: ${{ total }}</div>
+          </div> -->
         </div>
       </div>
+      <div class="page-break"></div>
     </div>
   </div>
   <!-- </div> -->
@@ -51,28 +53,28 @@
 
 <script setup>
 import { defineEmits, useStore } from "vuex";
-import { computed, ref } from "vue";
+import { computed } from "vue";
 
 const store = useStore();
 
 const emit = defineEmits(["close-generate-multi-modal"]);
 
-const bidderName = ref("");
-const bidderNum = ref();
-const total = ref(0);
+// const bidderName = ref("");
+// const bidderNum = ref();
+// const total = ref(0);
 
-// const bidders = computed(() => {
-//   return store.getters.bidders;
+const bidders = computed(() => {
+  return store.getters.bidders;
+});
+
+// const packages = computed(() => {
+//   return store.getters.aucItems;
 // });
 
-const packages = computed(() => {
-  return store.getters.aucItems;
-});
-
-const aucItemsWon = computed(() => {
-  const temp = packages.value.filter((p) => p.bidderNum === bidderNum.value);
-  return temp;
-});
+// const aucItemsWon = computed(() => {
+//   const temp = packages.value.filter((p) => p.bidderNum === bidderNum.value);
+//   return temp;
+// });
 
 // function setValues() {
 //   const chosenBidder = bidders.value.find((b) => b.name === bidderName.value);
@@ -223,6 +225,10 @@ function cancel() {
 
   .bottom-section {
     margin-top: 2rem;
+  }
+
+  .page-break {
+    break-after: page;
   }
 }
 </style>
