@@ -92,7 +92,7 @@ function handleBidderUpload(e) {
           let data = {};
 
           data.num = results.data[i].bidderNum;
-          data.description = results.data[i].bidderName;
+          data.name = results.data[i].bidderName;
 
           store.dispatch("createBidder", data);
         }

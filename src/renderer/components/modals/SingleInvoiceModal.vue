@@ -41,9 +41,11 @@
         <div>503-658-5650</div>
         <div>Fed ID# 93-0719295</div>
       </div>
-      <p>Invoice for {{ bidderName }}, num: {{ bidderNum }}</p>
+      <p>Invoice for: {{ bidderName }}, Bidder #: {{ bidderNum }}</p>
     </div>
-    <div style="break-after: page"></div>
+    <div v-for="(item, index) in aucItemsWon" :key="index">
+      {{ item.description }} | ${{ item.winningAmount }}
+    </div>
   </div>
   <!-- </div> -->
 </template>
@@ -63,9 +65,21 @@ const bidders = computed(() => {
   return store.getters.bidders;
 });
 
+const packages = computed(() => {
+  return store.getters.aucItems;
+});
+
+const aucItemsWon = computed(() => {
+  const temp = packages.value.filter((p) => p.bidderNum === bidderNum.value);
+  console.log("temp: ", temp);
+  return temp;
+});
+
 function setValues() {
   const chosenBidder = bidders.value.find((b) => b.name === bidderName.value);
   bidderNum.value = chosenBidder.num;
+
+  // Add totals
 }
 
 function generatePDF() {
