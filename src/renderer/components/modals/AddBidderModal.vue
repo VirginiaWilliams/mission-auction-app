@@ -2,6 +2,7 @@
   <div class="add-bidder-container">
     <div class="form-wrapper">
       <div class="form-modal">
+        <div class="modal-title">Add Bidder</div>
         <form @submit.prevent="addBidderItem">
           <label for="num">Num</label>
           <input
@@ -59,6 +60,7 @@ function addBidderItem() {
 
 <style>
 .form-wrapper {
+  display: flex;
   position: fixed;
   top: 0;
   left: 0;
@@ -66,19 +68,26 @@ function addBidderItem() {
   height: 100%;
   z-index: 900;
   backdrop-filter: blur(5px);
-  display: flex;
   align-items: center;
   justify-content: center;
   font-family: Arial, sans-serif;
 }
 
 .form-modal {
+  display: flex;
+  flex-direction: column;
   background: white;
   padding: 25px;
   border-radius: 5px;
   border: solid 1px gray;
   box-shadow: 20px 0 40px rgba(black, 0.1);
   width: 100%;
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 2rem;
 }
 
 form {

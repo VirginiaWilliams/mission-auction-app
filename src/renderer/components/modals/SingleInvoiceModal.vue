@@ -2,26 +2,29 @@
   <div class="add-auc-container">
     <div class="form-wrapper">
       <div class="form-modal">
-        <label for="bidder-id" class="bidder-id-label"> Bidder ID </label>
-        <input
-          v-model="bidderName"
-          type="list"
-          list="bidder-options"
-          name="bidder-id"
-          required
-          @input="setValues"
-        />
-        <datalist id="bidder-options"></datalist>
-        <button @click="generatePDF" type="button" class="button primary">
-          Generate
-        </button>
-        <button
-          @click="cancel"
-          type="button"
-          class="button secondary cancel-button-right"
-        >
-          Cancel
-        </button>
+        <div class="modal-title">Create Invoice</div>
+        <div class="modal-content">
+          <label for="bidder-id" class="bidder-id-label"> Bidder ID </label>
+          <input
+            v-model="bidderName"
+            type="list"
+            list="bidder-options"
+            name="bidder-id"
+            required
+            @input="setValues"
+          />
+          <datalist id="bidder-options"></datalist>
+          <button @click="generatePDF" type="button" class="button primary">
+            Generate
+          </button>
+          <button
+            @click="cancel"
+            type="button"
+            class="button secondary cancel-button-right"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -98,13 +101,24 @@ onMounted(() => {
 
 .form-modal {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   background: white;
   padding: 25px;
   border-radius: 5px;
   border: solid 1px gray;
   box-shadow: 20px 0 40px rgba(black, 0.1);
   width: 30rem;
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: row;
 }
 
 .bidder-id-label {

@@ -2,7 +2,7 @@
   <div class="add-auc-container">
     <div class="form-wrapper">
       <div class="form-modal">
-        <div class="modal-text">Are You Sure?</div>
+        <div class="modal-title">Are You Sure?</div>
         <footer>
           <button @click="cancel" type="button" class="button secondary">
             Cancel
@@ -45,13 +45,19 @@ function cancel() {
 
 .form-modal {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   background: white;
   padding: 25px;
   border-radius: 5px;
   border: solid 1px gray;
   box-shadow: 20px 0 40px rgba(black, 0.1);
   width: 30rem;
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 2rem;
 }
 
 .modal-text {

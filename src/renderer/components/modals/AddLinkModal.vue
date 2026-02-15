@@ -2,6 +2,7 @@
   <div class="add-link-container">
     <div class="form-wrapper">
       <div class="form-modal">
+        <div class="modal-title">Add Link</div>
         <form @submit.prevent="addLink">
           <label for="num">Num</label>
           <input
@@ -73,12 +74,20 @@ function addLink() {
 }
 
 .form-modal {
+  display: flex;
+  flex-direction: column;
   background: white;
   padding: 25px;
   border-radius: 5px;
   border: solid 1px gray;
   box-shadow: 20px 0 40px rgba(black, 0.1);
   width: 100%;
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 2rem;
 }
 
 form {
