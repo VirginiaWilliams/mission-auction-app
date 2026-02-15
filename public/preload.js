@@ -4,10 +4,11 @@ const { contextBridge, ipcRenderer } = require("electron");
  * and expose you app or computer to some problem (Attacks)!
  */
 
-// Hidden in API action process
+// Hidden stop in API action process
 const validChannels = [
   "get-aucItems",
   "create-aucItem",
+  "edit-aucItem",
   "delete-aucItem",
   "get-bidders",
   "create-bidder",

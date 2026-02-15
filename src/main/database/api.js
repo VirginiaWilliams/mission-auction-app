@@ -18,11 +18,6 @@ async function SyncDB() {
 
 // Third and final stop in the API action process
 // ********** Auc Item **********
-async function CreateAucItem(data) {
-  let aucItem = await AucItem.create(data);
-  return aucItem;
-}
-
 async function ReadAucItem() {
   let aucItems;
   aucItems = await AucItem.findAll();
@@ -30,6 +25,25 @@ async function ReadAucItem() {
   return aucItems.map((aucItem) => {
     return aucItem.toJSON();
   });
+}
+
+async function CreateAucItem(data) {
+  let aucItem = await AucItem.create(data);
+  return aucItem;
+}
+
+async function EditAucItem(data) {
+  let aucItem = await AucItem.findByPk(data.id);
+
+  aucItem.num = data.num;
+  aucItem.type = data.type;
+  aucItem.description = data.description;
+  aucItem.value = data.value;
+  aucItem.winningAmount = data.winningAmount;
+  aucItem.bidderNum = data.bidderNum;
+  aucItem.bidderName = data.bidderName;
+
+  return await aucItem.save();
 }
 
 async function DeleteAucItem(id) {
@@ -62,6 +76,7 @@ async function DeleteBidder(id) {
 export {
   CreateAucItem,
   ReadAucItem,
+  EditAucItem,
   DeleteAucItem,
   CreateBidder,
   ReadBidder,

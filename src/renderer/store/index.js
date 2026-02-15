@@ -36,6 +36,14 @@ export default createStore({
       }
     },
 
+    editAucItem: async (ctx, data) => {
+      let response = await window.ipc.invoke("edit-aucItem", data);
+
+      if (response.status === true) {
+        ctx.dispatch("getAucItems");
+      }
+    },
+
     deleteAucItem: async (ctx, id) => {
       let response = await window.ipc.invoke("delete-aucItem", id);
 

@@ -3,11 +3,11 @@
     <div class="form-wrapper">
       <div class="form-modal">
         <div class="modal-title">Add Link</div>
-        <form @submit.prevent="addLink">
+        <form @submit.prevent>
           <div class="input-field-container">
             <label class="long-label" for="num">Package Num</label>
             <input
-              v-model="newPakcageNum"
+              v-model="newPackageNum"
               type="number"
               name="num"
               class="short-input-field"
@@ -42,7 +42,7 @@
             <button @click="cancel" type="button" class="button secondary">
               Cancel
             </button>
-            <button type="submit" class="button primary">Add</button>
+            <button @click="addLink" class="button primary">Add</button>
           </footer>
         </form>
       </div>
@@ -58,9 +58,11 @@ const store = useStore();
 
 const emit = defineEmits(["close-link-modal"]);
 
-const newPakcageNum = ref();
+const newPackageNum = ref();
 const newBidderNum = ref();
 const newWinning = ref();
+
+const packageData = ref();
 
 const selectedPackageDesc = ref();
 const selectedBidderName = ref();
@@ -83,11 +85,10 @@ function setValues() {
     selectedBidderName.value = "";
   }
 
-  const selectedPackage = packages.value.find(
-    (p) => p.num === newPakcageNum.value
-  );
-  if (selectedPackage) {
-    selectedPackageDesc.value = selectedPackage.description;
+  const temp = packages.value.find((p) => p.num === newPackageNum.value);
+  if (temp) {
+    packageData.value = temp;
+    selectedPackageDesc.value = temp.description;
   } else {
     selectedPackageDesc.value = "";
   }
@@ -98,13 +99,19 @@ function cancel() {
 }
 
 function addLink() {
+  console.log("packageData: ", packageData.value);
   let data = {};
 
-  data.num = newPakcageNum.value;
-  data.name = newBidderNum.value;
+  data.id = packageData.value.id;
+  data.num = packageData.value.num;
+  data.type = packageData.value.type;
+  data.description = packageData.value.description;
+  data.value = packageData.value.value;
   data.winningAmount = newWinning.value;
+  data.bidderNum = newBidderNum.value;
+  data.bidderName = selectedBidderName.value;
 
-  store.dispatch("createLink", data);
+  store.dispatch("editAucItem", data);
   emit("close-link-modal");
 }
 </script>

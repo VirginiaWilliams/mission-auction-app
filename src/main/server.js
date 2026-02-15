@@ -2,6 +2,7 @@ import { ipcMain } from "electron";
 import {
   CreateAucItem,
   ReadAucItem,
+  EditAucItem,
   DeleteAucItem,
   CreateBidder,
   ReadBidder,
@@ -9,8 +10,8 @@ import {
 } from "./database/api";
 
 async function server() {
-  // Second stop in API action process
   try {
+    // Second stop in API action process
     // ********** Auc Item **********
     ipcMain.handle("get-aucItems", async () => {
       try {
@@ -26,6 +27,18 @@ async function server() {
     ipcMain.handle("create-aucItem", async (e, data) => {
       try {
         await CreateAucItem(data);
+
+        return {
+          status: true,
+        };
+      } catch (err) {
+        return { status: false, data: err };
+      }
+    });
+
+    ipcMain.handle("edit-aucItem", async (e, data) => {
+      try {
+        await EditAucItem(data);
 
         return {
           status: true,
