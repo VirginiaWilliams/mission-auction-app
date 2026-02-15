@@ -34,17 +34,24 @@
     <!-- <div v-for="(i, index) in aucItems" :key="index"> -->
     <div class="pdf-content">
       <div class="pdf-content-header">
-        <div>Missions Auction</div>
-        <div>Christ The Vine Lutheran Church</div>
-        <div>18677 SE Highway 212</div>
-        <div>Damascus OR 97089</div>
-        <div>503-658-5650</div>
-        <div>Fed ID# 93-0719295</div>
+        Missions Auction<br />
+        Christ The Vine Lutheran Church<br />
+        18677 SE Highway 212<br />
+        Damascus OR 97089<br />
+        503-658-5650<br />
+        Fed ID# 93-0719295<br />
       </div>
-      <p>Invoice for: {{ bidderName }}, Bidder #: {{ bidderNum }}</p>
-    </div>
-    <div v-for="(item, index) in aucItemsWon" :key="index">
-      {{ item.description }} | ${{ item.winningAmount }}
+      <div class="dynamic-content">
+        <div class="bidder-info">
+          <p>Invoice for: {{ bidderName }}, Bidder #: {{ bidderNum }}</p>
+        </div>
+        <div class="bidder-winnings">
+          <div v-for="(item, index) in aucItemsWon" :key="index">
+            {{ item.description }} | ${{ item.winningAmount }}
+          </div>
+        </div>
+        <div class="bottom-section">testing this out</div>
+      </div>
     </div>
   </div>
   <!-- </div> -->
@@ -177,23 +184,43 @@ onMounted(() => {
   body {
     visibility: hidden;
   }
+
   .print-content,
   .print-content * {
-    display: block;
     visibility: visible;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   .pdf-content {
-    float: none;
-    margin-top: 7rem;
     width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
   }
 
   .pdf-content-header {
-    padding-top: 5rem;
-    font-size: 26px;
+    font-size: 20px;
     font-weight: bold;
+    position: relative;
     width: 100%;
+  }
+
+  .dynamic-content {
+    margin-top: 10rem;
+  }
+
+  .bidder-info,
+  .bidder-winnings {
+    position: relative;
+    page-break-inside: avoid;
+  }
+
+  .bottom-section {
+    margin-top: 10rem;
   }
 }
 </style>
