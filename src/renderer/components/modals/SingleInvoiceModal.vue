@@ -49,8 +49,8 @@
           <div v-for="(item, index) in aucItemsWon" :key="index">
             {{ item.description }} | ${{ item.winningAmount }}
           </div>
+          <div class="bottom-section">Total Cost: ${{ total }}</div>
         </div>
-        <div class="bottom-section">Total Cost: ${{ total }}</div>
       </div>
     </div>
   </div>
@@ -213,6 +213,7 @@ onMounted(() => {
 
   .dynamic-content {
     margin-top: 10rem;
+    background-color: lightskyblue;
   }
 
   .bidder-info,
@@ -222,7 +223,7 @@ onMounted(() => {
   }
 
   .bottom-section {
-    margin-top: 10rem;
+    margin-top: 2rem;
   }
 }
 </style>
