@@ -12,7 +12,9 @@
               name="num"
               class="short-input-field"
               required
+              @input="setValues"
             />
+            - {{ selectedPackageDesc }}
           </div>
           <div class="input-field-container">
             <label class="long-label" for="name">Bidder Num</label>
@@ -22,7 +24,9 @@
               name="name"
               class="short-input-field"
               required
+              @input="setValues"
             />
+            - {{ selectedBidderName }}
           </div>
           <div class="input-field-container">
             <label class="long-label" for="winning">Winning Amount $</label>
@@ -33,9 +37,6 @@
               class="short-input-field"
               required
             />
-          </div>
-          <div class="preview-container">
-            <div>Preview: {{}}</div>
           </div>
           <footer>
             <button @click="cancel" type="button" class="button secondary">
@@ -51,7 +52,7 @@
 
 <script setup>
 import { useStore, defineEmits } from "vuex";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 const store = useStore();
 
@@ -60,6 +61,37 @@ const emit = defineEmits(["close-link-modal"]);
 const newPakcageNum = ref();
 const newBidderNum = ref();
 const newWinning = ref();
+
+const selectedPackageDesc = ref();
+const selectedBidderName = ref();
+
+const bidders = computed(() => {
+  return store.getters.bidders;
+});
+
+const packages = computed(() => {
+  return store.getters.aucItems;
+});
+
+function setValues() {
+  const selectedBidder = bidders.value.find(
+    (b) => b.num === newBidderNum.value
+  );
+  if (selectedBidder) {
+    selectedBidderName.value = selectedBidder.name;
+  } else {
+    selectedBidderName.value = "";
+  }
+
+  const selectedPackage = packages.value.find(
+    (p) => p.num === newPakcageNum.value
+  );
+  if (selectedPackage) {
+    selectedPackageDesc.value = selectedPackage.description;
+  } else {
+    selectedPackageDesc.value = "";
+  }
+}
 
 function cancel() {
   emit("close-link-modal");
