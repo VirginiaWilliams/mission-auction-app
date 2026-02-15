@@ -4,6 +4,10 @@
       @close-generate-modal="openSingleGenerateModal = false"
       v-if="openSingleGenerateModal"
     />
+    <MultiInvoiceModal
+      @close-generate-multi-modal="openMultiGenerateModal = false"
+      v-if="openMultiGenerateModal"
+    />
     <div class="left-side">
       <div class="package-button">
         <label for="package-input" class="button add-package">
@@ -37,7 +41,7 @@
       </div>
       <div
         class="button generate-all-button"
-        @click="openSingleGenerateModal = true"
+        @click="openMultiGenerateModal = true"
       >
         Generate All Invoices
       </div>
@@ -50,10 +54,12 @@ import Papa from "papaparse";
 import { useStore } from "vuex";
 import { ref } from "vue";
 import SingleInvoiceModal from "./modals/SingleInvoiceModal";
+import MultiInvoiceModal from "./modals/MultiInvoiceModal";
 
 const store = useStore();
 
 const openSingleGenerateModal = ref(false);
+const openMultiGenerateModal = ref(false);
 
 function handlePackageUpload(e) {
   const file = e.target.files[0];

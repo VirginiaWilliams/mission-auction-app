@@ -2,20 +2,8 @@
   <div class="add-auc-container">
     <div class="form-wrapper">
       <div class="form-modal">
-        <div class="modal-title">Generate Invoice</div>
+        <div class="modal-title">Generate All Invoices</div>
         <div class="modal-content">
-          <div class="input-field-container">
-            <label for="bidder-id" class="bidder-id-label"> Bidder ID </label>
-            <input
-              v-model="bidderName"
-              type="list"
-              list="bidder-options"
-              name="bidder-id"
-              required
-              @input="setValues"
-            />
-          </div>
-          <datalist id="bidder-options"></datalist>
           <button
             @click="cancel"
             type="button"
@@ -63,19 +51,19 @@
 
 <script setup>
 import { defineEmits, useStore } from "vuex";
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 
 const store = useStore();
 
-const emit = defineEmits(["close-generate-modal"]);
+const emit = defineEmits(["close-generate-multi-modal"]);
 
 const bidderName = ref("");
 const bidderNum = ref();
 const total = ref(0);
 
-const bidders = computed(() => {
-  return store.getters.bidders;
-});
+// const bidders = computed(() => {
+//   return store.getters.bidders;
+// });
 
 const packages = computed(() => {
   return store.getters.aucItems;
@@ -86,32 +74,32 @@ const aucItemsWon = computed(() => {
   return temp;
 });
 
-function setValues() {
-  const chosenBidder = bidders.value.find((b) => b.name === bidderName.value);
-  bidderNum.value = chosenBidder.num;
+// function setValues() {
+//   const chosenBidder = bidders.value.find((b) => b.name === bidderName.value);
+//   bidderNum.value = chosenBidder.num;
 
-  aucItemsWon.value.forEach((item) => {
-    total.value += item.winningAmount;
-  });
-}
+//   aucItemsWon.value.forEach((item) => {
+//     total.value += item.winningAmount;
+//   });
+// }
 
 function generatePDF() {
   window.print();
 }
 
 function cancel() {
-  emit("close-generate-modal");
+  emit("close-generate-multi-modal");
 }
 
-onMounted(() => {
-  const datalist = document.getElementById("bidder-options");
+// onMounted(() => {
+//   const datalist = document.getElementById("bidder-options");
 
-  store.getters.bidders.forEach((bidder) => {
-    var option = document.createElement("option");
-    option.innerHTML = bidder.name;
-    datalist.appendChild(option);
-  });
-});
+//   store.getters.bidders.forEach((bidder) => {
+//     var option = document.createElement("option");
+//     option.innerHTML = bidder.name;
+//     datalist.appendChild(option);
+//   });
+// });
 </script>
 
 <style>
