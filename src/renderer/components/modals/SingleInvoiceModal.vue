@@ -46,7 +46,11 @@
           <p>Invoice for: {{ bidderName }}, Bidder #: {{ bidderNum }}</p>
         </div>
         <div class="bidder-winnings">
-          <div v-for="(item, index) in aucItemsWon" :key="index">
+          <div
+            v-for="(item, index) in aucItemsWon"
+            :key="index"
+            class="winning-item"
+          >
             {{ item.description }} | ${{ item.winningAmount }}
           </div>
           <div class="bottom-section">Total Cost: ${{ total }}</div>
@@ -192,16 +196,15 @@ onMounted(() => {
     visibility: visible;
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
+    display: block;
   }
 
   .pdf-content {
     width: 100%;
     height: 100%;
     position: relative;
-    display: flex;
-    flex-direction: column;
+    display: block;
+    gap: 4px;
   }
 
   .pdf-content-header {
@@ -213,13 +216,21 @@ onMounted(() => {
 
   .dynamic-content {
     margin-top: 10rem;
-    background-color: lightskyblue;
+  }
+
+  .winning-item {
+    margin-top: -24px; /* just trying to fight the block spacing */
   }
 
   .bidder-info,
   .bidder-winnings {
     position: relative;
     page-break-inside: avoid;
+    display: block;
+  }
+
+  .bidder-info {
+    margin-bottom: 1rem;
   }
 
   .bottom-section {
