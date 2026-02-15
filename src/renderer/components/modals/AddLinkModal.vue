@@ -4,22 +4,39 @@
       <div class="form-modal">
         <div class="modal-title">Add Link</div>
         <form @submit.prevent="addLink">
-          <label for="num">Num</label>
-          <input
-            v-model="newNum"
-            type="number"
-            name="num"
-            class="short-input-field"
-            required
-          />
-          <label for="name">Name</label>
-          <input
-            v-model="newName"
-            type="textarea"
-            name="name"
-            placeholder="Enter Bidder Name"
-            required
-          />
+          <div class="input-field-container">
+            <label class="long-label" for="num">Package Num</label>
+            <input
+              v-model="newPakcageNum"
+              type="number"
+              name="num"
+              class="short-input-field"
+              required
+            />
+          </div>
+          <div class="input-field-container">
+            <label class="long-label" for="name">Bidder Num</label>
+            <input
+              v-model="newBidderNum"
+              type="number"
+              name="name"
+              class="short-input-field"
+              required
+            />
+          </div>
+          <div class="input-field-container">
+            <label class="long-label" for="winning">Winning Amount $</label>
+            <input
+              v-model="newWinning"
+              type="number"
+              name="winning"
+              class="short-input-field"
+              required
+            />
+          </div>
+          <div class="preview-container">
+            <div>Preview: {{}}</div>
+          </div>
           <footer>
             <button @click="cancel" type="button" class="button secondary">
               Cancel
@@ -40,8 +57,9 @@ const store = useStore();
 
 const emit = defineEmits(["close-link-modal"]);
 
-const newNum = ref();
-const newName = ref("");
+const newPakcageNum = ref();
+const newBidderNum = ref();
+const newWinning = ref();
 
 function cancel() {
   emit("close-link-modal");
@@ -50,8 +68,9 @@ function cancel() {
 function addLink() {
   let data = {};
 
-  data.num = newNum.value;
-  data.name = newName.value;
+  data.num = newPakcageNum.value;
+  data.name = newBidderNum.value;
+  data.winningAmount = newWinning.value;
 
   store.dispatch("createLink", data);
   emit("close-link-modal");
@@ -91,12 +110,22 @@ function addLink() {
 }
 
 form {
-  display: grid;
-  grid-template-columns: 15% 85%;
-  column-gap: 10px;
-  row-gap: 20px;
-  align-items: center;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-field-container {
+  margin-left: 0;
+  margin-right: auto;
+  margin-bottom: 1rem;
+}
+
+label {
+  margin-right: 1rem;
+}
+
+.long-label {
+  width: 7rem;
 }
 
 footer {

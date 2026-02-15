@@ -4,25 +4,27 @@
       <div class="form-modal">
         <div class="modal-title">Create Invoice</div>
         <div class="modal-content">
-          <label for="bidder-id" class="bidder-id-label"> Bidder ID </label>
-          <input
-            v-model="bidderName"
-            type="list"
-            list="bidder-options"
-            name="bidder-id"
-            required
-            @input="setValues"
-          />
+          <div class="input-field-container">
+            <label for="bidder-id" class="bidder-id-label"> Bidder ID </label>
+            <input
+              v-model="bidderName"
+              type="list"
+              list="bidder-options"
+              name="bidder-id"
+              required
+              @input="setValues"
+            />
+          </div>
           <datalist id="bidder-options"></datalist>
-          <button @click="generatePDF" type="button" class="button primary">
-            Generate
-          </button>
           <button
             @click="cancel"
             type="button"
             class="button secondary cancel-button-right"
           >
             Cancel
+          </button>
+          <button @click="generatePDF" type="button" class="button primary">
+            Generate
           </button>
         </div>
       </div>

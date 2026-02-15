@@ -4,40 +4,48 @@
       <div class="form-modal">
         <div class="modal-title">Add Package</div>
         <form @submit.prevent="addAucItem">
-          <label for="num">Num</label>
-          <input
-            v-model="newNum"
-            type="number"
-            name="num"
-            class="short-input-field"
-            required
-          />
-          <label for="description">Desc</label>
-          <input
-            v-model="newDescription"
-            type="textarea"
-            name="description"
-            placeholder="Enter the Item Description"
-            required
-          />
-          <label for="value">Value</label>
-          <input
-            v-model="newValue"
-            type="number"
-            name="value"
-            class="short-input-field"
-            required
-          />
-          <label for="type">Type</label>
-          <input
-            v-model="newType"
-            type="list"
-            id="type"
-            list="options"
-            name="type"
-            class="short-input-field"
-            required
-          />
+          <div class="input-field-container">
+            <label for="num">Num</label>
+            <input
+              v-model="newNum"
+              type="number"
+              name="num"
+              class="short-input-field"
+              required
+            />
+          </div>
+          <div class="input-field-container">
+            <label for="description">Desc</label>
+            <input
+              v-model="newDescription"
+              type="textarea"
+              name="description"
+              placeholder="Enter the Item Description"
+              required
+            />
+          </div>
+          <div class="input-field-container">
+            <label for="value">Value</label>
+            <input
+              v-model="newValue"
+              type="number"
+              name="value"
+              class="short-input-field"
+              required
+            />
+          </div>
+          <div class="input-field-container">
+            <label for="type">Type</label>
+            <input
+              v-model="newType"
+              type="list"
+              id="type"
+              list="options"
+              name="type"
+              class="short-input-field"
+              required
+            />
+          </div>
           <datalist id="options">
             <option value="Oral"></option>
             <option value="Silent"></option>
@@ -117,12 +125,22 @@ function addAucItem() {
 }
 
 form {
-  display: grid;
-  grid-template-columns: 15% 85%;
-  column-gap: 10px;
-  row-gap: 20px;
-  align-items: center;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-field-container {
+  margin-left: 0;
+  margin-right: auto;
+  margin-bottom: 1rem;
+}
+
+label {
+  margin-right: 1rem;
+}
+
+.long-label {
+  width: 7rem;
 }
 
 footer {

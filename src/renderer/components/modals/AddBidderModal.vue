@@ -4,22 +4,26 @@
       <div class="form-modal">
         <div class="modal-title">Add Bidder</div>
         <form @submit.prevent="addBidderItem">
-          <label for="num">Num</label>
-          <input
-            v-model="newNum"
-            type="number"
-            name="num"
-            class="short-input-field"
-            required
-          />
-          <label for="name">Name</label>
-          <input
-            v-model="newName"
-            type="textarea"
-            name="name"
-            placeholder="Enter Bidder Name"
-            required
-          />
+          <div class="input-field-container">
+            <label for="num">Num</label>
+            <input
+              v-model="newNum"
+              type="number"
+              name="num"
+              class="short-input-field"
+              required
+            />
+          </div>
+          <div class="input-field-container">
+            <label for="name">Name</label>
+            <input
+              v-model="newName"
+              type="textarea"
+              name="name"
+              placeholder="Enter Bidder Name"
+              required
+            />
+          </div>
           <footer>
             <button @click="cancel" type="button" class="button secondary">
               Cancel
@@ -91,12 +95,23 @@ function addBidderItem() {
 }
 
 form {
-  display: grid;
-  grid-template-columns: 15% 85%;
-  column-gap: 10px;
-  row-gap: 20px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  width: 100%;
+}
+
+.input-field-container {
+  margin-left: 0;
+  margin-right: auto;
+  margin-bottom: 1rem;
+}
+
+label {
+  margin-right: 1rem;
+}
+
+.long-label {
+  width: 7rem;
 }
 
 footer {

@@ -65,14 +65,23 @@ function cancel() {
 }
 
 form {
-  display: grid;
-  grid-template-columns: 15% 85%;
-  column-gap: 10px;
-  row-gap: 20px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  label {
-    font-weight: 600;
-  }
+}
+
+.input-field-container {
+  margin-left: 0;
+  margin-right: auto;
+  margin-bottom: 1rem;
+}
+
+label {
+  margin-right: 1rem;
+}
+
+.long-label {
+  width: 7rem;
 }
 
 footer {
