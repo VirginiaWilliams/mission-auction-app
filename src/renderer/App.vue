@@ -41,12 +41,12 @@
       <div v-else class="table-container">
         <table>
           <tr class="table-headers">
-            <th>Num</th>
+            <th>Package #</th>
             <th>Type</th>
             <th>Description</th>
             <th>Value</th>
+            <th>Bidder #</th>
             <th>Bidder Name</th>
-            <th>Bidder Num</th>
             <th>Winning Amnt</th>
             <th></th>
           </tr>
@@ -55,9 +55,9 @@
             <td>{{ i.type }}</td>
             <td>{{ i.description }}</td>
             <td>{{ i.value }}</td>
-            <td>{{ i.winningAmount == 0 ? "" : i.winningAmount }}</td>
-            <td>{{ i.bidderName }}</td>
             <td>{{ i.bidderNum == 0 ? "" : i.bidderNum }}</td>
+            <td>{{ i.bidderName }}</td>
+            <td>{{ i.winningAmount == 0 ? "" : i.winningAmount }}</td>
             <td>
               <div class="action-container">
                 <!-- <img src="./assets/pencil.png" class="button edit" /> -->
