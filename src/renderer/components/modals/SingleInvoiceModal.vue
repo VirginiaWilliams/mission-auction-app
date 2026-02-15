@@ -61,7 +61,6 @@ const bidders = computed(() => {
 function setValues() {
   const chosenBidder = bidders.value.find((b) => b.name === bidderName.value);
   bidderNum.value = chosenBidder.num;
-  console.log("bidderNum.value: ", bidderNum.value);
 }
 
 function generatePDF() {

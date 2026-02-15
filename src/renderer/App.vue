@@ -1,6 +1,13 @@
 <template>
   <body>
-    <AddAucModal @close-add-modal="openAddModal = false" v-if="openAddModal" />
+    <AddAucModal
+      @close-auc-modal="openAddAucModal = false"
+      v-if="openAddAucModal"
+    />
+    <AddBidderModal
+      @close-bidder-modal="openAddBidderModal = false"
+      v-if="openAddBidderModal"
+    />
     <ConfirmationModal
       @close-conf-modal="openConfirmationModal = false"
       @submit-conf-modal="deleteAucItem"
@@ -10,7 +17,14 @@
     <div class="page-content">
       <header>
         <h1>Manage Package Data</h1>
-        <span @click="openAddModal = true" class="button add">Add Entry</span>
+        <div class="table-actions">
+          <span @click="openAddAucModal = true" class="button add"
+            >Add Package</span
+          >
+          <span @click="openAddBidderModal = true" class="button add"
+            >Add Bidder</span
+          >
+        </div>
       </header>
       <div class="empty" v-if="aucItems.length === 0">
         <h2>
@@ -24,10 +38,10 @@
             <th>Type</th>
             <th>Description</th>
             <th>Value</th>
-            <th>Winning Amnt</th>
             <th>Bidder Name</th>
             <th>Bidder Num</th>
-            <th>Actions</th>
+            <th>Winning Amnt</th>
+            <th></th>
           </tr>
           <tr v-for="(i, index) in aucItems" :key="index">
             <td>{{ i.num ? i.num : "" }}</td>
@@ -39,7 +53,7 @@
             <td>{{ i.bidderNum == 0 ? "" : i.bidderNum }}</td>
             <td>
               <div class="action-container">
-                <img src="./assets/pencil.png" class="button edit" />
+                <!-- <img src="./assets/pencil.png" class="button edit" /> -->
                 <img
                   src="./assets/trash.png"
                   @click="handleDelete(i.id)"
@@ -56,6 +70,7 @@
 
 <script setup>
 import AddAucModal from "./components/modals/AddAucModal";
+import AddBidderModal from "./components/modals/AddBidderModal";
 import ConfirmationModal from "./components/modals/ConfirmationModal";
 import ToolBar from "./components/ToolBar";
 import { useStore } from "vuex";
@@ -70,7 +85,8 @@ const aucItems = computed(() => {
   return store.getters.aucItems;
 });
 
-const openAddModal = ref(false);
+const openAddAucModal = ref(false);
+const openAddBidderModal = ref(false);
 const openConfirmationModal = ref(false);
 
 const idToDelete = ref();
@@ -129,11 +145,16 @@ h2 {
   padding: 2rem;
 }
 
+.table-actions {
+  display: flex;
+  margin-left: auto;
+  margin-right: 1rem;
+}
+
 .add {
   width: 6rem;
   background-color: cornflowerblue;
-  margin-left: auto;
-  margin-right: 1rem;
+  margin-left: 1rem;
 }
 
 .delete {

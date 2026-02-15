@@ -2,7 +2,7 @@
   <div class="add-auc-container">
     <div class="form-wrapper">
       <div class="form-modal">
-        <form @submit.prevent="addAucItem">
+        <form @submit.prevent="addBidderItem">
           <label for="num">Num</label>
           <input
             v-model="newNum"
@@ -11,36 +11,14 @@
             class="short-input-field"
             required
           />
-          <label for="description">Desc</label>
+          <label for="name">Name</label>
           <input
-            v-model="newDescription"
+            v-model="newName"
             type="textarea"
-            name="description"
-            placeholder="Enter the Item Description"
+            name="name"
+            placeholder="Enter Bidder Name"
             required
           />
-          <label for="value">Value</label>
-          <input
-            v-model="newValue"
-            type="number"
-            name="value"
-            class="short-input-field"
-            required
-          />
-          <label for="type">Type</label>
-          <input
-            v-model="newType"
-            type="list"
-            id="type"
-            list="options"
-            name="type"
-            class="short-input-field"
-            required
-          />
-          <datalist id="options">
-            <option value="Oral"></option>
-            <option value="Silent"></option>
-          </datalist>
           <footer>
             <button @click="cancel" type="button" class="button secondary">
               Cancel
@@ -59,27 +37,23 @@ import { ref } from "vue";
 
 const store = useStore();
 
-const emit = defineEmits(["close-auc-modal"]);
+const emit = defineEmits(["close-bidder-modal"]);
 
 const newNum = ref();
-const newDescription = ref("");
-const newValue = ref();
-const newType = ref("");
+const newName = ref("");
 
 function cancel() {
-  emit("close-auc-modal");
+  emit("close-bidder-modal");
 }
 
-function addAucItem() {
+function addBidderItem() {
   let data = {};
 
   data.num = newNum.value;
-  data.description = newDescription.value;
-  data.type = newType.value;
-  data.value = newValue.value;
+  data.name = newName.value;
 
-  store.dispatch("createAucItem", data);
-  emit("close-auc-modal");
+  store.dispatch("createBidder", data);
+  emit("close-bidder-modal");
 }
 </script>
 
