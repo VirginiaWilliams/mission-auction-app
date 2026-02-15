@@ -50,7 +50,7 @@
             {{ item.description }} | ${{ item.winningAmount }}
           </div>
         </div>
-        <div class="bottom-section">testing this out</div>
+        <div class="bottom-section">Total Cost: ${{ total }}</div>
       </div>
     </div>
   </div>
@@ -67,6 +67,7 @@ const emit = defineEmits(["close-generate-modal"]);
 
 const bidderName = ref("");
 const bidderNum = ref();
+const total = ref(0);
 
 const bidders = computed(() => {
   return store.getters.bidders;
@@ -78,7 +79,6 @@ const packages = computed(() => {
 
 const aucItemsWon = computed(() => {
   const temp = packages.value.filter((p) => p.bidderNum === bidderNum.value);
-  console.log("temp: ", temp);
   return temp;
 });
 
@@ -86,7 +86,9 @@ function setValues() {
   const chosenBidder = bidders.value.find((b) => b.name === bidderName.value);
   bidderNum.value = chosenBidder.num;
 
-  // Add totals
+  aucItemsWon.value.forEach((item) => {
+    total.value += item.winningAmount;
+  });
 }
 
 function generatePDF() {
