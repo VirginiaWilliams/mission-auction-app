@@ -8,6 +8,10 @@
       @close-bidder-modal="openAddBidderModal = false"
       v-if="openAddBidderModal"
     />
+    <AddLinkModal
+      @close-link-modal="openAddLinkModal = false"
+      v-if="openAddLinkModal"
+    />
     <ConfirmationModal
       @close-conf-modal="openConfirmationModal = false"
       @submit-conf-modal="deleteAucItem"
@@ -23,6 +27,9 @@
           >
           <span @click="openAddBidderModal = true" class="button add"
             >Add Bidder</span
+          >
+          <span @click="openAddLinkModal = true" class="button add"
+            >Create Link</span
           >
         </div>
       </header>
@@ -71,6 +78,7 @@
 <script setup>
 import AddAucModal from "./components/modals/AddAucModal";
 import AddBidderModal from "./components/modals/AddBidderModal";
+import AddLinkModal from "./components/modals/AddLinkModal";
 import ConfirmationModal from "./components/modals/ConfirmationModal";
 import ToolBar from "./components/ToolBar";
 import { useStore } from "vuex";
@@ -87,6 +95,7 @@ const aucItems = computed(() => {
 
 const openAddAucModal = ref(false);
 const openAddBidderModal = ref(false);
+const openAddLinkModal = ref(false);
 const openConfirmationModal = ref(false);
 
 const idToDelete = ref();

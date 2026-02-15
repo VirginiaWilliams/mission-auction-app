@@ -1,8 +1,8 @@
 <template>
-  <div class="add-bidder-container">
+  <div class="add-link-container">
     <div class="form-wrapper">
       <div class="form-modal">
-        <form @submit.prevent="addBidderItem">
+        <form @submit.prevent="addLink">
           <label for="num">Num</label>
           <input
             v-model="newNum"
@@ -37,23 +37,23 @@ import { ref } from "vue";
 
 const store = useStore();
 
-const emit = defineEmits(["close-bidder-modal"]);
+const emit = defineEmits(["close-link-modal"]);
 
 const newNum = ref();
 const newName = ref("");
 
 function cancel() {
-  emit("close-bidder-modal");
+  emit("close-link-modal");
 }
 
-function addBidderItem() {
+function addLink() {
   let data = {};
 
   data.num = newNum.value;
   data.name = newName.value;
 
-  store.dispatch("createBidder", data);
-  emit("close-bidder-modal");
+  store.dispatch("createLink", data);
+  emit("close-link-modal");
 }
 </script>
 
