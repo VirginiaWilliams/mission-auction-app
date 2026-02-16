@@ -17,6 +17,11 @@
       @submit-conf-modal="deleteAucItem"
       v-if="openConfirmationModal"
     />
+    <DeleteAllModal
+      @close-delete-all-modal="openDeleteAllModal = false"
+      @submit-delete-all-modal="deleteAllItems"
+      v-if="openDeleteAllModal"
+    />
     <ToolBar />
     <div class="page-content">
       <header>
@@ -71,6 +76,12 @@
           </tr>
         </table>
       </div>
+      <span
+        v-if="aucItems.length !== 0"
+        @click="openDeleteAllModal = true"
+        class="button delete-all"
+        >CLEAR TABLE</span
+      >
     </div>
   </body>
 </template>
@@ -80,6 +91,7 @@ import AddAucModal from "./components/modals/AddAucModal";
 import AddBidderModal from "./components/modals/AddBidderModal";
 import AddLinkModal from "./components/modals/AddLinkModal";
 import ConfirmationModal from "./components/modals/ConfirmationModal";
+import DeleteAllModal from "./components/modals/DeleteAllModal";
 import ToolBar from "./components/ToolBar";
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
@@ -93,10 +105,15 @@ const aucItems = computed(() => {
   return store.getters.aucItems;
 });
 
+const bidders = computed(() => {
+  return store.getters.bidders;
+});
+
 const openAddAucModal = ref(false);
 const openAddBidderModal = ref(false);
 const openAddLinkModal = ref(false);
 const openConfirmationModal = ref(false);
+const openDeleteAllModal = ref(false);
 
 const idToDelete = ref();
 
@@ -108,6 +125,16 @@ function deleteAucItem() {
 function handleDelete(id) {
   idToDelete.value = id;
   openConfirmationModal.value = true;
+}
+
+function deleteAllItems() {
+  aucItems.value.forEach((item) => {
+    store.dispatch("deleteAucItem", item.id);
+  });
+  bidders.value.forEach((bidder) => {
+    store.dispatch("deleteBidder", bidder.id);
+  });
+  openDeleteAllModal.value = false;
 }
 </script>
 
@@ -172,6 +199,13 @@ h2 {
   height: 14px;
 }
 
+.delete-all {
+  width: 10rem;
+  background-color: #a04545;
+  margin-top: 2rem;
+  margin-left: 1rem;
+}
+
 .edit {
   width: 1rem;
   background-color: cornflowerblue;
@@ -191,6 +225,7 @@ table {
   text-align: left;
   margin-left: 1rem;
   margin-right: 1rem;
+  width: 100%;
 }
 
 th,
@@ -198,7 +233,6 @@ td {
   background: white;
   border: 1px solid black;
   border-collapse: collapse;
-  /* width: 30rem; */
   text-align: left;
   padding-left: 1rem;
   padding-right: 1rem;

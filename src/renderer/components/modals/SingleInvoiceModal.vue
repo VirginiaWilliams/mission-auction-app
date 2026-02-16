@@ -97,6 +97,7 @@ function setValues() {
 
 function generatePDF() {
   window.print();
+  emit("close-generate-modal");
 }
 
 function cancel() {

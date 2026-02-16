@@ -73,6 +73,7 @@ const totalsMap = computed(() => {
 
 async function generatePDF() {
   window.print();
+  emit("close-generate-multi-modal");
 }
 
 function cancel() {
