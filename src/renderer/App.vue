@@ -134,6 +134,11 @@ function deleteAllItems() {
   bidders.value.forEach((bidder) => {
     store.dispatch("deleteBidder", bidder.id);
   });
+
+  store.dispatch("getAucItems");
+  store.dispatch("getBidders");
+  store.dispatch("resetMaps");
+
   openDeleteAllModal.value = false;
 }
 </script>
