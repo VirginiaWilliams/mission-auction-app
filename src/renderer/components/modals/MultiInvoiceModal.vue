@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="print-content">
-    <div v-for="(b, index) in bidders" :key="index">
+    <div v-for="(entry, index) in packageMap.values()" :key="index">
       <div class="pdf-content">
         <div class="pdf-content-header">
           Missions Auction<br />
@@ -31,18 +31,21 @@
         </div>
         <div class="dynamic-content">
           <div class="bidder-info">
-            <p>Invoice for: {{ b.name }}, Bidder #: {{ b.num }}</p>
+            <p>
+              Invoice for: {{ entry[0].bidderName }}, Bidder #:
+              {{ entry[0].bidderNum }}
+            </p>
           </div>
           <div class="bidder-winnings">
             <div
-              v-for="(item, index) in packageMap.get(b.name)"
+              v-for="(item, index) in entry"
               :key="index"
               class="winning-item"
             >
               {{ item.description }} | ${{ item.winningAmount }}
             </div>
             <div class="bottom-section">
-              Total Cost: ${{ totalsMap.get(b.name) }}
+              Total Cost: ${{ totalsMap.get(entry[0].bidderName) }}
             </div>
           </div>
         </div>
@@ -50,7 +53,6 @@
       <div class="page-break"></div>
     </div>
   </div>
-  <!-- </div> -->
 </template>
 
 <script setup>
@@ -62,16 +64,11 @@ const store = useStore();
 const emit = defineEmits(["close-generate-multi-modal"]);
 
 const packageMap = computed(() => {
-  console.log("------- ", store.getters.bidderPackageMap.get("Ginny Williams"));
   return store.getters.bidderPackageMap;
 });
 
 const totalsMap = computed(() => {
   return store.getters.bidderTotalsMap;
-});
-
-const bidders = computed(() => {
-  return store.getters.bidders;
 });
 
 async function generatePDF() {
