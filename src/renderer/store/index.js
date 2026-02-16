@@ -4,6 +4,8 @@ export default createStore({
   state: {
     aucItems: [],
     bidders: [],
+    bidderPackageMap: new Map(),
+    bidderTotalsMap: new Map(),
   },
   getters: {
     aucItems: (state) => {
@@ -11,6 +13,12 @@ export default createStore({
     },
     bidders: (state) => {
       return state.bidders;
+    },
+    bidderPackageMap: (state) => {
+      return state.bidderPackageMap;
+    },
+    bidderTotalsMap: (state) => {
+      return state.bidderTotalsMap;
     },
   },
   // mutations: {
@@ -74,6 +82,29 @@ export default createStore({
       if (response.status === true) {
         ctx.dispatch("getBidders");
       }
+    },
+
+    // ********** Maps **********
+    setMaps: async (ctx) => {
+      ctx.state.aucItems.forEach((p) => {
+        if (p.bidderName != "") {
+          // Add to bidder -> package map
+          if (!ctx.state.bidderPackageMap.has(p.bidderName)) {
+            ctx.state.bidderPackageMap.set(p.bidderName, []);
+          }
+          ctx.state.bidderPackageMap.get(p.bidderName).push(p);
+
+          // Add to bidder -> total map
+          if (!ctx.state.bidderTotalsMap.has(p.bidderName)) {
+            ctx.state.bidderTotalsMap.set(p.bidderName, 0);
+          }
+          const currentTotal = ctx.state.bidderTotalsMap.get(p.bidderName);
+          ctx.state.bidderTotalsMap.set(
+            p.bidderName,
+            currentTotal + p.winningAmount
+          );
+        }
+      });
     },
   },
 });

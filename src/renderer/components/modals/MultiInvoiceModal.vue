@@ -33,16 +33,18 @@
           <div class="bidder-info">
             <p>Invoice for: {{ b.name }}, Bidder #: {{ b.num }}</p>
           </div>
-          <!-- <div class="bidder-winnings">
+          <div class="bidder-winnings">
             <div
-              v-for="(item, index) in aucItemsWon"
+              v-for="(item, index) in packageMap.get(b.name)"
               :key="index"
               class="winning-item"
             >
               {{ item.description }} | ${{ item.winningAmount }}
             </div>
-            <div class="bottom-section">Total Cost: ${{ total }}</div>
-          </div> -->
+            <div class="bottom-section">
+              Total Cost: ${{ totalsMap.get(b.name) }}
+            </div>
+          </div>
         </div>
       </div>
       <div class="page-break"></div>
@@ -59,49 +61,26 @@ const store = useStore();
 
 const emit = defineEmits(["close-generate-multi-modal"]);
 
-// const bidderName = ref("");
-// const bidderNum = ref();
-// const total = ref(0);
+const packageMap = computed(() => {
+  console.log("------- ", store.getters.bidderPackageMap.get("Ginny Williams"));
+  return store.getters.bidderPackageMap;
+});
+
+const totalsMap = computed(() => {
+  return store.getters.bidderTotalsMap;
+});
 
 const bidders = computed(() => {
   return store.getters.bidders;
 });
 
-// const packages = computed(() => {
-//   return store.getters.aucItems;
-// });
-
-// const aucItemsWon = computed(() => {
-//   const temp = packages.value.filter((p) => p.bidderNum === bidderNum.value);
-//   return temp;
-// });
-
-// function setValues() {
-//   const chosenBidder = bidders.value.find((b) => b.name === bidderName.value);
-//   bidderNum.value = chosenBidder.num;
-
-//   aucItemsWon.value.forEach((item) => {
-//     total.value += item.winningAmount;
-//   });
-// }
-
-function generatePDF() {
+async function generatePDF() {
   window.print();
 }
 
 function cancel() {
   emit("close-generate-multi-modal");
 }
-
-// onMounted(() => {
-//   const datalist = document.getElementById("bidder-options");
-
-//   store.getters.bidders.forEach((bidder) => {
-//     var option = document.createElement("option");
-//     option.innerHTML = bidder.name;
-//     datalist.appendChild(option);
-//   });
-// });
 </script>
 
 <style>

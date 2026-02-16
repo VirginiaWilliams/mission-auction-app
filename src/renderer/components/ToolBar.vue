@@ -39,10 +39,7 @@
       >
         Generate Single Invoice
       </div>
-      <div
-        class="button generate-all-button"
-        @click="openMultiGenerateModal = true"
-      >
+      <div class="button generate-all-button" @click="openMultiModal">
         Generate All Invoices
       </div>
     </div>
@@ -105,6 +102,11 @@ function handleBidderUpload(e) {
       },
     });
   }
+}
+
+function openMultiModal() {
+  store.dispatch("setMaps");
+  openMultiGenerateModal.value = true;
 }
 </script>
 
