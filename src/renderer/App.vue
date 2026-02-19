@@ -83,6 +83,7 @@
         >CLEAR TABLE</span
       >
     </div>
+    <SourceLink class="source-code" />
   </body>
 </template>
 
@@ -93,6 +94,7 @@ import AddLinkModal from "./components/modals/AddLinkModal";
 import ConfirmationModal from "./components/modals/ConfirmationModal";
 import DeleteAllModal from "./components/modals/DeleteAllModal";
 import ToolBar from "./components/ToolBar";
+import SourceLink from "./components/SourceLink";
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
 
@@ -148,6 +150,7 @@ body {
   background: lightgray;
   margin: 0 auto;
   font-family: Arial, sans-serif;
+  height: 100vh;
 }
 
 .page-content {
@@ -208,6 +211,7 @@ h2 {
   width: 10rem;
   background-color: #a04545;
   margin-top: 2rem;
+  margin-bottom: 2rem;
   margin-left: 1rem;
 }
 
@@ -241,6 +245,12 @@ td {
   text-align: left;
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.source-code {
+  bottom: 0;
+  right: 0;
+  position: fixed;
 }
 
 /* ********** Global Stuff ********** */
