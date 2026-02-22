@@ -46,8 +46,11 @@
       </div>
       <div class="dynamic-content">
         <div class="bidder-info">
-          Name: {{ bidderName }}<br />
-          Bidder #: {{ bidderNum }}
+          <div class="bidder-name">
+            <div class="bidder-name-col1">Name:</div>
+            <div class="bidder-name-col2">{{ bidderName }}</div>
+          </div>
+          <div>Bidder #: {{ bidderNum }}</div>
         </div>
         <div class="bidder-winnings">
           <div
@@ -55,11 +58,21 @@
             :key="index"
             class="winning-item"
           >
-            {{ item.description }} | ${{ item.winningAmount }}
+            <div class="item-col1">{{ item.description }}</div>
+            <div class="item-col2">$ {{ item.winningAmount }}</div>
+          </div>
+          <div class="winning-item">
+            <div class="item-col1 pdf-total">Total:</div>
+            <div class="item-col2 pdf-total">$ {{ total }}</div>
           </div>
           <div class="bottom-section">
-            <div class="pdf-total">Total Cost: ${{ total }}</div>
-            <div>Paid By (Circle One):     Cash     Check     Credit Card</div>
+            <div class="paid-by-section">
+              <div class="paid-by-col1">Paid By (Circle One):</div>
+              <div class="paid-by-col2">Cash</div>
+              <div class="paid-by-col3">Check </div>
+              <div class="paid-by-col4">Credit Card</div>
+            </div>
+            <div class="divider-line"></div>
           </div>
         </div>
       </div>

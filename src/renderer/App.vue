@@ -301,24 +301,89 @@ td {
 }
 
 .bidder-info {
-  font-size: 30px;
   margin-bottom: 1rem;
 }
 
+.bidder-name {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 10px;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.bidder-name-col1 {
+  grid-column: 1;
+  font-size: 24px;
+  width: 10rem;
+}
+
+.bidder-name-col2 {
+  grid-column: 2;
+  font-size: 34px;
+  width: 50rem;
+}
+
 .bidder-winnings {
-  margin-top: 5rem;
+  margin-top: 6rem;
 }
 
 .winning-item {
   margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 10px;
+  width: 100%;
+}
+
+.item-col1 {
+  grid-column: 1;
+  width: 50rem;
+}
+
+.item-col2 {
+  grid-column: 2;
+  width: 20rem;
 }
 
 .bottom-section {
-  margin-top: 3rem;
+  margin-top: 9rem;
   display: block;
 }
 
 .pdf-total {
-  margin-bottom: 3rem;
+  margin-top: 5rem;
+}
+
+.paid-by-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 10px;
+  width: 100%;
+}
+
+.paid-by-col1 {
+  grid-column: 1;
+}
+
+.paid-by-col2 {
+  grid-column: 2;
+}
+
+.paid-by-col3 {
+  grid-column: 3;
+}
+
+.paid-by-col4 {
+  grid-column: 4;
+}
+
+.divider-line {
+  border-top: 1px solid black;
+  width: 100%;
+  margin-top: 2rem;
 }
 </style>
