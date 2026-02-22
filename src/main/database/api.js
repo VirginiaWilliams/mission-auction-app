@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize";
 import AucItemModel from "./models/aucItem";
 import BidderModel from "./models/bidder";
+import LogoModel from "./models/logo";
 
 const sequelize = new Sequelize({
   dialect: "sqlite", // type of the database
@@ -9,6 +10,7 @@ const sequelize = new Sequelize({
 
 const AucItem = AucItemModel(sequelize);
 const Bidder = BidderModel(sequelize);
+const Logo = LogoModel(sequelize);
 
 SyncDB();
 
@@ -73,6 +75,18 @@ async function DeleteBidder(id) {
   });
 }
 
+async function CreateLogo(data) {
+  let bidder = await Logo.create(data);
+  return bidder;
+}
+
+async function ReadLogo() {
+  let logo;
+  logo = await Logo.findAll();
+
+  return logo;
+}
+
 export {
   CreateAucItem,
   ReadAucItem,
@@ -81,4 +95,6 @@ export {
   CreateBidder,
   ReadBidder,
   DeleteBidder,
+  CreateLogo,
+  ReadLogo,
 };

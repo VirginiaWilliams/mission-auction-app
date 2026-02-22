@@ -7,6 +7,8 @@ import {
   CreateBidder,
   ReadBidder,
   DeleteBidder,
+  CreateLogo,
+  ReadLogo,
 } from "./database/api";
 
 async function server() {
@@ -87,6 +89,31 @@ async function server() {
         return { status: true };
       } catch (err) {
         return { status: false, data: err.message };
+      }
+    });
+
+    // ********** Logo **********
+    ipcMain.handle("get-logos", async () => {
+      try {
+        return {
+          status: true,
+          data: await ReadLogo(),
+        };
+      } catch (err) {
+        return { status: false, data: err.message };
+      }
+    });
+
+    ipcMain.handle("create-logo", async (e, data) => {
+      console.timeLog("-------------------------- server");
+      try {
+        await CreateLogo(data);
+
+        return {
+          status: true,
+        };
+      } catch (err) {
+        return { status: false, data: err };
       }
     });
   } catch (err) {

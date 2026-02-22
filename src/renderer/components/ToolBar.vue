@@ -9,9 +9,10 @@
       v-if="openMultiGenerateModal"
     />
     <div class="left-side">
+      <div class="toolbar-text">Upload:</div>
       <div class="package-button">
         <label for="package-input" class="button add-package">
-          Upload Package CSV
+          Package CSV
         </label>
         <input
           id="package-input"
@@ -21,9 +22,7 @@
         />
       </div>
       <div class="bidder-button">
-        <label for="bidder-input" class="button add-bidder">
-          Upload Bidder CSV
-        </label>
+        <label for="bidder-input" class="button add-bidder"> Bidder CSV </label>
         <input
           id="bidder-input"
           type="file"
@@ -31,18 +30,24 @@
           @change="handleBidderUpload"
         />
       </div>
+      <div class="logo-button">
+        <label for="logo-input" class="button add-logo"> Logo </label>
+        <input id="logo-input" type="file" hidden @change="handleLogoUpload" />
+      </div>
     </div>
     <div class="right-side">
+      <div class="toolbar-text">Generate:</div>
       <div
         class="button generate-single-button"
         @click="openSingleGenerateModal = true"
       >
-        Generate Single Invoice
+        Single Invoice
       </div>
       <div class="button generate-all-button" @click="openMultiModal">
-        Generate All Invoices
+        All Invoices
       </div>
     </div>
+    <!-- <img id="myImage" src="" alt="Dynamically loaded image" /> -->
   </div>
 </template>
 
@@ -104,6 +109,49 @@ function handleBidderUpload(e) {
   }
 }
 
+async function handleLogoUpload(e) {
+  const file = e.target.files[0];
+  if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
+    try {
+      const pngBlob = await convertJpgToPng(file);
+      store.dispatch("addLogoTemp", pngBlob);
+    } catch (error) {
+      console.error("Conversion failed:", error);
+    }
+  } else {
+    alert("Please select a JPEG or PNG file.");
+  }
+}
+
+function convertJpgToPng(jpegFileBlob) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      // Create a canvas element
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      // Draw the JPEG image onto the canvas
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+
+      // Get the image data as a PNG blob
+      canvas.toBlob((blob) => {
+        if (blob) {
+          resolve(blob); // The resulting PNG blob
+        } else {
+          reject(new Error("Canvas toBlob failed"));
+        }
+      }, "image/png");
+    };
+    img.onerror = (error) => reject(error);
+
+    // Set the image source to the URL of the JPEG blob
+    img.src = URL.createObjectURL(jpegFileBlob);
+  });
+}
+
 function openMultiModal() {
   store.dispatch("setMaps");
   openMultiGenerateModal.value = true;
@@ -122,23 +170,31 @@ function openMultiModal() {
 
 .left-side {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1rem;
 }
 
 .right-side {
   display: flex;
   margin-left: auto;
   margin-right: 1rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .add-package {
   background-color: cornflowerblue;
-  margin-left: 1rem;
   height: 1rem;
 }
 
 .add-bidder {
   background-color: rgb(44, 65, 105);
-  margin-left: 1rem;
+  height: 1rem;
+}
+
+.add-logo {
+  background-color: rgb(93, 82, 112);
   height: 1rem;
 }
 
@@ -151,5 +207,9 @@ function openMultiModal() {
 .generate-all-button {
   background-color: rgb(29, 88, 56);
   height: 1rem;
+}
+
+.toolbar-text {
+  margin-right: 1rem;
 }
 </style>

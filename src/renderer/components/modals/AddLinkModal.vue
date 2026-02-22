@@ -99,7 +99,6 @@ function cancel() {
 }
 
 function addLink() {
-  console.log("packageData: ", packageData.value);
   let data = {};
 
   data.id = packageData.value.id;

@@ -33,7 +33,7 @@
           <span @click="openAddBidderModal = true" class="button add"
             >Add Bidder</span
           >
-          <span @click="openAddLinkModal = true" class="button add"
+          <span @click="openAddLinkModal = true" class="button add add-link"
             >Create Link</span
           >
         </div>
@@ -264,6 +264,10 @@ td {
   color: white;
   border-radius: 5px;
   border: none;
+}
+
+.add-link {
+  background-color: rgb(44, 65, 105);
 }
 
 /* ********** I dont't know why, but the pdf style needs to be here ********** */

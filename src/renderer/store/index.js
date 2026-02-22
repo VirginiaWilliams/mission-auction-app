@@ -4,6 +4,7 @@ export default createStore({
   state: {
     aucItems: [],
     bidders: [],
+    logos: [],
     bidderPackageMap: new Map(),
     bidderTotalsMap: new Map(),
   },
@@ -14,6 +15,9 @@ export default createStore({
     bidders: (state) => {
       return state.bidders;
     },
+    logos: (state) => {
+      return state.logos;
+    },
     bidderPackageMap: (state) => {
       return state.bidderPackageMap;
     },
@@ -21,11 +25,6 @@ export default createStore({
       return state.bidderTotalsMap;
     },
   },
-  // mutations: {
-  //   selectToEditVideo(state, value) {
-  //     state.toEditVideo = value;
-  //   },
-  // },
   actions: {
     // First stop in API action process
     // ********** Auc Item **********
@@ -84,11 +83,30 @@ export default createStore({
       }
     },
 
+    // ********** Logo **********
+    getLogos: async (ctx) => {
+      let response = await window.ipc.invoke("get-logos");
+      if (response.status === true) {
+        ctx.state.logo = response.data;
+      }
+    },
+
+    createLogo: async (ctx, data) => {
+      let response = await window.ipc.invoke("create-logo", data);
+
+      if (response.status === true) {
+        ctx.dispatch("getLogos");
+      }
+    },
+
+    addLogoTemp: async (ctx, data) => {
+      ctx.state.logos = [data];
+    },
+
     // ********** Maps **********
     setMaps: async (ctx) => {
       ctx.state.aucItems.forEach((p) => {
         if (p.bidderName != "") {
-          console.log("p.bidderName: ", p.bidderName);
           // Add to bidder -> package map
           if (!ctx.state.bidderPackageMap.has(p.bidderName)) {
             ctx.state.bidderPackageMap.set(p.bidderName, []);

@@ -13,6 +13,8 @@ const validChannels = [
   "get-bidders",
   "create-bidder",
   "delete-bidder",
+  "create-logo",
+  "get-logos",
 ];
 
 contextBridge.exposeInMainWorld("ipc", {
