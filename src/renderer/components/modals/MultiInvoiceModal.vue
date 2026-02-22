@@ -150,7 +150,7 @@ function cancel() {
 
 .print-content,
 .print-content * {
-  display: none;
+  /* display: none; */
 }
 
 @media print {

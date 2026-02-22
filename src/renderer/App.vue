@@ -265,4 +265,60 @@ td {
   border-radius: 5px;
   border: none;
 }
+
+/* ********** I dont't know why, but the pdf style needs to be here ********** */
+
+.print-content {
+  margin: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.header-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 10px;
+  width: 100%;
+}
+
+.header-col1 {
+  grid-column: 1;
+  font-size: 34px;
+  font-weight: bold;
+  width: 44rem; /* adjust to move image horizontal */
+}
+
+.header-col2 {
+  grid-column: 2;
+  width: 20rem;
+}
+
+.dynamic-content {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 20rem;
+}
+
+.bidder-info {
+  font-size: 30px;
+  margin-bottom: 1rem;
+}
+
+.bidder-winnings {
+  margin-top: 5rem;
+}
+
+.winning-item {
+  margin-top: 1rem;
+}
+
+.bottom-section {
+  margin-top: 3rem;
+  display: block;
+}
+
+.pdf-total {
+  margin-bottom: 3rem;
+}
 </style>

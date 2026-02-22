@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <template>
   <div class="add-auc-container">
     <div class="form-wrapper">
@@ -31,19 +32,22 @@
     </div>
   </div>
   <div class="print-content">
-    <!-- <div v-for="(i, index) in aucItems" :key="index"> -->
     <div class="pdf-content">
-      <div class="pdf-content-header">
-        Missions Auction<br />
-        Christ The Vine Lutheran Church<br />
-        18677 SE Highway 212<br />
-        Damascus OR 97089<br />
-        503-658-5650<br />
-        Fed ID# 93-0719295<br />
+      <div class="header-container">
+        <div class="header-col1">
+          Missions Auction<br />
+          Christ The Vine Lutheran Church<br />
+          18677 SE Highway 212<br />
+          Damascus OR 97089<br />
+          503-658-5650<br />
+          Fed ID# 93-0719295<br />
+        </div>
+        <div class="header-col2"><img src="../../assets/logo.png" class="pdf-image" alt="Mission Auction Logo"></div>
       </div>
       <div class="dynamic-content">
         <div class="bidder-info">
-          <p>Invoice for: {{ bidderName }}, Bidder #: {{ bidderNum }}</p>
+          Name: {{ bidderName }}<br />
+          Bidder #: {{ bidderNum }}
         </div>
         <div class="bidder-winnings">
           <div
@@ -53,12 +57,14 @@
           >
             {{ item.description }} | ${{ item.winningAmount }}
           </div>
-          <div class="bottom-section">Total Cost: ${{ total }}</div>
+          <div class="bottom-section">
+            <div class="pdf-total">Total Cost: ${{ total }}</div>
+            <div>Paid By (Circle One):     Cash     Check     Credit Card</div>
+          </div>
         </div>
       </div>
-    </div>
+    </div> 
   </div>
-  <!-- </div> -->
 </template>
 
 <script setup>
@@ -208,34 +214,11 @@ onMounted(() => {
     gap: 4px;
   }
 
-  .pdf-content-header {
-    font-size: 20px;
-    font-weight: bold;
-    position: relative;
-    width: 100%;
-  }
-
-  .dynamic-content {
-    margin-top: 10rem;
-  }
-
-  .winning-item {
-    margin-top: -24px; /* just trying to fight the block spacing */
-  }
-
   .bidder-info,
   .bidder-winnings {
     position: relative;
     page-break-inside: avoid;
     display: block;
-  }
-
-  .bidder-info {
-    margin-bottom: 1rem;
-  }
-
-  .bottom-section {
-    margin-top: 2rem;
   }
 }
 </style>
