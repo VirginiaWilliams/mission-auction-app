@@ -162,7 +162,6 @@ function openMultiModal() {
 
 function generateReport() {
   store.dispatch("get-aucItems");
-  console.log(store.getters.aucItems);
   downloadCSVFromJson("data.csv", store.getters.aucItems);
 }
 

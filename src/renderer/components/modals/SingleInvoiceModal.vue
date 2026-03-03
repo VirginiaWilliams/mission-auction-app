@@ -107,11 +107,14 @@ const aucItemsWon = computed(() => {
 
 function setValues() {
   const chosenBidder = bidders.value.find((b) => b.name === bidderName.value);
-  bidderNum.value = chosenBidder.num;
+  console.log(chosenBidder);
+  if (chosenBidder) {
+    bidderNum.value = chosenBidder.num;
 
-  aucItemsWon.value.forEach((item) => {
-    total.value += item.winningAmount;
-  });
+    aucItemsWon.value.forEach((item) => {
+      total.value += item.winningAmount;
+    });
+  }
 }
 
 function generatePDF() {
@@ -133,9 +136,11 @@ onMounted(() => {
   });
 
   const logo = store.getters.logos;
-  const objectUrl = URL.createObjectURL(logo[0]);
-  const imageElement = document.getElementById("pdf-image");
-  imageElement.src = objectUrl;
+  if (logo[0]) {
+    const objectUrl = URL.createObjectURL(logo[0]);
+    const imageElement = document.getElementById("pdf-image");
+    imageElement.src = objectUrl;
+  }
 });
 </script>
 
