@@ -46,6 +46,9 @@
       <div class="button generate-all-button" @click="openMultiModal">
         All Invoices
       </div>
+      <div class="button generate-report" @click="generateReport">
+        Final Report
+      </div>
     </div>
     <!-- <img id="myImage" src="" alt="Dynamically loaded image" /> -->
   </div>
@@ -156,6 +159,27 @@ function openMultiModal() {
   store.dispatch("setMaps");
   openMultiGenerateModal.value = true;
 }
+
+function generateReport() {
+  store.dispatch("get-aucItems");
+  console.log(store.getters.aucItems);
+  downloadCSVFromJson("data.csv", store.getters.aucItems);
+}
+
+function downloadCSVFromJson(filename, arrayOfJson) {
+  const header = Object.keys(arrayOfJson[0]);
+  let csv = arrayOfJson.map((row) =>
+    header.map((fieldName) => JSON.stringify(row[fieldName] || "")).join(",")
+  );
+  csv.unshift(header.join(","));
+  csv = csv.join("\r\n");
+
+  // Create link and download
+  const link = document.createElement("a");
+  link.href = "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
+  link.download = filename;
+  link.click();
+}
 </script>
 
 <style>
@@ -206,6 +230,12 @@ function openMultiModal() {
 
 .generate-all-button {
   background-color: rgb(29, 88, 56);
+  height: 1rem;
+  margin-right: 1rem;
+}
+
+.generate-report {
+  background-color: rgb(15, 42, 28);
   height: 1rem;
 }
 
