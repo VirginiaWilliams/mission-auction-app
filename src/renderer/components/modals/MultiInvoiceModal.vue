@@ -19,33 +19,57 @@
     </div>
   </div>
   <div class="print-content">
-    <div v-for="(entry, index) in packageMap.values()" :key="index">
+    <div v-for="(bidder, index) in packageMap.values()" :key="index">
       <div class="pdf-content">
-        <div class="pdf-content-header">
-          Missions Auction<br />
-          Christ The Vine Lutheran Church<br />
-          18677 SE Highway 212<br />
-          Damascus OR 97089<br />
-          503-658-5650<br />
-          Fed ID# 93-0719295<br />
+        <div class="header-container">
+          <div class="header-col1">
+            Missions Auction<br />
+            Christ The Vine Lutheran Church<br />
+            18677 SE Highway 212<br />
+            Damascus OR 97089<br />
+            503-658-5650<br />
+            Fed ID# 93-0719295<br />
+          </div>
+          <div class="header-col2">
+            <img
+              src="../../assets/logo.png"
+              id="pdf-image"
+              class="pdf-image"
+              alt="Mission Auction Logo"
+            />
+          </div>
         </div>
         <div class="dynamic-content">
           <div class="bidder-info">
-            <p>
-              Invoice for: {{ entry[0].bidderName }}, Bidder #:
-              {{ entry[0].bidderNum }}
-            </p>
+            <div class="bidder-name">
+              <div class="bidder-name-col1">Name:</div>
+              <div class="bidder-name-col2">{{ bidder[0].bidderName }}</div>
+            </div>
+            <div>Bidder #: {{ bidder[0].bidderNum }}</div>
           </div>
           <div class="bidder-winnings">
             <div
-              v-for="(item, index) in entry"
+              v-for="(item, index) in bidder"
               :key="index"
               class="winning-item"
             >
-              {{ item.description }} | ${{ item.winningAmount }}
+              <div class="item-col1">{{ item.description }}</div>
+              <div class="item-col2">$ {{ item.winningAmount }}</div>
+            </div>
+            <div class="winning-item">
+              <div class="item-col1 pdf-total">Total:</div>
+              <div class="item-col2 pdf-total">
+                ${{ totalsMap.get(bidder[0].bidderName) }}
+              </div>
             </div>
             <div class="bottom-section">
-              Total Cost: ${{ totalsMap.get(entry[0].bidderName) }}
+              <div class="paid-by-section">
+                <div class="paid-by-col1">Paid By (Circle One):</div>
+                <div class="paid-by-col2">Cash</div>
+                <div class="paid-by-col3">Check</div>
+                <div class="paid-by-col4">Credit Card</div>
+              </div>
+              <div class="divider-line"></div>
             </div>
           </div>
         </div>
@@ -64,6 +88,8 @@ const store = useStore();
 const emit = defineEmits(["close-generate-multi-modal"]);
 
 const packageMap = computed(() => {
+  const test = store.getters.bidderPackageMap;
+  console.log("test: ", test);
   return store.getters.bidderPackageMap;
 });
 
