@@ -1,29 +1,19 @@
 # mission-auction-app
 
 ## Project setup
+### Install Dependencies
 ```
 npm install
 ```
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm run electron:serve
 ```
 
-### Compiles and minifies for production
+### Build for production
+create the exe:
 ```
-npm run build
+npm run electron:build -- --win
 ```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+The folder will be created in the dist_electron directory
