@@ -117,7 +117,10 @@ async function handleLogoUpload(e) {
   if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
     try {
       const pngBlob = await convertJpgToPng(file);
-      store.dispatch("addLogoTemp", pngBlob);
+
+      const arrayBuffer = await pngBlob.arrayBuffer();
+
+      store.dispatch("createLogo", arrayBuffer);
     } catch (error) {
       console.error("Conversion failed:", error);
     }

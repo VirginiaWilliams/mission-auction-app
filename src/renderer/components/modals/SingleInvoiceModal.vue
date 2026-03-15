@@ -107,7 +107,6 @@ const aucItemsWon = computed(() => {
 
 function setValues() {
   const chosenBidder = bidders.value.find((b) => b.name === bidderName.value);
-  console.log(chosenBidder);
   if (chosenBidder) {
     bidderNum.value = chosenBidder.num;
 
@@ -126,7 +125,7 @@ function cancel() {
   emit("close-generate-modal");
 }
 
-onMounted(() => {
+onMounted(async () => {
   const datalist = document.getElementById("bidder-options");
 
   store.getters.bidders.forEach((bidder) => {
@@ -135,11 +134,11 @@ onMounted(() => {
     datalist.appendChild(option);
   });
 
-  const logo = store.getters.logos;
-  if (logo[0]) {
-    const objectUrl = URL.createObjectURL(logo[0]);
+  await store.dispatch("getLogo");
+  const logo = store.getters.logo;
+  if (logo) {
     const imageElement = document.getElementById("pdf-image");
-    imageElement.src = objectUrl;
+    imageElement.src = logo;
   }
 });
 </script>

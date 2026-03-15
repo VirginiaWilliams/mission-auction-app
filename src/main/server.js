@@ -1,4 +1,4 @@
-import { ipcMain } from "electron";
+import { ipcMain, app } from "electron";
 import {
   CreateAucItem,
   ReadAucItem,
@@ -7,9 +7,10 @@ import {
   CreateBidder,
   ReadBidder,
   DeleteBidder,
-  CreateLogo,
-  ReadLogo,
+  // CreateLogo,
+  // ReadLogo,
 } from "./database/api";
+const fs = require("fs");
 
 async function server() {
   try {
@@ -93,28 +94,29 @@ async function server() {
     });
 
     // ********** Logo **********
-    ipcMain.handle("get-logos", async () => {
+    ipcMain.handle("get-logo", async () => {
       try {
-        return {
-          status: true,
-          data: await ReadLogo(),
-        };
-      } catch (err) {
-        return { status: false, data: err.message };
+        // Ensure the path is safe/within app scope if necessary
+        const filePath = app.getAppPath() + "\\logo.png";
+        const imageBuffer = fs.readFileSync(filePath);
+        const base64Image = imageBuffer.toString("base64");
+
+        return `data:image/png;base64,${base64Image}`; // Read file synchronously for simplicity, async is better for large files
+      } catch (error) {
+        console.error("Failed to read file:", error);
+        throw new Error(error.message); // Throw an error that the renderer can catch
       }
     });
 
     ipcMain.handle("create-logo", async (e, data) => {
-      console.timeLog("-------------------------- server");
-      try {
-        await CreateLogo(data);
+      const filePath = app.getAppPath() + "\\logo.png";
+      const buffer = Buffer.from(data);
 
-        return {
-          status: true,
-        };
-      } catch (err) {
-        return { status: false, data: err };
-      }
+      fs.writeFile(filePath, buffer, (err) => {
+        if (err) {
+          console.error("Failed to save the file:", err);
+        }
+      });
     });
   } catch (err) {
     throw new Error(err);

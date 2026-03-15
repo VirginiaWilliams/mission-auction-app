@@ -88,8 +88,6 @@ const store = useStore();
 const emit = defineEmits(["close-generate-multi-modal"]);
 
 const packageMap = computed(() => {
-  const test = store.getters.bidderPackageMap;
-  console.log("test: ", test);
   return store.getters.bidderPackageMap;
 });
 

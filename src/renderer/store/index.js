@@ -4,7 +4,7 @@ export default createStore({
   state: {
     aucItems: [],
     bidders: [],
-    logos: [],
+    logo: "",
     bidderPackageMap: new Map(),
     bidderTotalsMap: new Map(),
   },
@@ -15,8 +15,8 @@ export default createStore({
     bidders: (state) => {
       return state.bidders;
     },
-    logos: (state) => {
-      return state.logos;
+    logo: (state) => {
+      return state.logo;
     },
     bidderPackageMap: (state) => {
       return state.bidderPackageMap;
@@ -84,23 +84,14 @@ export default createStore({
     },
 
     // ********** Logo **********
-    getLogos: async (ctx) => {
-      let response = await window.ipc.invoke("get-logos");
-      if (response.status === true) {
-        ctx.state.logo = response.data;
-      }
+    getLogo: async (ctx) => {
+      let response = await window.ipc.invoke("get-logo");
+      ctx.state.logo = String(response);
     },
 
     createLogo: async (ctx, data) => {
-      let response = await window.ipc.invoke("create-logo", data);
-
-      if (response.status === true) {
-        ctx.dispatch("getLogos");
-      }
-    },
-
-    addLogoTemp: async (ctx, data) => {
-      ctx.state.logos = [data];
+      await window.ipc.invoke("create-logo", data);
+      ctx.dispatch("getLogo");
     },
 
     // ********** Maps **********
