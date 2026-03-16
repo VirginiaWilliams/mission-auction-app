@@ -28,6 +28,10 @@
             Generate
           </button>
         </div>
+        <div class="logo-preview-container">
+          Current Logo Preview:
+          <img src="" id="logo-preview" class="logo-preview" alt="Mission Auction Logo">
+        </div>
       </div>
     </div>
   </div>
@@ -139,6 +143,9 @@ onMounted(async () => {
   if (logo) {
     const imageElement = document.getElementById("pdf-image");
     imageElement.src = logo;
+
+    const imagePreview = document.getElementById("logo-preview");
+    imagePreview.src = logo;
   }
 });
 </script>
@@ -213,6 +220,19 @@ onMounted(async () => {
 .print-content,
 .print-content * {
   display: none;
+}
+
+.logo-preview-container {
+  display: flex;
+  flex-direction: column;
+  border-top: solid 1px rgb(186, 186, 186);
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+
+.logo-preview {
+  margin-top: 1rem;
+  width: 8rem;
 }
 
 @media print {
