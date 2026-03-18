@@ -89,6 +89,7 @@ function handlePackageUpload(e) {
       },
     });
   }
+  e.target.value = "";
 }
 
 function handleBidderUpload(e) {
