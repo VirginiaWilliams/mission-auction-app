@@ -155,6 +155,7 @@ body {
 
 .page-content {
   margin: 2rem;
+  padding-bottom: 2rem;
 }
 
 .table-container {
