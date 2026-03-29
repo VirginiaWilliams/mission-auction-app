@@ -25,7 +25,22 @@
     <ToolBar />
     <div class="page-content">
       <header>
-        <h1>Manage Package Data</h1>
+        <button
+          class="table-tab-button"
+          :class="isTablePackage == 'packages' ? 'selected-tab' : ''"
+          value="packages"
+          @click="switchTab"
+        >
+          Packages
+        </button>
+        <button
+          class="table-tab-button"
+          :class="isTablePackage == 'bidders' ? 'selected-tab' : ''"
+          value="bidders"
+          @click="switchTab"
+        >
+          Bidders
+        </button>
         <div class="table-actions">
           <span @click="openAddAucModal = true" class="button add"
             >Add Package</span
@@ -38,50 +53,89 @@
           >
         </div>
       </header>
-      <div class="empty" v-if="aucItems.length === 0">
-        <h2>
-          The list is empty! Please upload package data or manually add entries
-        </h2>
+      <div class="package-list" v-if="isTablePackage == 'packages'">
+        <div class="empty" v-if="aucItems.length === 0">
+          <h2>
+            The list is empty! Please upload package data or manually add
+            entries
+          </h2>
+        </div>
+        <div v-else class="table-container">
+          <table>
+            <tr class="table-headers">
+              <th>Package #</th>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Value</th>
+              <th>Bidder #</th>
+              <th>Bidder Name</th>
+              <th>Winning Amnt</th>
+              <th></th>
+            </tr>
+            <tr v-for="(i, index) in aucItems" :key="index">
+              <td>{{ i.num ? i.num : "" }}</td>
+              <td>{{ i.type }}</td>
+              <td>{{ i.description }}</td>
+              <td>{{ i.value }}</td>
+              <td>{{ i.bidderNum == 0 ? "" : i.bidderNum }}</td>
+              <td>{{ i.bidderName }}</td>
+              <td>{{ i.winningAmount == 0 ? "" : i.winningAmount }}</td>
+              <td>
+                <div class="action-container">
+                  <!-- <img src="./assets/pencil.png" class="button edit" /> -->
+                  <img
+                    src="./assets/trash.png"
+                    @click="handleDelete(i.id)"
+                    class="button delete"
+                  />
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <span
+          v-if="aucItems.length !== 0"
+          @click="openDeleteAllModal = true"
+          class="button delete-all"
+          >CLEAR TABLE</span
+        >
       </div>
-      <div v-else class="table-container">
-        <table>
-          <tr class="table-headers">
-            <th>Package #</th>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Value</th>
-            <th>Bidder #</th>
-            <th>Bidder Name</th>
-            <th>Winning Amnt</th>
-            <th></th>
-          </tr>
-          <tr v-for="(i, index) in aucItems" :key="index">
-            <td>{{ i.num ? i.num : "" }}</td>
-            <td>{{ i.type }}</td>
-            <td>{{ i.description }}</td>
-            <td>{{ i.value }}</td>
-            <td>{{ i.bidderNum == 0 ? "" : i.bidderNum }}</td>
-            <td>{{ i.bidderName }}</td>
-            <td>{{ i.winningAmount == 0 ? "" : i.winningAmount }}</td>
-            <td>
-              <div class="action-container">
-                <!-- <img src="./assets/pencil.png" class="button edit" /> -->
-                <img
-                  src="./assets/trash.png"
-                  @click="handleDelete(i.id)"
-                  class="button delete"
-                />
-              </div>
-            </td>
-          </tr>
-        </table>
+      <div class="bidder-list" v-if="isTablePackage == 'bidders'">
+        <div class="empty" v-if="bidders.length === 0">
+          <h2>
+            The list is empty! Please upload package data or manually add
+            entries
+          </h2>
+        </div>
+        <div v-else class="table-container">
+          <table>
+            <tr class="table-headers">
+              <th>Bidder #</th>
+              <th>Name</th>
+              <th></th>
+            </tr>
+            <tr v-for="(i, index) in bidders" :key="index">
+              <td>{{ i.num }}</td>
+              <td>{{ i.name }}</td>
+              <!-- <td>
+                <div class="action-container">
+                  <img
+                    src="./assets/trash.png"
+                    @click="handleDelete(i.id)"
+                    class="button delete"
+                  />
+                </div>
+              </td> -->
+            </tr>
+          </table>
+        </div>
+        <span
+          v-if="bidders.length !== 0"
+          @click="openDeleteAllModal = true"
+          class="button delete-all"
+          >CLEAR TABLE</span
+        >
       </div>
-      <span
-        v-if="aucItems.length !== 0"
-        @click="openDeleteAllModal = true"
-        class="button delete-all"
-        >CLEAR TABLE</span
-      >
     </div>
     <SourceLink class="source-code" />
   </body>
@@ -102,6 +156,8 @@ const store = useStore();
 
 store.dispatch("getAucItems");
 store.dispatch("getBidders");
+
+const isTablePackage = ref("packages");
 
 const aucItems = computed(() => {
   return store.getters.aucItems;
@@ -142,6 +198,10 @@ function deleteAllItems() {
   store.dispatch("resetMaps");
 
   openDeleteAllModal.value = false;
+}
+
+function switchTab(e) {
+  isTablePackage.value = e.target.value;
 }
 </script>
 
@@ -390,5 +450,20 @@ td {
   border-top: 1px solid black;
   width: 100%;
   margin-top: 2rem;
+}
+
+.table-tab-button {
+  font-size: 24px;
+  font-weight: 400;
+  text-align: center;
+  margin-left: 1rem;
+  border: none;
+  padding: 6px;
+  background-color: transparent;
+}
+
+.selected-tab {
+  font-weight: 700;
+  text-decoration: underline;
 }
 </style>

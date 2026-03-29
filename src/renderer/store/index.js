@@ -7,6 +7,7 @@ export default createStore({
     logo: "",
     bidderPackageMap: new Map(),
     bidderTotalsMap: new Map(),
+    // isTableBidder: false,
   },
   getters: {
     aucItems: (state) => {
