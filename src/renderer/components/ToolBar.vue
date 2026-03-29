@@ -112,6 +112,7 @@ function handleBidderUpload(e) {
       },
     });
   }
+  e.target.value = "";
 }
 
 async function handleLogoUpload(e) {
