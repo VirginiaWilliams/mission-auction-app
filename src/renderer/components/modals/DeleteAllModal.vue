@@ -4,8 +4,8 @@
       <div class="form-modal">
         <div class="modal-title">Are You Sure?</div>
         <div class="modal-text">
-          This action will permanately delete all table entries, plus all bidder
-          info.
+          This action will permanately delete ALL table entries from BOTH
+          packages and bidders.
         </div>
         <footer>
           <button @click="cancel" type="button" class="button secondary">

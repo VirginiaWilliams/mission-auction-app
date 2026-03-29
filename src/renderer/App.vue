@@ -14,7 +14,7 @@
     />
     <ConfirmationModal
       @close-conf-modal="openConfirmationModal = false"
-      @submit-conf-modal="deleteAucItem"
+      @submit-conf-modal="deleteItem"
       v-if="openConfirmationModal"
     />
     <DeleteAllModal
@@ -85,7 +85,7 @@
                   <!-- <img src="./assets/pencil.png" class="button edit" /> -->
                   <img
                     src="./assets/trash.png"
-                    @click="handleDelete(i.id)"
+                    @click="handlePackageDelete(i.id)"
                     class="button delete"
                   />
                 </div>
@@ -97,7 +97,7 @@
           v-if="aucItems.length !== 0"
           @click="openDeleteAllModal = true"
           class="button delete-all"
-          >CLEAR TABLE</span
+          >CLEAR ALL TABLES</span
         >
       </div>
       <div class="bidder-list" v-if="isTablePackage == 'bidders'">
@@ -117,15 +117,15 @@
             <tr v-for="(i, index) in bidders" :key="index">
               <td>{{ i.num }}</td>
               <td>{{ i.name }}</td>
-              <!-- <td>
+              <td>
                 <div class="action-container">
                   <img
                     src="./assets/trash.png"
-                    @click="handleDelete(i.id)"
+                    @click="handleBidderDelete(i.id)"
                     class="button delete"
                   />
                 </div>
-              </td> -->
+              </td>
             </tr>
           </table>
         </div>
@@ -133,7 +133,7 @@
           v-if="bidders.length !== 0"
           @click="openDeleteAllModal = true"
           class="button delete-all"
-          >CLEAR TABLE</span
+          >CLEAR ALL TABLES</span
         >
       </div>
     </div>
@@ -173,15 +173,28 @@ const openAddLinkModal = ref(false);
 const openConfirmationModal = ref(false);
 const openDeleteAllModal = ref(false);
 
-const idToDelete = ref();
+const packageIdToDelete = ref();
+const bidderIdToDelete = ref();
 
-function deleteAucItem() {
-  store.dispatch("deleteAucItem", idToDelete.value);
+function deleteItem() {
+  if (packageIdToDelete.value && packageIdToDelete.value != "") {
+    store.dispatch("deleteAucItem", packageIdToDelete.value);
+  }
+  if (bidderIdToDelete.value && bidderIdToDelete.value != "") {
+    store.dispatch("deleteBidder", bidderIdToDelete.value);
+  }
   openConfirmationModal.value = false;
+  packageIdToDelete.value = null;
+  bidderIdToDelete.value = null;
 }
 
-function handleDelete(id) {
-  idToDelete.value = id;
+function handlePackageDelete(id) {
+  packageIdToDelete.value = id;
+  openConfirmationModal.value = true;
+}
+
+function handleBidderDelete(id) {
+  bidderIdToDelete.value = id;
   openConfirmationModal.value = true;
 }
 
