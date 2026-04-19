@@ -79,10 +79,10 @@ function handlePackageUpload(e) {
         for (let i = 0; i < results.data.length - 1; i++) {
           let data = {};
 
-          data.num = results.data[i].itemNum;
-          data.type = results.data[i].type;
-          data.description = results.data[i].description;
-          data.value = results.data[i].value;
+          data.num = results.data[i].PackageNum;
+          data.type = results.data[i].Type;
+          data.description = results.data[i].Description;
+          data.value = results.data[i].Value;
 
           store.dispatch("createAucItem", data);
         }
@@ -104,8 +104,8 @@ function handleBidderUpload(e) {
         for (let i = 0; i < results.data.length - 1; i++) {
           let data = {};
 
-          data.num = results.data[i].bidderNum;
-          data.name = results.data[i].bidderName;
+          data.num = results.data[i].BidderNum;
+          data.name = results.data[i].BidderName;
 
           store.dispatch("createBidder", data);
         }

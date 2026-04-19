@@ -59,17 +59,18 @@
             The list is empty! Please upload package data or manually add
             entries
           </h2>
+          <h3>Expected Headers: PackageNum, Type, Description, Value</h3>
         </div>
         <div v-else class="table-container">
           <table>
             <tr class="table-headers">
-              <th>Package #</th>
+              <th>PackageNum</th>
               <th>Type</th>
               <th>Description</th>
               <th>Value</th>
-              <th>Bidder #</th>
-              <th>Bidder Name</th>
-              <th>Winning Amnt</th>
+              <th>BidderNum</th>
+              <th>BidderName</th>
+              <th>WinningAmnt</th>
               <th></th>
             </tr>
             <tr v-for="(i, index) in aucItems" :key="index">
@@ -106,6 +107,7 @@
             The list is empty! Please upload package data or manually add
             entries
           </h2>
+          <h3>Expected Headers: BudderNum, BidderName</h3>
         </div>
         <div v-else class="table-container">
           <table>
@@ -259,6 +261,12 @@ h2 {
   color: #a04545;
 }
 
+h3 {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+
 .empty {
   padding: 2rem;
 }
@@ -375,7 +383,7 @@ td {
 .dynamic-content {
   font-size: 24px;
   font-weight: bold;
-  margin-top: 20rem;
+  margin-top: 22rem;
 }
 
 .bidder-info {
@@ -473,6 +481,7 @@ td {
   border: none;
   padding: 6px;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .selected-tab {
