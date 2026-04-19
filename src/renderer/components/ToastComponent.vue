@@ -1,5 +1,5 @@
 <template>
-  <div class="toast-container">
+  <div class="toast-container" :class="color">
     <img src="../assets/check.png" class="check-icon" />
     {{ message }}
   </div>
@@ -8,7 +8,7 @@
 <script setup>
 import { defineProps } from "vue";
 
-defineProps({ message: String });
+defineProps({ message: String, color: String });
 </script>
 
 <style>
@@ -21,11 +21,19 @@ defineProps({ message: String });
   height: 1rem;
   z-index: 900;
   display: flex;
-  background-color: mediumseagreen;
+  background-color: cornflowerblue;
   color: white;
   border-radius: 5px;
   justify-content: center;
   align-items: center;
+}
+
+.success {
+  background-color: mediumseagreen;
+}
+
+.error {
+  background-color: #a04545;
 }
 
 .check-icon {

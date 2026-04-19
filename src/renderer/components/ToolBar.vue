@@ -51,7 +51,7 @@
       </div>
     </div>
   </div>
-  <ToastComponent v-if="toastOpen" :message="'Successfully uploaded logo'" />
+  <ToastComponent v-if="toastOpen" :message="toastText" :color="toastColor" />
 </template>
 
 <script setup>
@@ -69,6 +69,8 @@ const openSingleGenerateModal = ref(false);
 const openMultiGenerateModal = ref(false);
 
 const toastOpen = ref(false);
+const toastText = ref("");
+const toastColor = ref("");
 
 function handlePackageUpload(e) {
   const file = e.target.files[0];
@@ -82,12 +84,24 @@ function handlePackageUpload(e) {
         for (let i = 0; i < results.data.length - 1; i++) {
           let data = {};
 
-          data.num = results.data[i].PackageNum;
-          data.type = results.data[i].Type;
-          data.description = results.data[i].Description;
-          data.value = results.data[i].Value;
+          if (
+            "PackageNum" in results.data[i] &&
+            "Type" in results.data[i] &&
+            "Description" in results.data[i] &&
+            "Value" in results.data[i]
+          ) {
+            data.num = results.data[i].PackageNum;
+            data.type = results.data[i].Type;
+            data.description = results.data[i].Description;
+            data.value = results.data[i].Value;
 
-          store.dispatch("createAucItem", data);
+            store.dispatch("createAucItem", data);
+          } else {
+            toastText.value = "Error: column names did not match!";
+            toastColor.value = "error";
+            toastOpen.value = true;
+            setTimeout(() => (toastOpen.value = false), 3000);
+          }
         }
       },
     });
@@ -128,8 +142,10 @@ async function handleLogoUpload(e) {
 
       await store.dispatch("createLogo", arrayBuffer);
 
+      toastText.value = "Successfully uploaded logo";
+      toastColor.value = "success";
       toastOpen.value = true;
-      setTimeout(() => (toastOpen.value = false), 2000);
+      setTimeout(() => (toastOpen.value = false), 3000);
     } catch (error) {
       console.error("Conversion failed:", error);
     }
