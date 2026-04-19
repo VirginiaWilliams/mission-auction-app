@@ -29,7 +29,7 @@
           </button>
         </div>
         <div class="logo-preview-container">
-          Current Logo Preview:
+          Current Logo:
           <img src="" id="logo-preview" class="logo-preview" alt="Mission Auction Logo">
         </div>
       </div>

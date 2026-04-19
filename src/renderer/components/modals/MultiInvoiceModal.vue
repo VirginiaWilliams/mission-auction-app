@@ -15,6 +15,15 @@
             Generate
           </button>
         </div>
+        <div class="multi-logo-preview-container">
+          Current Logo:
+          <img
+            src=""
+            id="multi-logo-preview"
+            class="multi-logo-preview"
+            alt="Mission Auction Logo"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -81,7 +90,7 @@
 
 <script setup>
 import { defineEmits, useStore } from "vuex";
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 
 const store = useStore();
 
@@ -103,6 +112,19 @@ async function generatePDF() {
 function cancel() {
   emit("close-generate-multi-modal");
 }
+
+onMounted(async () => {
+  await store.dispatch("getLogo");
+  const logo = store.getters.logo;
+  if (logo) {
+    const imageElement = document.getElementById("pdf-image");
+    console.log(imageElement);
+    imageElement.src = logo;
+
+    const imagePreview = document.getElementById("multi-logo-preview");
+    imagePreview.src = logo;
+  }
+});
 </script>
 
 <style>
@@ -175,6 +197,19 @@ function cancel() {
 .print-content,
 .print-content * {
   display: none;
+}
+
+.multi-logo-preview-container {
+  display: flex;
+  flex-direction: column;
+  border-top: solid 1px rgb(186, 186, 186);
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+
+.multi-logo-preview {
+  margin-top: 1rem;
+  width: 8rem;
 }
 
 @media print {
