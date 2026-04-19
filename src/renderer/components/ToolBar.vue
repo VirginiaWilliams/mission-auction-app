@@ -47,7 +47,7 @@
         All Invoices
       </div>
       <div class="button generate-report" @click="generateReport">
-        Final Report
+        Final CSV Report
       </div>
     </div>
     <!-- <img id="myImage" src="" alt="Dynamically loaded image" /> -->
