@@ -42,9 +42,16 @@ import { ref } from "vue";
 
 const store = useStore();
 
+store.dispatch("getBidders");
+
 const emit = defineEmits(["close-bidder-modal"]);
 
-const newNum = ref();
+const newNum = ref(
+  Math.max(...store.getters.bidders.map((item) => item.num)) + 1
+);
+if (newNum.value <= 0) {
+  newNum.value = 1;
+}
 const newName = ref("");
 
 function cancel() {
