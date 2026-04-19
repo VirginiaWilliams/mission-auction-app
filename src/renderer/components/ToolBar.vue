@@ -50,8 +50,8 @@
         Final CSV Report
       </div>
     </div>
-    <!-- <img id="myImage" src="" alt="Dynamically loaded image" /> -->
   </div>
+  <ToastComponent v-if="toastOpen" :message="'Successfully uploaded logo'" />
 </template>
 
 <script setup>
@@ -60,12 +60,15 @@ import { useStore } from "vuex";
 import { ref } from "vue";
 import SingleInvoiceModal from "./modals/SingleInvoiceModal";
 import MultiInvoiceModal from "./modals/MultiInvoiceModal";
+import ToastComponent from "./ToastComponent";
 import { convertJpgToPng } from "../helpers/logoHandling";
 
 const store = useStore();
 
 const openSingleGenerateModal = ref(false);
 const openMultiGenerateModal = ref(false);
+
+const toastOpen = ref(false);
 
 function handlePackageUpload(e) {
   const file = e.target.files[0];
@@ -123,7 +126,10 @@ async function handleLogoUpload(e) {
 
       const arrayBuffer = await pngBlob.arrayBuffer();
 
-      store.dispatch("createLogo", arrayBuffer);
+      await store.dispatch("createLogo", arrayBuffer);
+
+      toastOpen.value = true;
+      setTimeout(() => (toastOpen.value = false), 2000);
     } catch (error) {
       console.error("Conversion failed:", error);
     }
