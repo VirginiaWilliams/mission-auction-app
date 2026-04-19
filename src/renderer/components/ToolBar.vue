@@ -97,7 +97,7 @@ function handlePackageUpload(e) {
 
             store.dispatch("createAucItem", data);
           } else {
-            toastText.value = "Error: column names did not match!";
+            toastText.value = "Error: incorrect format!";
             toastColor.value = "error";
             toastOpen.value = true;
             setTimeout(() => (toastOpen.value = false), 3000);
@@ -121,10 +121,20 @@ function handleBidderUpload(e) {
         for (let i = 0; i < results.data.length - 1; i++) {
           let data = {};
 
-          data.num = results.data[i].BidderNum;
-          data.name = results.data[i].BidderName;
+          if (
+            "BidderNum" in results.data[i] &&
+            "BidderName" in results.data[i]
+          ) {
+            data.num = results.data[i].BidderNum;
+            data.name = results.data[i].BidderName;
 
-          store.dispatch("createBidder", data);
+            store.dispatch("createBidder", data);
+          } else {
+            toastText.value = "Error: incorrect format!";
+            toastColor.value = "error";
+            toastOpen.value = true;
+            setTimeout(() => (toastOpen.value = false), 3000);
+          }
         }
       },
     });
