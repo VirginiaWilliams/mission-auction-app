@@ -41,7 +41,7 @@
           </div>
           <div class="header-col2">
             <img
-              src="../../assets/logo.png"
+              :src="imageSrc"
               id="pdf-image"
               class="pdf-image"
               alt="Mission Auction Logo"
@@ -90,7 +90,7 @@
 
 <script setup>
 import { defineEmits, useStore } from "vuex";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 const store = useStore();
 
@@ -103,6 +103,8 @@ const packageMap = computed(() => {
 const totalsMap = computed(() => {
   return store.getters.bidderTotalsMap;
 });
+
+const imageSrc = ref("");
 
 async function generatePDF() {
   window.print();
@@ -117,9 +119,7 @@ onMounted(async () => {
   await store.dispatch("getLogo");
   const logo = store.getters.logo;
   if (logo) {
-    const imageElement = document.getElementById("pdf-image");
-    console.log(imageElement);
-    imageElement.src = logo;
+    imageSrc.value = logo;
 
     const imagePreview = document.getElementById("multi-logo-preview");
     imagePreview.src = logo;
