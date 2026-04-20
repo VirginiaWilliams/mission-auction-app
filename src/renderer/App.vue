@@ -383,7 +383,7 @@ td {
 .dynamic-content {
   font-size: 24px;
   font-weight: bold;
-  margin-top: 22rem;
+  margin-top: 25rem;
 }
 
 .bidder-info {

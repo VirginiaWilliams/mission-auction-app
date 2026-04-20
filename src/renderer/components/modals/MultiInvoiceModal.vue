@@ -265,6 +265,7 @@ onMounted(async () => {
 
   .page-break {
     break-after: page;
+    page-break-after: always;
   }
 }
 </style>
