@@ -97,6 +97,17 @@ export default createStore({
 
     // ********** Maps **********
     setMaps: async (ctx) => {
+      if (ctx.state.bidderPackageMap || ctx.state.bidderTotalsMap) {
+        if (ctx.state.bidderPackageMap.size > 0) {
+          ctx.state.bidderPackageMap.clear();
+        }
+        if (ctx.state.bidderTotalsMap.size > 0) {
+          ctx.state.bidderTotalsMap.clear();
+        }
+      }
+
+      console.log("ctx.state.bidderPackageMap: ", ctx.state.bidderPackageMap);
+
       ctx.state.aucItems.forEach((p) => {
         if (p.bidderName != "") {
           // Add to bidder -> package map
