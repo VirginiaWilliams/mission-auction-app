@@ -107,7 +107,7 @@
             The list is empty! Please upload package data or manually add
             entries
           </h2>
-          <h3>Expected Headers: BudderNum, BidderName</h3>
+          <h3>Expected Headers: BidderNum, BidderName</h3>
         </div>
         <div v-else class="table-container">
           <table>
