@@ -377,7 +377,7 @@ td {
 
 .header-col2 {
   grid-column: 2;
-  width: 20rem;
+  width: 16rem;
 }
 
 .dynamic-content {
