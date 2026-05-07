@@ -6,7 +6,7 @@
         <div class="modal-title">Generate Invoice</div>
         <div class="modal-content">
           <div class="input-field-container">
-            <label for="bidder-id" class="bidder-id-label"> Bidder ID </label>
+            <label for="bidder-id" class="bidder-id-label"> Bidder Name </label>
             <input
               v-model="bidderName"
               type="list"
