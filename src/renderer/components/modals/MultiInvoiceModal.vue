@@ -107,8 +107,15 @@ const totalsMap = computed(() => {
 const imageSrc = ref("");
 
 async function generatePDF() {
+  const bidderlist = document.getElementById("bidder-list");
+  if (bidderlist) bidderlist.replaceChildren();
+
+  const packagelist = document.getElementById("package-list");
+  if (packagelist) packagelist.replaceChildren();
+
   window.print();
   emit("close-generate-multi-modal");
+  window.location.reload();
 }
 
 function cancel() {
