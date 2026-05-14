@@ -41,7 +41,7 @@
           </div>
           <div class="header-col2">
             <img
-              :src="imageSrc"
+              src="../../assets/logo.png"
               id="pdf-image"
               class="pdf-image"
               alt="Mission Auction Logo"
