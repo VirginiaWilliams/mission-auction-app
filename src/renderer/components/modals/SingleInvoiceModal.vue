@@ -120,9 +120,16 @@ function setValues() {
   }
 }
 
-function generatePDF() {
+async function generatePDF() {
+  const bidderlist = document.getElementById("bidder-list");
+  if (bidderlist) bidderlist.replaceChildren();
+
+  const packagelist = document.getElementById("package-list");
+  if (packagelist) packagelist.replaceChildren();
+
   window.print();
   emit("close-generate-modal");
+  window.location.reload();
 }
 
 function cancel() {

@@ -68,7 +68,7 @@
             <div class="winning-item">
               <div class="item-col1 pdf-total">Total:</div>
               <div class="item-col2 pdf-total">
-                ${{ totalsMap.get(bidder[0].bidderName) }}
+                $ {{ totalsMap.get(bidder[0].bidderName) }}
               </div>
             </div>
             <div class="bottom-section">

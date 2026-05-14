@@ -53,7 +53,11 @@
           >
         </div>
       </header>
-      <div class="package-list" v-if="isTablePackage == 'packages'">
+      <div
+        id="package-list"
+        class="package-list"
+        v-if="isTablePackage == 'packages'"
+      >
         <div class="empty" v-if="aucItems.length === 0">
           <h2>
             The list is empty! Please upload package data or manually add
@@ -101,7 +105,11 @@
           >CLEAR ALL TABLES</span
         >
       </div>
-      <div class="bidder-list" v-if="isTablePackage == 'bidders'">
+      <div
+        id="bidder-list"
+        class="bidder-list"
+        v-if="isTablePackage == 'bidders'"
+      >
         <div class="empty" v-if="bidders.length === 0">
           <h2>
             The list is empty! Please upload package data or manually add
