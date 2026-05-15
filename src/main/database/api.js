@@ -59,26 +59,12 @@ async function CreateBidder(data) {
 }
 
 async function EditBidder(data) {
-  console.log("----------- 1");
   let bidder = await Bidder.findByPk(data.id);
 
   bidder.num = data.num;
   bidder.name = data.name;
 
   return await bidder.save();
-
-  // console.log("----------- 2");
-  // console.log("----------- id: ", data.num);
-
-  // let packages = await AucItem.findAll({
-  //   where: {
-  //     bidderId: 1,
-  //   },
-  // });
-  // console.log("----------- packages: ", packages);
-  // packages.forEach((item) => {
-  //   console.log("----------- item: ", item);
-  // });
 }
 
 async function ReadBidder() {

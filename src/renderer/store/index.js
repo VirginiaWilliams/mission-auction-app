@@ -20,7 +20,13 @@ export default createStore({
       return state.logo;
     },
     bidderPackageMap: (state) => {
-      return state.bidderPackageMap;
+      const sortedArray = Array.from(state.bidderPackageMap.entries());
+      sortedArray.sort((a, b) => {
+        return a[1][0].bidderNum - b[1][0].bidderNum;
+      });
+
+      const sortedMap = new Map(sortedArray);
+      return sortedMap;
     },
     bidderTotalsMap: (state) => {
       return state.bidderTotalsMap;
@@ -45,7 +51,6 @@ export default createStore({
     },
 
     editAucItem: async (ctx, data) => {
-      console.log("editAucItem: ", data);
       let response = await window.ipc.invoke("edit-aucItem", data);
 
       if (response.status === true) {
@@ -114,8 +119,6 @@ export default createStore({
           ctx.state.bidderTotalsMap.clear();
         }
       }
-
-      console.log("ctx.state.bidderPackageMap: ", ctx.state.bidderPackageMap);
 
       ctx.state.aucItems.forEach((p) => {
         if (p.bidderName != "") {
