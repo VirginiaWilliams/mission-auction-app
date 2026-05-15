@@ -16,7 +16,7 @@ async function SyncDB() {
   await sequelize.sync();
 }
 
-// Third and final stop in the API action process
+// Third and final stop in API action process
 // ********** Auc Item **********
 async function ReadAucItem() {
   let aucItems;
