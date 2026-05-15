@@ -5,16 +5,6 @@
         <div class="modal-title">Edit Package</div>
         <form @submit.prevent="editAucItem">
           <div class="input-field-container">
-            <label for="num">Num</label>
-            <input
-              v-model="newNum"
-              type="number"
-              name="num"
-              class="short-input-field"
-              required
-            />
-          </div>
-          <div class="input-field-container">
             <label for="description">Desc</label>
             <input
               v-model="newDescription"

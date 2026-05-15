@@ -73,12 +73,7 @@ store.dispatch("getAucItems");
 
 const emit = defineEmits(["close-auc-modal"]);
 
-const newNum = ref(
-  Math.max(...store.getters.aucItems.map((item) => item.num)) + 1
-);
-if (newNum.value <= 0) {
-  newNum.value = 1;
-}
+const newNum = ref("");
 const newDescription = ref("");
 const newValue = ref();
 const newType = ref("");

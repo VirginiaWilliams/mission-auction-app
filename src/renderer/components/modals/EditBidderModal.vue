@@ -2,18 +2,8 @@
   <div class="edit-bidder-container">
     <div class="form-wrapper">
       <div class="form-modal">
-        <div class="modal-title">Edit Package</div>
+        <div class="modal-title">Edit Bidder</div>
         <form @submit.prevent="editBidder">
-          <div class="input-field-container">
-            <label for="num">Num</label>
-            <input
-              v-model="newNum"
-              type="number"
-              name="num"
-              class="short-input-field"
-              required
-            />
-          </div>
           <div class="input-field-container">
             <label for="name">Name</label>
             <input
