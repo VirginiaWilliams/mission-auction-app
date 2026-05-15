@@ -46,7 +46,9 @@
           503-658-5650<br />
           Fed ID# 93-0719295<br />
         </div>
-        <div class="header-col2"><img src="../../assets/logo.png" id="pdf-image" class="pdf-image" alt="Mission Auction Logo"></div>
+        <div class="header-col2">
+          <img src="../../assets/logo.png" id="pdf-image" class="pdf-image" alt="Mission Auction Logo">
+        </div>
       </div>
       <div class="dynamic-content">
         <div class="bidder-info">
@@ -148,9 +150,6 @@ onMounted(async () => {
   await store.dispatch("getLogo");
   const logo = store.getters.logo;
   if (logo) {
-    const imageElement = document.getElementById("pdf-image");
-    imageElement.src = logo;
-
     const imagePreview = document.getElementById("logo-preview");
     imagePreview.src = logo;
   }
