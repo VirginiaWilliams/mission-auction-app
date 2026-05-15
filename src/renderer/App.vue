@@ -22,6 +22,23 @@
       @submit-delete-all-modal="deleteAllItems"
       v-if="openDeleteAllModal"
     />
+    <EditAucModal
+      @close-edit-auc-modal="openAucEditModal = false"
+      v-if="openAucEditModal"
+      :id="packageToEdit.id"
+      :num="packageToEdit.num"
+      :description="packageToEdit.description"
+      :type="packageToEdit.type"
+      :value="packageToEdit.value"
+      :winningAmount="packageToEdit.winningAmount"
+    />
+    <EditBidderModal
+      @close-edit-bidder-modal="openBidderEditModal = false"
+      v-if="openBidderEditModal"
+      :id="bidderToEdit.id"
+      :num="bidderToEdit.num"
+      :name="bidderToEdit.name"
+    />
     <ToolBar />
     <div class="page-content">
       <header>
@@ -87,11 +104,15 @@
               <td>{{ i.winningAmount == 0 ? "" : i.winningAmount }}</td>
               <td>
                 <div class="action-container">
-                  <!-- <img src="./assets/pencil.png" class="button edit" /> -->
+                  <img
+                    src="./assets/pencil.png"
+                    class="button edit"
+                    @click="handlePackageUpdate(i)"
+                  />
                   <img
                     src="./assets/trash.png"
-                    @click="handlePackageDelete(i.id)"
                     class="button delete"
+                    @click="handlePackageDelete(i.id)"
                   />
                 </div>
               </td>
@@ -130,6 +151,11 @@
               <td>
                 <div class="action-container">
                   <img
+                    src="./assets/pencil.png"
+                    class="button edit"
+                    @click="handleBidderUpdate(i)"
+                  />
+                  <img
                     src="./assets/trash.png"
                     @click="handleBidderDelete(i.id)"
                     class="button delete"
@@ -157,6 +183,8 @@ import AddBidderModal from "./components/modals/AddBidderModal";
 import AddLinkModal from "./components/modals/AddLinkModal";
 import ConfirmationModal from "./components/modals/ConfirmationModal";
 import DeleteAllModal from "./components/modals/DeleteAllModal";
+import EditAucModal from "./components/modals/EditAucModal";
+import EditBidderModal from "./components/modals/EditBidderModal";
 import ToolBar from "./components/ToolBar";
 import SourceLink from "./components/SourceLink";
 import { useStore } from "vuex";
@@ -182,9 +210,13 @@ const openAddBidderModal = ref(false);
 const openAddLinkModal = ref(false);
 const openConfirmationModal = ref(false);
 const openDeleteAllModal = ref(false);
+const openAucEditModal = ref(false);
+const openBidderEditModal = ref(false);
 
 const packageIdToDelete = ref();
 const bidderIdToDelete = ref();
+const packageToEdit = ref();
+const bidderToEdit = ref();
 
 function deleteItem() {
   if (packageIdToDelete.value && packageIdToDelete.value != "") {
@@ -201,6 +233,16 @@ function deleteItem() {
 function handlePackageDelete(id) {
   packageIdToDelete.value = id;
   openConfirmationModal.value = true;
+}
+
+function handlePackageUpdate(item) {
+  packageToEdit.value = item;
+  openAucEditModal.value = true;
+}
+
+function handleBidderUpdate(item) {
+  bidderToEdit.value = item;
+  openBidderEditModal.value = true;
 }
 
 function handleBidderDelete(id) {

@@ -45,6 +45,7 @@ export default createStore({
     },
 
     editAucItem: async (ctx, data) => {
+      console.log("editAucItem: ", data);
       let response = await window.ipc.invoke("edit-aucItem", data);
 
       if (response.status === true) {
@@ -70,6 +71,14 @@ export default createStore({
 
     createBidder: async (ctx, data) => {
       let response = await window.ipc.invoke("create-bidder", data);
+
+      if (response.status === true) {
+        ctx.dispatch("getBidders");
+      }
+    },
+
+    editBidder: async (ctx, data) => {
+      let response = await window.ipc.invoke("edit-bidder", data);
 
       if (response.status === true) {
         ctx.dispatch("getBidders");

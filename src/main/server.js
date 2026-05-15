@@ -5,6 +5,7 @@ import {
   EditAucItem,
   DeleteAucItem,
   CreateBidder,
+  EditBidder,
   ReadBidder,
   DeleteBidder,
   // CreateLogo,
@@ -75,6 +76,18 @@ async function server() {
     ipcMain.handle("create-bidder", async (e, data) => {
       try {
         await CreateBidder(data);
+
+        return {
+          status: true,
+        };
+      } catch (err) {
+        return { status: false, data: err };
+      }
+    });
+
+    ipcMain.handle("edit-bidder", async (e, data) => {
+      try {
+        await EditBidder(data);
 
         return {
           status: true,

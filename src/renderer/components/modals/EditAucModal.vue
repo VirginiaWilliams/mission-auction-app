@@ -1,9 +1,9 @@
 <template>
-  <div class="add-auc-container">
+  <div class="edit-auc-container">
     <div class="form-wrapper">
       <div class="form-modal">
-        <div class="modal-title">Add Package</div>
-        <form @submit.prevent="addAucItem">
+        <div class="modal-title">Edit Package</div>
+        <form @submit.prevent="editAucItem">
           <div class="input-field-container">
             <label for="num">Num</label>
             <input
@@ -51,11 +51,24 @@
             <option value="Silent"></option>
             <option value="Live"></option>
           </datalist>
+          <div class="input-field-container">
+            <label for="winningAmount">Winning Amount</label>
+            <input
+              v-model="newWinningAmount"
+              type="number"
+              name="winningAmount"
+              class="short-input-field"
+              required
+            />
+          </div>
           <footer>
+            <div class="note-container">
+              Note: bidder info must be edited from the bidder table
+            </div>
             <button @click="cancel" type="button" class="button secondary">
               Cancel
             </button>
-            <button type="submit" class="button primary">Add</button>
+            <button type="submit" class="button primary">Submit</button>
           </footer>
         </form>
       </div>
@@ -65,38 +78,46 @@
 
 <script setup>
 import { useStore, defineEmits } from "vuex";
-import { ref } from "vue";
+import { ref, defineProps } from "vue";
 
 const store = useStore();
 
+const props = defineProps({
+  id: Number,
+  num: String,
+  description: String,
+  type: String,
+  value: String,
+  winningAmount: String,
+});
+
 store.dispatch("getAucItems");
 
-const emit = defineEmits(["close-auc-modal"]);
+const emit = defineEmits(["close-edit-auc-modal"]);
 
-const newNum = ref(
-  Math.max(...store.getters.aucItems.map((item) => item.num)) + 1
-);
-if (newNum.value <= 0) {
-  newNum.value = 1;
-}
-const newDescription = ref("");
-const newValue = ref();
-const newType = ref("");
+const newNum = ref(props.num);
+const newDescription = ref(props.description);
+const newType = ref(props.type);
+const newValue = ref(props.value);
+const newWinningAmount = ref(props.winningAmount);
 
 function cancel() {
-  emit("close-auc-modal");
+  emit("close-edit-auc-modal");
 }
 
-function addAucItem() {
+function editAucItem() {
   let data = {};
 
+  data.id = props.id;
   data.num = newNum.value;
   data.description = newDescription.value;
   data.type = newType.value;
   data.value = newValue.value;
+  data.winningAmount = newWinningAmount.value;
 
-  store.dispatch("createAucItem", data);
-  emit("close-auc-modal");
+  store.dispatch("editAucItem", data);
+
+  emit("close-edit-auc-modal");
 }
 </script>
 
@@ -129,7 +150,7 @@ function addAucItem() {
 .modal-title {
   font-size: 20px;
   font-weight: bold;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 form {
@@ -141,6 +162,13 @@ form {
   margin-left: 0;
   margin-right: auto;
   margin-bottom: 1rem;
+}
+
+.note-container {
+  font-size: 14px;
+  margin-left: 0;
+  margin-right: auto;
+  margin-bottom: 2rem;
 }
 
 label {

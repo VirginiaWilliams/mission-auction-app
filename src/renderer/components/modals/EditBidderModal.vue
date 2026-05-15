@@ -1,9 +1,9 @@
 <template>
-  <div class="add-auc-container">
+  <div class="edit-bidder-container">
     <div class="form-wrapper">
       <div class="form-modal">
-        <div class="modal-title">Add Package</div>
-        <form @submit.prevent="addAucItem">
+        <div class="modal-title">Edit Package</div>
+        <form @submit.prevent="editBidder">
           <div class="input-field-container">
             <label for="num">Num</label>
             <input
@@ -15,47 +15,20 @@
             />
           </div>
           <div class="input-field-container">
-            <label for="description">Desc</label>
+            <label for="name">Name</label>
             <input
-              v-model="newDescription"
+              v-model="newName"
               type="textarea"
-              name="description"
-              placeholder="Enter the Item Description"
+              name="name"
+              placeholder="Enter new Name"
               required
             />
           </div>
-          <div class="input-field-container">
-            <label for="value">Value</label>
-            <input
-              v-model="newValue"
-              type="number"
-              name="value"
-              class="short-input-field"
-              required
-            />
-          </div>
-          <div class="input-field-container">
-            <label for="type">Type</label>
-            <input
-              v-model="newType"
-              type="list"
-              id="type"
-              list="options"
-              name="type"
-              class="short-input-field"
-              required
-            />
-          </div>
-          <datalist id="options">
-            <option value="Oral"></option>
-            <option value="Silent"></option>
-            <option value="Live"></option>
-          </datalist>
           <footer>
             <button @click="cancel" type="button" class="button secondary">
               Cancel
             </button>
-            <button type="submit" class="button primary">Add</button>
+            <button type="submit" class="button primary">Submit</button>
           </footer>
         </form>
       </div>
@@ -65,38 +38,62 @@
 
 <script setup>
 import { useStore, defineEmits } from "vuex";
-import { ref } from "vue";
+import { ref, defineProps, computed } from "vue";
 
 const store = useStore();
 
+const props = defineProps({
+  id: Number,
+  num: String,
+  name: String,
+});
+
+store.dispatch("getBidders");
 store.dispatch("getAucItems");
 
-const emit = defineEmits(["close-auc-modal"]);
+const aucItems = computed(() => {
+  return store.getters.aucItems;
+});
 
-const newNum = ref(
-  Math.max(...store.getters.aucItems.map((item) => item.num)) + 1
-);
-if (newNum.value <= 0) {
-  newNum.value = 1;
-}
-const newDescription = ref("");
-const newValue = ref();
-const newType = ref("");
+const emit = defineEmits(["close-edit-bidder-modal"]);
+
+const newNum = ref(props.num);
+const newName = ref(props.name);
 
 function cancel() {
-  emit("close-auc-modal");
+  emit("close-edit-bidder-modal");
 }
 
-function addAucItem() {
+function editBidder() {
   let data = {};
 
+  data.id = props.id;
   data.num = newNum.value;
-  data.description = newDescription.value;
-  data.type = newType.value;
-  data.value = newValue.value;
+  data.name = newName.value;
 
-  store.dispatch("createAucItem", data);
-  emit("close-auc-modal");
+  store.dispatch("editBidder", data);
+
+  const filteredAuc = aucItems.value.filter(
+    (item) => item.bidderNum === props.num
+  );
+
+  filteredAuc.forEach((item) => {
+    let data = {};
+
+    data.id = item.id;
+    data.num = item.num;
+    data.type = item.type;
+    data.description = item.description;
+    data.value = item.value;
+    data.winningAmount = item.winningAmount;
+    data.bidderNum = item.bidderNum;
+    data.bidderName = newName.value;
+
+    console.log("item: ", data);
+    store.dispatch("editAucItem", data);
+  });
+
+  emit("close-edit-bidder-modal");
 }
 </script>
 
@@ -129,7 +126,7 @@ function addAucItem() {
 .modal-title {
   font-size: 20px;
   font-weight: bold;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 form {
@@ -141,6 +138,13 @@ form {
   margin-left: 0;
   margin-right: auto;
   margin-bottom: 1rem;
+}
+
+.note-container {
+  font-size: 14px;
+  margin-left: 0;
+  margin-right: auto;
+  margin-bottom: 2rem;
 }
 
 label {
