@@ -99,11 +99,13 @@ function handlePackageUpload(e) {
             data.num = results.data[i].PackageNum;
             data.type = results.data[i].Type;
             data.description = results.data[i].Description;
-            data.value = results.data[i].Value;
+
+            const valueStripped = results.data[i].Value.replace("$", "");
+            data.value = Number(valueStripped);
 
             store.dispatch("createAucItem", data);
           } else {
-            toastText.value = "Error: incorrect format!";
+            toastText.value = "Error: incorrect header format!";
             toastColor.value = "error";
             toastOpen.value = true;
             setTimeout(() => (toastOpen.value = false), 3000);
@@ -136,7 +138,7 @@ function handleBidderUpload(e) {
 
             store.dispatch("createBidder", data);
           } else {
-            toastText.value = "Error: incorrect format!";
+            toastText.value = "Error: incorrect header format!";
             toastColor.value = "error";
             toastOpen.value = true;
             setTimeout(() => (toastOpen.value = false), 3000);
