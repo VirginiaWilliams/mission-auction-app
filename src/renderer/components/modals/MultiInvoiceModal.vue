@@ -28,7 +28,7 @@
     </div>
   </div>
   <div class="print-content">
-    <div v-for="(bidder, index) in packageMap.values()" :key="index">
+    <div v-for="(bidder, index) in packageMap" :key="index">
       <div class="pdf-content">
         <div class="header-container">
           <div class="header-col1">
@@ -52,13 +52,13 @@
           <div class="bidder-info">
             <div class="bidder-name">
               <div class="bidder-name-col1">Name:</div>
-              <div class="bidder-name-col2">{{ bidder[0].bidderName }}</div>
+              <div class="bidder-name-col2">{{ bidder[0] }}</div>
             </div>
-            <div>Bidder #: {{ bidder[0].bidderNum }}</div>
+            <div>Bidder #: {{ bidder[1][0].bidderNum }}</div>
           </div>
           <div class="bidder-winnings">
             <div
-              v-for="(item, index) in bidder"
+              v-for="(item, index) in bidder[1]"
               :key="index"
               class="winning-item"
             >
@@ -68,7 +68,7 @@
             <div class="winning-item">
               <div class="item-col1 pdf-total">Total:</div>
               <div class="item-col2 pdf-total">
-                $ {{ totalsMap.get(bidder[0].bidderName) }}
+                $ {{ totalsMap.get(bidder[0]) }}
               </div>
             </div>
             <div class="bottom-section">
@@ -97,7 +97,15 @@ const store = useStore();
 const emit = defineEmits(["close-generate-multi-modal"]);
 
 const packageMap = computed(() => {
-  return store.getters.bidderPackageMap;
+  console.log(
+    "--------------------- store.getters.bidderPackageMap: ",
+    store.getters.bidderPackageMap
+  );
+  let test = Array.from(store.getters.bidderPackageMap);
+  console.log("type ", typeof test);
+  test = test.flatMap((el) => [el, el]);
+  console.log("test: ", test);
+  return test;
 });
 
 const totalsMap = computed(() => {
