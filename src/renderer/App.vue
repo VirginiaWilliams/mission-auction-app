@@ -268,7 +268,7 @@ function handleBidderDelete(id) {
 }
 
 function removeLink(link) {
-  store.dispatch("deleteLink", link.id);
+  store.dispatch("deleteLink", link.bidder_aucItem.id);
 }
 
 function deleteAllItems() {

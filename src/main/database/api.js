@@ -103,7 +103,6 @@ async function AddLink(data) {
 }
 
 async function DeleteLink(id) {
-  console.log("############ 2", id);
   return BidderAucItem.destroy({
     where: { id },
   });

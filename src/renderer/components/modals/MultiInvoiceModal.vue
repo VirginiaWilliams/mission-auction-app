@@ -97,14 +97,8 @@ const store = useStore();
 const emit = defineEmits(["close-generate-multi-modal"]);
 
 const packageMap = computed(() => {
-  console.log(
-    "--------------------- store.getters.bidderPackageMap: ",
-    store.getters.bidderPackageMap
-  );
   let test = Array.from(store.getters.bidderPackageMap);
-  console.log("type ", typeof test);
   test = test.flatMap((el) => [el, el]);
-  console.log("test: ", test);
   return test;
 });
 
