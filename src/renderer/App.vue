@@ -89,7 +89,7 @@
               <th>Type</th>
               <th>Description</th>
               <th>Value</th>
-              <th>BidderNum BidderName WinningAmnt</th>
+              <th>BidderNum | BidderName | WinningAmnt</th>
               <th></th>
             </tr>
             <tr v-for="(i, index) in aucItems" :key="index">
@@ -99,24 +99,44 @@
               <td>{{ i.value }}</td>
               <td>
                 <div v-if="i.Bidders">
-                  <div v-for="(j, index) in i.Bidders" :key="index">
-                    <td>{{ j.num == 0 ? "" : j.num }}</td>
-                    <td>{{ j.name }}</td>
-                    <td>
+                  <tr
+                    v-for="(j, index) in i.Bidders"
+                    :key="index"
+                    class="inner-table-row"
+                  >
+                    <td
+                      class="inner-table"
+                      :class="index % 2 != 0 ? 'table-dark' : ''"
+                    >
+                      {{ j.num == 0 ? "" : j.num }}
+                    </td>
+                    <td
+                      class="inner-table"
+                      :class="index % 2 != 0 ? 'table-dark' : ''"
+                    >
+                      {{ j.name }}
+                    </td>
+                    <td
+                      class="inner-table"
+                      :class="index % 2 != 0 ? 'table-dark' : ''"
+                    >
                       {{
                         j.bidder_aucItem.winningAmount == 0
                           ? ""
                           : j.bidder_aucItem.winningAmount
                       }}
                     </td>
-                    <td>
+                    <td
+                      class="inner-table"
+                      :class="index % 2 != 0 ? 'table-dark' : ''"
+                    >
                       <img
                         src="./assets/remove.png"
                         class="remove"
                         @click="removeLink(j)"
                       />
                     </td>
-                  </div>
+                  </tr>
                 </div>
               </td>
               <td>
@@ -563,5 +583,17 @@ td {
 .remove {
   width: 1rem;
   cursor: pointer;
+}
+
+.inner-table-row {
+  width: 100%;
+}
+
+.inner-table {
+  border: none;
+}
+
+.table-dark {
+  background-color: rgb(228, 228, 228);
 }
 </style>
