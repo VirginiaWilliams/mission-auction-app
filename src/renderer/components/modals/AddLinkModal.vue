@@ -66,6 +66,7 @@ const packageData = ref();
 
 const selectedPackageDesc = ref();
 const selectedBidderName = ref();
+const selectedBidderId = ref();
 
 const bidders = computed(() => {
   return store.getters.bidders;
@@ -81,8 +82,10 @@ function setValues() {
   );
   if (selectedBidder) {
     selectedBidderName.value = selectedBidder.name;
+    selectedBidderId.value = selectedBidder.id;
   } else {
     selectedBidderName.value = "";
+    selectedBidderId.value = null;
   }
 
   const temp = packages.value.find((p) => p.num === newPackageNum.value);
@@ -106,11 +109,15 @@ function addLink() {
   data.type = packageData.value.type;
   data.description = packageData.value.description;
   data.value = packageData.value.value;
-  data.winningAmount = newWinning.value;
-  data.bidderNum = newBidderNum.value;
-  data.bidderName = selectedBidderName.value;
+
+  let link = {};
+
+  link.AucItemId = packageData.value.id;
+  link.BidderId = selectedBidderId.value;
+  link.winningAmount = newWinning.value;
 
   store.dispatch("editAucItem", data);
+  store.dispatch("addLink", link);
   emit("close-link-modal");
 }
 </script>

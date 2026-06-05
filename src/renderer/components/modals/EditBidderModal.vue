@@ -28,7 +28,7 @@
 
 <script setup>
 import { useStore, defineEmits } from "vuex";
-import { ref, defineProps, computed } from "vue";
+import { ref, defineProps } from "vue";
 
 const store = useStore();
 
@@ -40,10 +40,6 @@ const props = defineProps({
 
 store.dispatch("getBidders");
 store.dispatch("getAucItems");
-
-const aucItems = computed(() => {
-  return store.getters.aucItems;
-});
 
 const emit = defineEmits(["close-edit-bidder-modal"]);
 
@@ -62,26 +58,7 @@ function editBidder() {
   data.name = newName.value;
 
   store.dispatch("editBidder", data);
-
-  const filteredAuc = aucItems.value.filter(
-    (item) => item.bidderNum === props.num
-  );
-
-  filteredAuc.forEach((item) => {
-    let data = {};
-
-    data.id = item.id;
-    data.num = item.num;
-    data.type = item.type;
-    data.description = item.description;
-    data.value = item.value;
-    data.winningAmount = item.winningAmount;
-    data.bidderNum = item.bidderNum;
-    data.bidderName = newName.value;
-
-    console.log("item: ", data);
-    store.dispatch("editAucItem", data);
-  });
+  store.dispatch("editAucItem", data);
 
   emit("close-edit-bidder-modal");
 }

@@ -98,6 +98,24 @@ export default createStore({
       }
     },
 
+    // ********** Link **********
+    addLink: async (ctx, data) => {
+      let response = await window.ipc.invoke("add-link", data);
+
+      if (response.status === true) {
+        ctx.dispatch("getAucItems");
+      }
+    },
+
+    deleteLink: async (ctx, id) => {
+      let response = await window.ipc.invoke("delete-link", id);
+
+      if (response.status === true) {
+        ctx.dispatch("getBidders");
+        ctx.dispatch("getAucItems");
+      }
+    },
+
     // ********** Logo **********
     getLogo: async (ctx) => {
       let response = await window.ipc.invoke("get-logo");

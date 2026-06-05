@@ -41,16 +41,6 @@
             <option value="Silent"></option>
             <option value="Live"></option>
           </datalist>
-          <div class="input-field-container">
-            <label for="winningAmount">Winning Amount</label>
-            <input
-              v-model="newWinningAmount"
-              type="number"
-              name="winningAmount"
-              class="short-input-field"
-              required
-            />
-          </div>
           <footer>
             <div class="note-container">
               Note: bidder info must be edited from the bidder table

@@ -1,4 +1,4 @@
-import { Sequelize } from "sequelize";
+import { Sequelize, DataTypes } from "sequelize";
 import AucItemModel from "./models/aucItem";
 import BidderModel from "./models/bidder";
 
@@ -9,6 +9,20 @@ const sequelize = new Sequelize({
 
 const AucItem = AucItemModel(sequelize);
 const Bidder = BidderModel(sequelize);
+const BidderAucItem = sequelize.define("bidder_aucItem", {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  winningAmount: {
+    type: DataTypes.INTEGER,
+    defaultValue: null,
+  },
+});
+
+AucItem.belongsToMany(Bidder, { through: BidderAucItem });
+Bidder.belongsToMany(AucItem, { through: BidderAucItem });
 
 SyncDB();
 
@@ -20,7 +34,10 @@ async function SyncDB() {
 // ********** Auc Item **********
 async function ReadAucItem() {
   let aucItems;
-  aucItems = await AucItem.findAll();
+
+  aucItems = await AucItem.findAll({
+    include: [{ model: Bidder }],
+  });
 
   return aucItems.map((aucItem) => {
     return aucItem.toJSON();
@@ -39,9 +56,6 @@ async function EditAucItem(data) {
   aucItem.type = data.type;
   aucItem.description = data.description;
   aucItem.value = data.value;
-  aucItem.winningAmount = data.winningAmount;
-  aucItem.bidderNum = data.bidderNum;
-  aucItem.bidderName = data.bidderName;
 
   return await aucItem.save();
 }
@@ -82,6 +96,19 @@ async function DeleteBidder(id) {
   });
 }
 
+// ********** Link **********
+async function AddLink(data) {
+  await BidderAucItem.create(data);
+  return;
+}
+
+async function DeleteLink(id) {
+  console.log("############ 2", id);
+  return BidderAucItem.destroy({
+    where: { id },
+  });
+}
+
 export {
   CreateAucItem,
   ReadAucItem,
@@ -91,4 +118,6 @@ export {
   EditBidder,
   ReadBidder,
   DeleteBidder,
+  AddLink,
+  DeleteLink,
 };

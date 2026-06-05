@@ -8,6 +8,8 @@ import {
   EditBidder,
   ReadBidder,
   DeleteBidder,
+  AddLink,
+  DeleteLink,
   // CreateLogo,
   // ReadLogo,
 } from "./database/api";
@@ -100,6 +102,29 @@ async function server() {
     ipcMain.handle("delete-bidder", async (e, id) => {
       try {
         await DeleteBidder(id);
+        return { status: true };
+      } catch (err) {
+        return { status: false, data: err.message };
+      }
+    });
+
+    // ********** Link **********
+
+    ipcMain.handle("add-link", async (e, data) => {
+      try {
+        await AddLink(data);
+
+        return {
+          status: true,
+        };
+      } catch (err) {
+        return { status: false, data: err };
+      }
+    });
+
+    ipcMain.handle("delete-link", async (e, id) => {
+      try {
+        await DeleteLink(id);
         return { status: true };
       } catch (err) {
         return { status: false, data: err.message };

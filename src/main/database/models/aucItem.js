@@ -25,18 +25,6 @@ const AucItemModel = (sequelize) => {
         type: DataTypes.INTEGER,
         defaultValue: 0,
       },
-      winningAmount: {
-        type: DataTypes.INTEGER,
-        defaultValue: 0,
-      },
-      bidderNum: {
-        type: DataTypes.INTEGER,
-        defaultValue: 0,
-      },
-      bidderName: {
-        type: DataTypes.STRING,
-        defaultValue: "",
-      },
     },
     {
       sequelize,

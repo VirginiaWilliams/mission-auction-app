@@ -89,9 +89,7 @@
               <th>Type</th>
               <th>Description</th>
               <th>Value</th>
-              <th>BidderNum</th>
-              <th>BidderName</th>
-              <th>WinningAmnt</th>
+              <th>BidderNum BidderName WinningAmnt</th>
               <th></th>
             </tr>
             <tr v-for="(i, index) in aucItems" :key="index">
@@ -99,9 +97,28 @@
               <td>{{ i.type }}</td>
               <td>{{ i.description }}</td>
               <td>{{ i.value }}</td>
-              <td>{{ i.bidderNum == 0 ? "" : i.bidderNum }}</td>
-              <td>{{ i.bidderName }}</td>
-              <td>{{ i.winningAmount == 0 ? "" : i.winningAmount }}</td>
+              <td>
+                <div v-if="i.Bidders">
+                  <div v-for="(j, index) in i.Bidders" :key="index">
+                    <td>{{ j.num == 0 ? "" : j.num }}</td>
+                    <td>{{ j.name }}</td>
+                    <td>
+                      {{
+                        j.bidder_aucItem.winningAmount == 0
+                          ? ""
+                          : j.bidder_aucItem.winningAmount
+                      }}
+                    </td>
+                    <td>
+                      <img
+                        src="./assets/remove.png"
+                        class="remove"
+                        @click="removeLink(j)"
+                      />
+                    </td>
+                  </div>
+                </div>
+              </td>
               <td>
                 <div class="action-container">
                   <img
@@ -248,6 +265,10 @@ function handleBidderUpdate(item) {
 function handleBidderDelete(id) {
   bidderIdToDelete.value = id;
   openConfirmationModal.value = true;
+}
+
+function removeLink(link) {
+  store.dispatch("deleteLink", link.id);
 }
 
 function deleteAllItems() {
@@ -537,5 +558,10 @@ td {
 .selected-tab {
   font-weight: 700;
   text-decoration: underline;
+}
+
+.remove {
+  width: 1rem;
+  cursor: pointer;
 }
 </style>
