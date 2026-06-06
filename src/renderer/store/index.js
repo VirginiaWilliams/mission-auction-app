@@ -5,9 +5,6 @@ export default createStore({
     aucItems: [],
     bidders: [],
     logo: "",
-    bidderPackageMap: new Map(),
-    bidderTotalsMap: new Map(),
-    // isTableBidder: false,
   },
   getters: {
     aucItems: (state) => {
@@ -125,42 +122,6 @@ export default createStore({
     createLogo: async (ctx, data) => {
       await window.ipc.invoke("create-logo", data);
       ctx.dispatch("getLogo");
-    },
-
-    // ********** Maps **********
-    setMaps: async (ctx) => {
-      if (ctx.state.bidderPackageMap || ctx.state.bidderTotalsMap) {
-        if (ctx.state.bidderPackageMap.size > 0) {
-          ctx.state.bidderPackageMap.clear();
-        }
-        if (ctx.state.bidderTotalsMap.size > 0) {
-          ctx.state.bidderTotalsMap.clear();
-        }
-      }
-
-      ctx.state.aucItems.forEach((p) => {
-        if (p.bidderName != "") {
-          // Add to bidder -> package map
-          if (!ctx.state.bidderPackageMap.has(p.bidderName)) {
-            ctx.state.bidderPackageMap.set(p.bidderName, []);
-          }
-          ctx.state.bidderPackageMap.get(p.bidderName).push(p);
-
-          // Add to bidder -> total map
-          if (!ctx.state.bidderTotalsMap.has(p.bidderName)) {
-            ctx.state.bidderTotalsMap.set(p.bidderName, 0);
-          }
-          const currentTotal = ctx.state.bidderTotalsMap.get(p.bidderName);
-          ctx.state.bidderTotalsMap.set(
-            p.bidderName,
-            currentTotal + p.winningAmount
-          );
-        }
-      });
-    },
-    resetMaps: async (ctx) => {
-      ctx.bidderPackageMap = new Map();
-      ctx.bidderTotalsMap = new Map();
     },
   },
 });

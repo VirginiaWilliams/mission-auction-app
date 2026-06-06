@@ -173,7 +173,6 @@ async function handleLogoUpload(e) {
 }
 
 function openMultiModal() {
-  store.dispatch("setMaps");
   openMultiGenerateModal.value = true;
 }
 

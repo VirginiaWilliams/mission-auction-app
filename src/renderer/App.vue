@@ -301,7 +301,6 @@ function deleteAllItems() {
 
   store.dispatch("getAucItems");
   store.dispatch("getBidders");
-  store.dispatch("resetMaps");
 
   openDeleteAllModal.value = false;
 }
