@@ -8,7 +8,7 @@
           <div class="input-field-container">
             <label for="bidder-id" class="bidder-id-label"> Bidder Name </label>
             <input
-              v-model="bidderName"
+              v-model="chosenBidder.name"
               type="list"
               list="bidder-options"
               name="bidder-id"
@@ -54,18 +54,18 @@
         <div class="bidder-info">
           <div class="bidder-name">
             <div class="bidder-name-col1">Name:</div>
-            <div class="bidder-name-col2">{{ bidderName }}</div>
+            <div class="bidder-name-col2">{{ chosenBidder.name }}</div>
           </div>
-          <div>Bidder #: {{ bidderNum }}</div>
+          <div>Bidder #: {{ chosenBidder.num }}</div>
         </div>
         <div class="bidder-winnings">
           <div
-            v-for="(item, index) in aucItemsWon"
+            v-for="(item, index) in chosenBidder.AucItems"
             :key="index"
             class="winning-item"
           >
             <div class="item-col1">{{ item.description }}</div>
-            <div class="item-col2">$ {{ item.winningAmount }}</div>
+            <div class="item-col2">$ {{ item.bidder_aucItem.winningAmount }}</div>
           </div>
           <div class="winning-item">
             <div class="item-col1 pdf-total">Total:</div>
@@ -94,30 +94,25 @@ const store = useStore();
 
 const emit = defineEmits(["close-generate-modal"]);
 
-const bidderName = ref("");
-const bidderNum = ref();
+const chosenBidder = ref({
+  num: 0,
+  name: "",
+  AucItems: [],
+});
 const total = ref(0);
 
 const bidders = computed(() => {
   return store.getters.bidders;
 });
 
-const packages = computed(() => {
-  return store.getters.aucItems;
-});
-
-const aucItemsWon = computed(() => {
-  const temp = packages.value.filter((p) => p.bidderNum === bidderNum.value);
-  return temp;
-});
-
 function setValues() {
-  const chosenBidder = bidders.value.find((b) => b.name === bidderName.value);
-  if (chosenBidder) {
-    bidderNum.value = chosenBidder.num;
-
-    aucItemsWon.value.forEach((item) => {
-      total.value += item.winningAmount;
+  const foundBidder = bidders.value.find(
+    (b) => b.name === chosenBidder.value.name
+  );
+  if (foundBidder) {
+    chosenBidder.value = foundBidder;
+    chosenBidder.value.AucItems.forEach((item) => {
+      total.value += item.bidder_aucItem.winningAmount;
     });
   }
 }
@@ -146,13 +141,6 @@ onMounted(async () => {
     option.innerHTML = bidder.name;
     datalist.appendChild(option);
   });
-
-  await store.dispatch("getLogo");
-  const logo = store.getters.logo;
-  if (logo) {
-    const imagePreview = document.getElementById("logo-preview");
-    imagePreview.src = logo;
-  }
 });
 </script>
 

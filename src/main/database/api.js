@@ -83,7 +83,9 @@ async function EditBidder(data) {
 
 async function ReadBidder() {
   let bidders;
-  bidders = await Bidder.findAll();
+  bidders = await Bidder.findAll({
+    include: [{ model: AucItem }],
+  });
 
   return bidders.map((bidder) => {
     return bidder.toJSON();

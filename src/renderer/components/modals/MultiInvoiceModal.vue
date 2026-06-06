@@ -28,7 +28,7 @@
     </div>
   </div>
   <div class="print-content">
-    <div v-for="(bidder, index) in packageMap" :key="index">
+    <div v-for="(bidder, index) in bidders" :key="index">
       <div class="pdf-content">
         <div class="header-container">
           <div class="header-col1">
@@ -52,23 +52,32 @@
           <div class="bidder-info">
             <div class="bidder-name">
               <div class="bidder-name-col1">Name:</div>
-              <div class="bidder-name-col2">{{ bidder[0] }}</div>
+              <div class="bidder-name-col2">{{ bidder.name }}</div>
             </div>
-            <div>Bidder #: {{ bidder[1][0].bidderNum }}</div>
+            <div>Bidder #: {{ bidder.num }}</div>
           </div>
           <div class="bidder-winnings">
             <div
-              v-for="(item, index) in bidder[1]"
+              v-for="(item, index) in bidder.AucItems"
               :key="index"
               class="winning-item"
             >
               <div class="item-col1">{{ item.description }}</div>
-              <div class="item-col2">$ {{ item.winningAmount }}</div>
+              <div class="item-col2">
+                $ {{ item.bidder_aucItem.winningAmount }}
+              </div>
             </div>
             <div class="winning-item">
               <div class="item-col1 pdf-total">Total:</div>
               <div class="item-col2 pdf-total">
-                $ {{ totalsMap.get(bidder[0]) }}
+                $
+                {{
+                  bidder.AucItems.reduce((accumulator, currentItem) => {
+                    return (
+                      accumulator + currentItem.bidder_aucItem.winningAmount
+                    );
+                  }, 0)
+                }}
               </div>
             </div>
             <div class="bottom-section">
@@ -96,14 +105,17 @@ const store = useStore();
 
 const emit = defineEmits(["close-generate-multi-modal"]);
 
-const packageMap = computed(() => {
-  let test = Array.from(store.getters.bidderPackageMap);
-  test = test.flatMap((el) => [el, el]);
-  return test;
-});
+const bidders = computed(() => {
+  let allBidders = store.getters.bidders;
+  let biddersWithWinnings = [];
 
-const totalsMap = computed(() => {
-  return store.getters.bidderTotalsMap;
+  allBidders.forEach((bidder) => {
+    if (bidder.AucItems.length != 0) {
+      biddersWithWinnings.push(bidder);
+    }
+  });
+
+  return biddersWithWinnings;
 });
 
 const imageSrc = ref("");
