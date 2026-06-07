@@ -99,7 +99,7 @@
 
 <script setup>
 import { defineEmits, useStore } from "vuex";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted } from "vue";
 
 const store = useStore();
 
@@ -118,8 +118,6 @@ const bidders = computed(() => {
   return biddersWithWinnings;
 });
 
-const imageSrc = ref("");
-
 async function generatePDF() {
   const bidderlist = document.getElementById("bidder-list");
   if (bidderlist) bidderlist.replaceChildren();
@@ -137,14 +135,18 @@ function cancel() {
 }
 
 onMounted(async () => {
-  await store.dispatch("getLogo");
-  const logo = store.getters.logo;
-  if (logo) {
-    imageSrc.value = logo;
+  let logo = await store.dispatch("getLogos");
 
-    const imagePreview = document.getElementById("multi-logo-preview");
-    imagePreview.src = logo;
-  }
+  let arrayBufferView = new Uint8Array(logo.data.dataValues.data.buffer);
+  let blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+  let urlCreator = window.URL || window.webkitURL;
+  let imageUrl = urlCreator.createObjectURL(blob);
+
+  let img = document.querySelector("#multi-logo-preview");
+  img.src = imageUrl;
+
+  let pdfImg = document.querySelector("#pdf-image");
+  pdfImg.src = imageUrl;
 });
 </script>
 
