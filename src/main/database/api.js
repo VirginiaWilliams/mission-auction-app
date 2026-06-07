@@ -1,6 +1,7 @@
 import { Sequelize, DataTypes } from "sequelize";
 import AucItemModel from "./models/aucItem";
 import BidderModel from "./models/bidder";
+import LogoModel from "./models/logo";
 
 const sequelize = new Sequelize({
   dialect: "sqlite", // type of the database
@@ -9,6 +10,8 @@ const sequelize = new Sequelize({
 
 const AucItem = AucItemModel(sequelize);
 const Bidder = BidderModel(sequelize);
+const Logo = LogoModel(sequelize);
+
 const BidderAucItem = sequelize.define("bidder_aucItem", {
   id: {
     type: DataTypes.INTEGER,
@@ -110,6 +113,32 @@ async function DeleteLink(id) {
   });
 }
 
+// ********** Logo **********
+async function CreateLogo(data) {
+  const nodeBuffer = Buffer.from(data);
+
+  await Logo.create({ data: nodeBuffer });
+  return;
+}
+
+async function ReadLogo() {
+  return await Logo.findAll();
+}
+
+async function EditLogo(data) {
+  let logo = await Logo.findByPk(data.id);
+
+  logo.data = data;
+
+  return await logo.save();
+}
+
+async function DeleteLogo(id) {
+  return Logo.destroy({
+    where: { id },
+  });
+}
+
 export {
   CreateAucItem,
   ReadAucItem,
@@ -121,4 +150,8 @@ export {
   DeleteBidder,
   AddLink,
   DeleteLink,
+  CreateLogo,
+  ReadLogo,
+  EditLogo,
+  DeleteLogo,
 };

@@ -141,6 +141,18 @@ onMounted(async () => {
     option.innerHTML = bidder.name;
     datalist.appendChild(option);
   });
+
+  let test = await store.dispatch("getLogos");
+
+  let arrayBufferView = new Uint8Array(test.data.dataValues.data.buffer);
+  let blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+  let urlCreator = window.URL || window.webkitURL;
+  let imageUrl = urlCreator.createObjectURL(blob);
+  let img = document.querySelector("#logo-preview");
+  img.src = imageUrl;
+
+  let pdfImg = document.querySelector("#pdf-image");
+  pdfImg.src = imageUrl;
 });
 </script>
 

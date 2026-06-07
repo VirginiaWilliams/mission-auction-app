@@ -1,4 +1,4 @@
-import { ipcMain, app } from "electron";
+import { ipcMain } from "electron";
 import {
   CreateAucItem,
   ReadAucItem,
@@ -10,10 +10,12 @@ import {
   DeleteBidder,
   AddLink,
   DeleteLink,
-  // CreateLogo,
-  // ReadLogo,
+  CreateLogo,
+  ReadLogo,
+  EditLogo,
+  DeleteLogo,
 } from "./database/api";
-const fs = require("fs");
+// const fs = require("fs");
 
 async function server() {
   try {
@@ -132,29 +134,51 @@ async function server() {
     });
 
     // ********** Logo **********
-    ipcMain.handle("get-logo", async () => {
+    ipcMain.handle("get-logos", async () => {
       try {
-        // Ensure the path is safe/within app scope if necessary
-        const filePath = app.getAppPath() + "\\logo.png";
-        const imageBuffer = fs.readFileSync(filePath);
-        const base64Image = imageBuffer.toString("base64");
-
-        return `data:image/png;base64,${base64Image}`; // Read file synchronously for simplicity, async is better for large files
-      } catch (error) {
-        console.error("Failed to read file:", error);
-        throw new Error(error.message); // Throw an error that the renderer can catch
+        const res = await ReadLogo();
+        const last = res[res.length - 1];
+        return {
+          status: true,
+          data: last,
+        };
+      } catch (err) {
+        return { status: false, data: err.message };
       }
     });
 
-    ipcMain.handle("create-logo", async (e, data) => {
-      const filePath = app.getAppPath() + "\\logo.png";
-      const buffer = Buffer.from(data);
+    ipcMain.handle("create-logo", async (e, { data }) => {
+      const nodeBuffer = Buffer.from(data);
+      try {
+        await CreateLogo(nodeBuffer);
 
-      fs.writeFile(filePath, buffer, (err) => {
-        if (err) {
-          console.error("Failed to save the file:", err);
-        }
-      });
+        return {
+          status: true,
+        };
+      } catch (err) {
+        return { status: false, data: err };
+      }
+    });
+
+    ipcMain.handle("edit-logo", async (e, data) => {
+      try {
+        await EditLogo(data);
+
+        return {
+          status: true,
+        };
+      } catch (err) {
+        return { status: false, data: err };
+      }
+    });
+
+    ipcMain.handle("delete-logo", async (e, id) => {
+      try {
+        await DeleteLogo(id);
+        return { status: true };
+      } catch (err) {
+        return { status: false, data: err.message };
+      }
     });
   } catch (err) {
     throw new Error(err);

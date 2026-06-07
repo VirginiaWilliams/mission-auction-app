@@ -4,7 +4,7 @@ export default createStore({
   state: {
     aucItems: [],
     bidders: [],
-    logo: "",
+    logo: null,
   },
   getters: {
     aucItems: (state) => {
@@ -114,14 +114,40 @@ export default createStore({
     },
 
     // ********** Logo **********
-    getLogo: async (ctx) => {
-      let response = await window.ipc.invoke("get-logo");
-      ctx.state.logo = String(response);
+    getLogos: async (ctx) => {
+      let response = await window.ipc.invoke("get-logos");
+      if (response.status === true) {
+        ctx.state.logo = response.data.dataValues;
+      }
+      return response;
     },
 
     createLogo: async (ctx, data) => {
-      await window.ipc.invoke("create-logo", data);
-      ctx.dispatch("getLogo");
+      let response = await window.ipc.invoke("create-logo", {
+        data: data,
+        mimeType: Blob.type,
+      });
+
+      if (response.status === true) {
+        ctx.dispatch("getLogos");
+      }
+      return response;
+    },
+
+    editLogo: async (ctx, data) => {
+      let response = await window.ipc.invoke("edit-logo", data);
+
+      if (response.status === true) {
+        ctx.dispatch("getLogos");
+      }
+    },
+
+    deleteLogo: async (ctx, id) => {
+      let response = await window.ipc.invoke("delete-logo", id);
+
+      if (response.status === true) {
+        ctx.dispatch("getLogos");
+      }
     },
   },
 });

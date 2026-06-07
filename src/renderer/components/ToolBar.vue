@@ -32,13 +32,7 @@
       </div>
       <div class="logo-button">
         <label for="logo-input" class="button add-logo"> Logo </label>
-        <input
-          id="logo-input"
-          type="file"
-          hidden
-          disabled
-          @change="handleLogoUpload"
-        />
+        <input id="logo-input" type="file" hidden @change="handleLogoUpload" />
       </div>
     </div>
     <div class="right-side">

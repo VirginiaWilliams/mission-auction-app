@@ -16,6 +16,10 @@ const validChannels = [
   "delete-bidder",
   "add-link",
   "delete-link",
+  "get-logos",
+  "create-logo",
+  "edit-logo",
+  "delete-logo",
 ];
 
 contextBridge.exposeInMainWorld("ipc", {
