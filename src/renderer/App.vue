@@ -87,17 +87,21 @@
             <tr class="table-headers">
               <th>PackageNum</th>
               <th>Type</th>
-              <th>Description</th>
+              <th class="desc-col">Description</th>
               <th>Value</th>
               <th>BidderNum | BidderName | WinningAmnt</th>
               <th></th>
             </tr>
             <tr v-for="(i, index) in aucItems" :key="index">
-              <td>{{ i.num ? i.num : "" }}</td>
-              <td>{{ i.type }}</td>
-              <td>{{ i.description }}</td>
-              <td>{{ i.value }}</td>
-              <td>
+              <td :class="index % 2 != 0 ? 'table-dark' : ''">
+                {{ i.num ? i.num : "" }}
+              </td>
+              <td :class="index % 2 != 0 ? 'table-dark' : ''">{{ i.type }}</td>
+              <td class="desc-col" :class="index % 2 != 0 ? 'table-dark' : ''">
+                {{ i.description }}
+              </td>
+              <td :class="index % 2 != 0 ? 'table-dark' : ''">{{ i.value }}</td>
+              <td :class="index % 2 != 0 ? 'table-dark' : ''">
                 <div v-if="i.Bidders">
                   <tr
                     v-for="(j, index) in i.Bidders"
@@ -139,7 +143,7 @@
                   </tr>
                 </div>
               </td>
-              <td>
+              <td :class="index % 2 != 0 ? 'table-dark' : ''">
                 <div class="action-container">
                   <img
                     src="./assets/pencil.png"
@@ -594,5 +598,9 @@ td {
 
 .table-dark {
   background-color: rgb(228, 228, 228);
+}
+
+.desc-col {
+  max-width: 20rem;
 }
 </style>
