@@ -50,15 +50,17 @@ function cancel() {
   emit("close-edit-bidder-modal");
 }
 
-function editBidder() {
+async function editBidder() {
   let data = {};
 
   data.id = props.id;
   data.num = newNum.value;
   data.name = newName.value;
 
-  store.dispatch("editBidder", data);
-  store.dispatch("editAucItem", data);
+  await store.dispatch("editBidder", data);
+
+  store.dispatch("getAucItems");
+  store.dispatch("getBidders");
 
   emit("close-edit-bidder-modal");
 }

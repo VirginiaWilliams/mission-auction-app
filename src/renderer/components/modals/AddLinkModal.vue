@@ -118,6 +118,10 @@ function addLink() {
 
   store.dispatch("editAucItem", data);
   store.dispatch("addLink", link);
+
+  store.dispatch("getAucItems");
+  store.dispatch("getBidders");
+
   emit("close-link-modal");
 }
 </script>
