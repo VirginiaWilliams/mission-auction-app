@@ -8,6 +8,7 @@
             <label for="description">Desc</label>
             <input
               v-model="newDescription"
+              ref="inputRef"
               type="textarea"
               name="description"
               placeholder="Enter the Item Description"
@@ -58,9 +59,11 @@
 
 <script setup>
 import { useStore, defineEmits } from "vuex";
-import { ref, defineProps } from "vue";
+import { ref, defineProps, onMounted } from "vue";
 
 const store = useStore();
+
+const inputRef = ref(null);
 
 const props = defineProps({
   id: Number,
@@ -99,6 +102,12 @@ function editAucItem() {
 
   emit("close-edit-auc-modal");
 }
+
+onMounted(async () => {
+  if (inputRef.value) {
+    inputRef.value.focus();
+  }
+});
 </script>
 
 <style>

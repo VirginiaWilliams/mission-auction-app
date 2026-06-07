@@ -8,6 +8,7 @@
             <label class="long-label" for="num">Package Num</label>
             <input
               v-model="newPackageNum"
+              ref="inputRef"
               type="number"
               name="num"
               class="short-input-field"
@@ -52,7 +53,7 @@
 
 <script setup>
 import { useStore, defineEmits } from "vuex";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 const store = useStore();
 
@@ -67,6 +68,8 @@ const packageData = ref();
 const selectedPackageDesc = ref();
 const selectedBidderName = ref();
 const selectedBidderId = ref();
+
+const inputRef = ref(null);
 
 const bidders = computed(() => {
   return store.getters.bidders;
@@ -124,6 +127,12 @@ function addLink() {
 
   emit("close-link-modal");
 }
+
+onMounted(async () => {
+  if (inputRef.value) {
+    inputRef.value.focus();
+  }
+});
 </script>
 
 <style>

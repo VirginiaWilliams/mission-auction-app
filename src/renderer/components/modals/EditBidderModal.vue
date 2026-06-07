@@ -8,6 +8,7 @@
             <label for="name">Name</label>
             <input
               v-model="newName"
+              ref="inputRef"
               type="textarea"
               name="name"
               placeholder="Enter new Name"
@@ -28,9 +29,11 @@
 
 <script setup>
 import { useStore, defineEmits } from "vuex";
-import { ref, defineProps } from "vue";
+import { ref, defineProps, onMounted } from "vue";
 
 const store = useStore();
+
+const inputRef = ref(null);
 
 const props = defineProps({
   id: Number,
@@ -64,6 +67,12 @@ async function editBidder() {
 
   emit("close-edit-bidder-modal");
 }
+
+onMounted(async () => {
+  if (inputRef.value) {
+    inputRef.value.focus();
+  }
+});
 </script>
 
 <style>
