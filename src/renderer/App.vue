@@ -93,15 +93,15 @@
               <th></th>
             </tr>
             <tr v-for="(i, index) in aucItems" :key="index">
-              <td :class="index % 2 != 0 ? 'table-dark' : ''">
+              <td :class="index % 2 == 0 ? 'table-dark' : ''">
                 {{ i.num ? i.num : "" }}
               </td>
-              <td :class="index % 2 != 0 ? 'table-dark' : ''">{{ i.type }}</td>
-              <td class="desc-col" :class="index % 2 != 0 ? 'table-dark' : ''">
+              <td :class="index % 2 == 0 ? 'table-dark' : ''">{{ i.type }}</td>
+              <td class="desc-col" :class="index % 2 == 0 ? 'table-dark' : ''">
                 {{ i.description }}
               </td>
-              <td :class="index % 2 != 0 ? 'table-dark' : ''">{{ i.value }}</td>
-              <td :class="index % 2 != 0 ? 'table-dark' : ''">
+              <td :class="index % 2 == 0 ? 'table-dark' : ''">{{ i.value }}</td>
+              <td :class="index % 2 == 0 ? 'table-dark' : ''">
                 <div v-if="i.Bidders">
                   <tr
                     v-for="(j, index) in i.Bidders"
@@ -110,19 +110,19 @@
                   >
                     <td
                       class="inner-table"
-                      :class="index % 2 != 0 ? 'table-dark' : ''"
+                      :class="index % 2 == 0 ? 'table-dark' : ''"
                     >
                       {{ j.num == 0 ? "" : j.num }}
                     </td>
                     <td
                       class="inner-table"
-                      :class="index % 2 != 0 ? 'table-dark' : ''"
+                      :class="index % 2 == 0 ? 'table-dark' : ''"
                     >
                       {{ j.name }}
                     </td>
                     <td
                       class="inner-table"
-                      :class="index % 2 != 0 ? 'table-dark' : ''"
+                      :class="index % 2 == 0 ? 'table-dark' : ''"
                     >
                       {{
                         j.bidder_aucItem.winningAmount == 0
@@ -132,7 +132,7 @@
                     </td>
                     <td
                       class="inner-table"
-                      :class="index % 2 != 0 ? 'table-dark' : ''"
+                      :class="index % 2 == 0 ? 'table-dark' : ''"
                     >
                       <img
                         src="./assets/remove.png"
@@ -143,7 +143,7 @@
                   </tr>
                 </div>
               </td>
-              <td :class="index % 2 != 0 ? 'table-dark' : ''">
+              <td :class="index % 2 == 0 ? 'table-dark' : ''">
                 <div class="action-container">
                   <img
                     src="./assets/pencil.png"
@@ -187,9 +187,9 @@
               <th></th>
             </tr>
             <tr v-for="(i, index) in bidders" :key="index">
-              <td>{{ i.num }}</td>
-              <td>{{ i.name }}</td>
-              <td>
+              <td :class="index % 2 == 0 ? 'table-dark' : ''">{{ i.num }}</td>
+              <td :class="index % 2 == 0 ? 'table-dark' : ''">{{ i.name }}</td>
+              <td :class="index % 2 == 0 ? 'table-dark' : ''">
                 <div class="action-container">
                   <img
                     src="./assets/pencil.png"
@@ -316,7 +316,7 @@ function switchTab(e) {
 
 <style>
 body {
-  background: lightgray;
+  background: rgb(255, 255, 255);
   margin: 0 auto;
   font-family: Arial, sans-serif;
   height: 100vh;
@@ -597,7 +597,7 @@ td {
 }
 
 .table-dark {
-  background-color: rgb(228, 228, 228);
+  background-color: rgb(230, 230, 230);
 }
 
 .desc-col {
