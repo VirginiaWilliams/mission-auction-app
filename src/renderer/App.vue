@@ -100,7 +100,9 @@
               <td class="desc-col" :class="index % 2 == 0 ? 'table-dark' : ''">
                 {{ i.description }}
               </td>
-              <td :class="index % 2 == 0 ? 'table-dark' : ''">{{ i.value }}</td>
+              <td :class="index % 2 == 0 ? 'table-dark' : ''">
+                ${{ i.value }}
+              </td>
               <td :class="index % 2 == 0 ? 'table-dark' : ''">
                 <div v-if="i.Bidders">
                   <tr
@@ -110,21 +112,21 @@
                   >
                     <td
                       class="inner-table"
-                      :class="index % 2 == 0 ? 'table-dark' : ''"
+                      :class="index % 2 != 0 ? 'table-dark' : ''"
                     >
                       {{ j.num == 0 ? "" : j.num }}
                     </td>
                     <td
                       class="inner-table"
-                      :class="index % 2 == 0 ? 'table-dark' : ''"
+                      :class="index % 2 != 0 ? 'table-dark' : ''"
                     >
                       {{ j.name }}
                     </td>
                     <td
                       class="inner-table"
-                      :class="index % 2 == 0 ? 'table-dark' : ''"
+                      :class="index % 2 != 0 ? 'table-dark' : ''"
                     >
-                      {{
+                      ${{
                         j.bidder_aucItem.winningAmount == 0
                           ? ""
                           : j.bidder_aucItem.winningAmount
@@ -132,7 +134,7 @@
                     </td>
                     <td
                       class="inner-table"
-                      :class="index % 2 == 0 ? 'table-dark' : ''"
+                      :class="index % 2 != 0 ? 'table-dark' : ''"
                     >
                       <img
                         src="./assets/remove.png"
@@ -421,6 +423,7 @@ td {
   text-align: left;
   padding-left: 1rem;
   padding-right: 1rem;
+  max-width: 20rem;
 }
 
 .source-code {

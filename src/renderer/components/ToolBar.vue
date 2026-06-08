@@ -172,7 +172,47 @@ function openMultiModal() {
 
 function generateReport() {
   store.dispatch("get-aucItems");
-  downloadCSVFromJson("data.csv", store.getters.aucItems);
+  const formattedJson = formatJson(store.getters.aucItems);
+  downloadCSVFromJson("data.csv", formattedJson);
+}
+
+function formatJson(arrayOfJson) {
+  let newJson = [];
+
+  arrayOfJson.forEach((item) => {
+    let bidderNums = [];
+    let bidderNames = [];
+    let winningAmounts = [];
+    item.Bidders.forEach((bidder) => {
+      bidderNums.push(bidder.num);
+      bidderNames.push(bidder.name);
+      winningAmounts.push(bidder.bidder_aucItem.winningAmount);
+    });
+    newJson.push({
+      num: item.num,
+      type: item.type,
+      description: item.description,
+      value: item.value,
+      bidderNum: bidderNums[0],
+      bidderName: bidderNames[0],
+      winningAmount: winningAmounts[0],
+    });
+    if (bidderNums.length > 1) {
+      for (let i = 1; i < bidderNums.length; i++) {
+        newJson.push({
+          num: "",
+          type: "",
+          description: "",
+          value: "",
+          bidderNum: bidderNums[i],
+          bidderName: bidderNames[i],
+          winningAmount: winningAmounts[i],
+        });
+      }
+    }
+  });
+
+  return newJson;
 }
 
 function downloadCSVFromJson(filename, arrayOfJson) {
