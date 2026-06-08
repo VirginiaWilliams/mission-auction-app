@@ -111,19 +111,19 @@
                     class="inner-table-row"
                   >
                     <td
-                      class="inner-table"
+                      class="inner-table-num"
                       :class="index % 2 != 0 ? 'table-dark' : ''"
                     >
                       {{ j.num == 0 ? "" : j.num }}
                     </td>
                     <td
-                      class="inner-table"
+                      class="inner-table-name"
                       :class="index % 2 != 0 ? 'table-dark' : ''"
                     >
                       {{ j.name }}
                     </td>
                     <td
-                      class="inner-table"
+                      class="inner-table-winning"
                       :class="index % 2 != 0 ? 'table-dark' : ''"
                     >
                       ${{
@@ -133,7 +133,7 @@
                       }}
                     </td>
                     <td
-                      class="inner-table"
+                      class="inner-table-remove"
                       :class="index % 2 != 0 ? 'table-dark' : ''"
                     >
                       <img
@@ -595,7 +595,17 @@ td {
   width: 100%;
 }
 
-.inner-table {
+.inner-table-num,
+.inner-table-remove {
+  width: 1rem;
+  border: none;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.inner-table-name,
+.inner-table-winning {
+  width: 100%;
   border: none;
 }
 
